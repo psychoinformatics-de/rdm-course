@@ -10,7 +10,7 @@
 carpentry: "swc"
 
 # Overall title for pages.
-title: "The Unix Shell"
+title: "Research Data Management with DataLad"
 
 
 #------------------------------------------------------------
@@ -26,7 +26,7 @@ kind: "lesson"
 repository: <USERNAME>/<PROJECT>
 
 # Email address, no mailto:
-email: "team@carpentries.org"
+email: "team@datalad.org"
 
 # Sites.
 amy_site: "https://amy.software-carpentry.org/workshops"
