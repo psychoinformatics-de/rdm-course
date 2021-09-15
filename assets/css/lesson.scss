@@ -12,18 +12,18 @@ $color-brand:       #2b3990 !default;
 $color-error:       #bd2c00 !default;
 $color-warning:     #cda01d !default;
 $color-output:      #303030 !default;
-$color-source:      #360084 !default;
+$color-source:      #360084 !default; //360084
 
 // blockquotes
-$color-callout:     #f4fd9c !default;
+$color-callout:     #ffa200 !default; // 7fd5ff
 $color-caution:     #cf000e !default;
-$color-challenge:   #eec275 !default;
+$color-challenge:   #7fd5ff !default;
 $color-checklist:   #dfd2a0 !default;
 $color-discussion:  #eec275 !default;
-$color-keypoints:   #7ae78e !default;
-$color-objectives:  #daee84 !default;
-$color-prereq:      #9cd6dc !default;
-$color-solution:    #ded4b9 !default;
+$color-keypoints:   #66cc33 !default;
+$color-objectives:  #333333 !default;
+$color-prereq:      #333333 !default; // 333333
+$color-solution:    #5d9bbb !default;
 $color-testimonial: #fc8dc1 !default;
 
 //----------------------------------------
@@ -198,15 +198,19 @@ $codeblock-padding: 5px !default;
 font-size: 18px;
 }
 
-.challenge    { background-color: #eec27520; }
-.callout      { background-color: #f4fd9c20; }
-.challenge    { background-color: #eec27520; }
+.prereq h2,
+.objectives h2 {
+  color: #fff;
+}
+
+.challenge    { background-color: #7fd4ff20; }
+.callout      { background-color: #ffa20025; } // 7fd4ff38
 .checklist    { background-color: #dfd2a020; }
 .discussion   { background-color: #eec27520; }
-.keypoints    { background-color: #7ae78e20; }
-.objectives   { background-color: #daee8420; }
-.prereq       { background-color: #9cd6dc20; }
-.solution     { background-color: #ded4b94d; }
+.keypoints    { background-color: #66cc3322; }
+.objectives   { background-color: #f3f3f36b; }
+.prereq       { background-color: #f3f3f36b; } // f3f3f36b
+.solution     { background-color: #5d9cbb3c; }
 .testimonial  { background-color: #fc8dc120; }
 
 blockquote p {
@@ -227,7 +231,7 @@ a code {
 }
 
 a:link {
-  color: #196EBD;
+  color: #ffa200;
 }
 
 a:active,
@@ -237,7 +241,7 @@ a:hover {
 }
 
 a:visited {
-  color: #1AA4DA;
+  color: #ffa200;
 }
 
 code {
