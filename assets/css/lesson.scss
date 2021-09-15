@@ -21,7 +21,7 @@ $color-challenge:   #7fd5ff !default;
 $color-checklist:   #dfd2a0 !default;
 $color-discussion:  #eec275 !default;
 $color-keypoints:   #66cc33 !default;
-$color-objectives:  #126e12 !default;
+$color-objectives:  #333333 !default;
 $color-prereq:      #333333 !default; // 333333
 $color-solution:    #5d9bbb !default;
 $color-testimonial: #fc8dc1 !default;
@@ -213,7 +213,7 @@ font-size: 18px;
 .checklist    { background-color: #dfd2a020; }
 .discussion   { background-color: #eec27520; }
 .keypoints    { background-color: #66cc3322; }
-.objectives   { background-color: #126e1217; }
+.objectives   { background-color: #f3f3f36b; }
 .prereq       { background-color: #f3f3f36b; } // f3f3f36b
 .solution     { background-color: #5d9cbb3c; }
 .testimonial  { background-color: #fc8dc120; }
