@@ -12,7 +12,7 @@ $color-brand:       #2b3990 !default;
 $color-error:       #bd2c00 !default;
 $color-warning:     #cda01d !default;
 $color-output:      #303030 !default;
-$color-source:      #360084 !default; //360084
+$color-source:      #303030 !default; //360084
 
 // blockquotes
 $color-callout:     #ffa200 !default; // 7fd5ff
@@ -51,7 +51,7 @@ div.warning:before,
 div.output::before,
 div.source::before,
 div[class^='language-']::before {
-    background-color: #f2eff6;
+    background-color: #efefef;
     display: block;
     font-weight: bold;
     padding: 5px 10px;
@@ -62,7 +62,7 @@ div.source::before { content: "Code"; }
 
 div.error::before  { background-color: #ffebe6; content: "Error"; }
 div.warning:before { background-color: #f8f4e8; content:" Warning"; }
-div.output::before { background-color: #efefef; content: "Output"; }
+div.output::before { background-color: #303030; content: "Output"; color: #efefef; border-color: #303030;}
 
 div.language-basic::before    { content: "Basic"; }
 div.language-bash::before     { content: "Bash"; }
@@ -202,9 +202,14 @@ font-size: 18px;
 .objectives h2 {
   color: #fff;
 }
+.solution h2 {
+  color: #f3f3f3;
+}
 
-.challenge    { background-color: #7fd4ff20; }
-.callout      { background-color: #ffa20025; } // 7fd4ff38
+
+
+.challenge    { background-color: #7fd4ff20; border-color: $color-solution;}
+.callout      { background-color: #ffa2001e; } // 7fd4ff38
 .checklist    { background-color: #dfd2a020; }
 .discussion   { background-color: #eec27520; }
 .keypoints    { background-color: #66cc3322; }
