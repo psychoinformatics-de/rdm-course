@@ -15,7 +15,7 @@ is set up and how to customize it, see: https://carpentries.github.io/lesson-exa
 
 The `_config.yml` file in the repo root allows several options for customization.
 The `carpentry` variable is set to `swc` (line 10), meaning that for any updates where
-we want DataLad-specific content to display we will have to ensure these are edited wherever required by `swc`-specific logic.
+we want DataLad-specific content to display we will have to ensure these are edited wherever `swc`-specific logic occurs.
 
 ## Editing the main page
 
