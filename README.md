@@ -1,25 +1,19 @@
-[![Create a Slack Account with us](https://img.shields.io/badge/Create_Slack_Account-The_Carpentries-071159.svg)](https://swc-slack-invite.herokuapp.com/) 
-[![Slack Status](https://img.shields.io/badge/Slack_Channel-swc--shell-E01563.svg)](https://swcarpentry.slack.com/messages/C9X3XTHJ8) 
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.3266823.svg)](https://doi.org/10.5281/zenodo.3266823)
+[UNDER CURRENT DEVELOPMENT]
 
-shell-novice
-============
+RDM with DataLad
+================
 
-An introduction to the Unix shell for people who have never used the command line before.
-Please see <https://swcarpentry.github.io/shell-novice/> for a rendered version of this material,
-[the lesson template documentation][lesson-example]
-for instructions on formatting, building, and submitting material,
-or run `make` in this directory for a list of helpful commands.
+*[description of repo content to follow]*
 
-Maintainers:
+Credit
+======
 
-* [Gabriel A. Devenyi][devenyi_gabriel]
-* [Colin Morris][colin_morris]
-* [Gerard Capes][gerard_capes]
-* [Jacob Deppen][jacob_deppen]
+This repo's design was adapted from
+[The Carpentries lesson styles template](https://github.com/carpentries/styles/)
+(licensed under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/).)
 
-[devenyi_gabriel]: http://software-carpentry.org/team/#devenyi_gabriel
-[colin_morris]: https://github.com/colinmorris
-[gerard_capes]: https://carpentries.org/instructors/#capes_gerard
-[jacob_deppen]: https://deppen8.github.io/
-[lesson-example]: https://carpentries.github.io/lesson-example/
+The RDM training material itself was created by the DataLad team,
+either in full, or adapted from existing openly available material.
+
+Sources include:
+- *add sources*
