@@ -34,6 +34,27 @@ episode order.
 Episodes will automatically appear in order as part of the schedule on
 the main page.
 
+## Setup for local rendering of lessons
+
+To preview the changes locally, follow the instructions from
+[Carpentries lesson example](https://carpentries.github.io/lesson-example/setup.html).
+
+Short version:
+
+```bash
+# Install:
+sudo apt-get install ruby ruby-dev build-essential libxml2-dev
+gem install bundler --user-install
+
+# Add ~/.local/share/gem/ruby/2.7.0/bin to path, as per printed message
+
+# In the root of the repository (once) to install dependencies
+bundle update
+
+# Start the server
+make serve
+```
+
 
 Credit
 ======
