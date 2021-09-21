@@ -67,4 +67,5 @@ The RDM training material itself was created by the DataLad team,
 either in full, or adapted from existing openly available material.
 
 Sources include:
+- [Naming Things](http://www2.stat.duke.edu/~rcs46/lectures_2015/01-markdown-git/slides/naming-slides/naming-slides.pdf)" (CC0) by Jenny Bryan
 - *add sources*
