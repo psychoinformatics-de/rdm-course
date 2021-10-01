@@ -224,13 +224,175 @@ rename to name-recoded.dat
 
 Therefore, a naming pattern needs to be chosen carefully!
 
-## [TODO] Further topics
+## File types (text vs binary)
 
-Also part of this module, either within the current "episode" or as a
-separate one.
+Any dataset will likely store different kinds of data, and use different file formats to do so. There is a myriad of formats; sometimes, the format choice for a given type of data will be obvious (dictated by universally accepted or field-specific standards), sometimes there will be several possibilities. Leaving the formats aside, one broad distinction can be made: text vs binary.
 
-- Data organisation
-  - files / directories
-  - tabular data
-  - binary data
-  - sidecar metadata strategy
+- Text file is a file structured as a sequence of lines containing text, composed of characters. 
+- Binary file is anything other than a text file.
+
+A text file can be viewed and edited using a text editor . The *lines* are delimited by a newline character, typically written as `\n`. Note that although some editors will *wrap* lines for display purposes, this is purely visual, as the line endings are stored in the file.
+
+### Version control
+
+One important feature of text files is that they can be version controlled on a line by line basis. So if you have a long file, but only change it in a few places, changes will be recorded for the specific lines. Moreover, it will be easy to display what the modification involved, by portraying it as lines being taken out and added (in programming slang, this is called a file *diff*).
+
+Compare this to a binary file, which does not have a line structure. Version control systems, including datalad, will also track binary files, but they will do so on a per-file basis. TODO: Flesh out
+
+Datalad introduces one additional distinction between text and binary files. In a typical dataset, binary files will be annexed (TODO: meaning that...) and text files will not (TODO: although...). To protect the data from accidental modifications, datalad will content-lock the annexed files, disabling your permission to edit them. The files can be unlocked manually with `datalad unlock`, but the `datalad run` command performs unlocking automatically.
+
+### Different flavours of text files
+
+Text files may be simple in their structure, but they can be very powerful in their ability to store content. All the example formats below are human- and machine-readable. They have all become widely accepted standards and you will likely find a library for reading these files in your favourite programming language.
+
+#### Plain text
+
+A plain text file is just that, plain text.
+
+~~~
+Here is plain text.
+A very simple file, this
+can be read by all.
+~~~
+
+#### Markdown
+
+A very common format for representing free-form text is Markdown. Markdown a *lightweight markup language*, meaning that it introduces some unobtrusive syntax for marking headers, emphasis, links, blocks of code, etc:
+
+~~~
+# Markdown example
+
+## Some things for which markdown has rules
+
+- Lists
+- Marking emphasis with *italics* or **bold**
+- Links, such as [example](https://example.com)
+- Some `inline code` (and code blocks, not shown)
+~~~
+
+Fairly standardised and very popular, Markdown is recognised by many programs and platforms. While it is readable as-is, many code-hosting websites, such as GitHub, will recognise markdown files (giving special attention to those named README) and render them as html in the web interface. Markdown files are a good choice for describing things in a free narrative - yor project, dataset, or analysis. This course materials have also been written in Markdown!
+
+There are other markup languages for similar purposes, such as reStructuredText (popular choice in the world of python documentation), AsciiDoc, or Org Mode (popular among the users of Emacs text editor). Html is also a markup language, but in most cases it is easier to write in one of the lightweight languages and then convert the documents to html when they are .
+
+
+#### Delimited files: csv, tsv
+
+Moving on from narrative to data, comma-separated files (.csv) and tab-separated files (.tsv) are common ways to represent tabular data:
+
+~~~
+TODO: example of a few csv rows, possibly demonstrating quoting
+~~~
+
+#### Configuration and data serialisation: toml, yaml & json
+
+Some formats were made for serialisation (or interchange) -- converting data objects into an easily transmittable form. They can be useful for storing configurations, or keeping (meta-)data which is best represented as key-value pairs.
+
+Here's an example in [TOML](https://toml.io/en/), Tom's Obvious Minimal Language (taken from its official website):
+
+~~~
+# This is a TOML document
+
+title = "Example"
+
+[owner]
+name = "Tom Preston-Werner"
+dob = 1979-05-27T07:32:00-08:00
+
+[database]
+enabled = true
+ports = [ 8000, 8001, 8002 ]
+data = [ ["delta", "phi"], [3.14] ]
+temp_targets = { cpu = 79.5, case = 72.0 }
+~~~
+{: .language-toml}
+
+This is what the same data looks like in [YAML](https://yaml.org/), Yaml Ain't Markup Language:
+
+~~~
+# This is a YAML document
+
+title: Example
+owner:
+  dob: 1979-05-27 07:32:00-08:00
+  name: Tom Preston-Werner
+database:
+  enabled: true
+  ports:
+  - 8000
+  - 8001
+  - 8002
+  data:
+  - - delta
+    - phi
+  - - 3.14
+  temp_targets:
+    case: 72.0
+    cpu: 79.5
+~~~
+{: .language-yaml}
+
+And here is the same data in [JSON](https://www.json.org/), JavaScript Object notation:
+
+~~~
+{
+    "title": "Example",
+    "owner": {
+        "dob": "1979-05-27 07:32:00-08:00",
+        "name": "Tom Preston-Werner"
+    },
+    "database": {
+	"enabled": true,
+	"ports": [
+            8000,
+            8001,
+            8002
+        ],
+        "data": [
+            [
+                "delta",
+                "phi"
+            ],
+            [
+                3.14
+            ]
+        ],
+        "temp_targets": {
+            "case": 72.0,
+            "cpu": 79.5
+        }
+    }
+}
+~~~
+{: .language-json}
+
+## Sidecar metadata strategy
+
+Sometimes, it is desirable to combine binary and text files to represent the same data object. This could be useful if the binary format does not have the possibility to store some metadata, or simply because we want to make the metadata easily readable to anybody (i.e. without requiring potentially uncommon software which can open our binary format).
+
+Let's assume our dataset contains photographs of penguins, collected for research purposes. Suppose that we want to keep (TODO: decide) in the file name to make it easily searchable, but there is additional metadata that may be needed for analysis. We can decide to store the image data in a jpeg file (binary) and the metadata in a yaml file (text). Thus, we will use two files with the same base name and different extensions:
+
+~~~
+photo_type-color.jpeg
+photo_type-color.toml
+~~~
+
+Content of the yaml file:
+
+~~~
+species: Adelie
+island: Torgersen
+penguin_count: 1
+sex: MALE
+photographer: John
+~~~
+{: .language-yaml}
+
+
+As a side note, jpeg files do support quite a lot of metadata (Exif specification) but most likely they are neither sufficient nor convenient for our research.
+
+## [TODO] File / directory structure
+
+## [TODO] Other
+
+- Unify headings
+- Consider splitting into several "episodes"
