@@ -277,10 +277,15 @@ There are other markup languages for similar purposes, such as reStructuredText 
 
 #### Delimited files: csv, tsv
 
-Moving on from narrative to data, comma-separated files (.csv) and tab-separated files (.tsv) are common ways to represent tabular data:
+Moving on from narrative to data, comma-separated files (.csv) and tab-separated files (.tsv) are simple and common ways to represent tabular data. The example below comes from the [Palmer Penguins](https://github.com/allisonhorst/palmerpenguins) dataset:
 
 ~~~
-TODO: example of a few csv rows, possibly demonstrating quoting
+species,island,bill_length_mm,bill_depth_mm,flipper_length_mm,body_mass_g,sex,year
+Adelie,Torgersen,39.1,18.7,181,3750,male,2007
+Adelie,Torgersen,39.5,17.4,186,3800,female,2007
+Adelie,Torgersen,40.3,18,195,3250,female,2007
+Adelie,Torgersen,NA,NA,NA,NA,NA,2007
+Adelie,Torgersen,36.7,19.3,193,3450,female,2007
 ~~~
 
 #### Configuration and data serialisation: toml, yaml & json
@@ -373,7 +378,7 @@ Let's assume our dataset contains photographs of penguins, collected for researc
 
 ~~~
 photo_type-color.jpeg
-photo_type-color.toml
+photo_type-color.yaml
 ~~~
 
 Content of the yaml file:
@@ -389,6 +394,39 @@ photographer: John
 
 
 As a side note, jpeg files do support quite a lot of metadata (Exif specification) but most likely they are neither sufficient nor convenient for our research.
+
+### Describing columns in tabular files
+
+Another place where the sidecar files could come useful is alongside the tabular files (csv/tsv).
+Remember the penguin csv table above?
+The column names were pretty self-explanatory, but a description could make things even clearer.
+Other datasets could probably benefit even more from a description like this (also from the Palmer Penguins dataset):
+
+~~~
+species: a factor denoting penguin species (Adélie, Chinstrap and Gentoo)}
+island: a factor denoting island in Palmer Archipelago, Antarctica (Biscoe, Dream or Torgersen)}
+bill_length_mm: a number denoting bill length (millimeters)}
+...
+~~~
+
+You could even go a step further, and for each label provide several pieces of information using the same set of keys.
+These could include: long name, description, definitions of factors (especially if they are numeric), links to ontologies.
+Using yaml syntax, we could rewrite the above description in the following way:
+
+~~~
+species:
+  description: a factor denoting penguin species
+  levels:
+    Adélie: Adélie (P. adeliae)
+	Chinstrap: Chinstrap (P. antarctica)
+	Gentoo: Gentoo (P. papua)
+  termURL: https://www.wikidata.org/wiki/Q9147
+bill_length_mm:
+  description: a factor denoting bill length
+  units: mm
+~~~
+{: .language-yaml}
+
 
 ## [TODO] File / directory structure
 
