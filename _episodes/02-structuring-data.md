@@ -408,27 +408,29 @@ island: a factor denoting island in Palmer Archipelago, Antarctica (Biscoe, Drea
 bill_length_mm: a number denoting bill length (millimeters)}
 ...
 ~~~
+{: .language-yaml}
 
-You could even go a step further, and for each label provide several pieces of information using the same set of keys.
-These could include: long name, description, definitions of factors (especially if they are numeric), links to ontologies.
+You could even go a step further, and for each label provide several pieces of information.
+These could include: long name, free-form description, definitions of factor levels (especially useful if they are numeric), links to ontologies.
 Using yaml syntax, we could rewrite the above description in the following way:
 
 ~~~
 species:
   description: a factor denoting penguin species
   levels:
-    Adélie: Adélie (P. adeliae)
-	Chinstrap: Chinstrap (P. antarctica)
-	Gentoo: Gentoo (P. papua)
+    Adélie: P. adeliae
+    Chinstrap: P. antarctica
+    Gentoo: P. papua
   termURL: https://www.wikidata.org/wiki/Q9147
 bill_length_mm:
-  description: a factor denoting bill length
+  description: a number denoting bill length
   units: mm
 ~~~
 {: .language-yaml}
 
 
 ## [TODO] File / directory structure
+
 
 ## [TODO] Other
 
