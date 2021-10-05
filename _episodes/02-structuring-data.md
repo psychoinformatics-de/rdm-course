@@ -429,8 +429,40 @@ bill_length_mm:
 {: .language-yaml}
 
 
-## [TODO] File / directory structure
+## [WIP] File / directory structure
 
+Above, we have been dealing mostly with file naming and file types.
+What remains is a way these files are organised into directories.
+This might seem like a trivial issue, but the way files are organised may make script-based analyses easier, or enable the use of automated tools relying on a predefined structure.
+
+In fact, all of us are probably using some sort of rules to organise our data.
+These rules may come from a field-specific or lab-specific standard, or simply follow common sense.
+In either case, the overall logic will probably be similar and try to incorporate (in various orders) levels such as: experiment / subject or specimen / session or repetition / data type or measurement method.
+
+Using a consistent pattern within an experiment makes scripting easier.
+Using a consistent pattern across experiment, or across labs, saves time on repetitive processing steps and simplifies collaboration, as it is much easier to figure out what goes where.
+
+> ## Tip: use relative paths
+>
+> Using relative paths in analysis code guarantees huge gains when moving it
+> from one computer to another.
+> Avoid hardcoding '/home/Alice', or '/Users/Bob', or 'C://RawData/'.
+> You can create the code directory in the top level of the dataset.
+> Then, use relative paths, which won't depend on where the dataset is placed.
+> Alternatively, if you want the code to be in an entirely separate location,
+> you can create a simple configuration file (using one of the text formats
+> presented earlier) and have your scripts read base paths from there.
+> If they change, only the config file will have to be edited.
+{:.callout}
+
+TODO:
+
+- discuss absolute vs relative paths in greater detail -- and probably make the tip shorter?
+- give a toy example of planning a directory structure
+- emphasise adding READMEs
+- mention cookiecutter?
+- mention BIDS
+- mention YODA?
 
 ## [TODO] Other
 
