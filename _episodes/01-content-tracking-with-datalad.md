@@ -249,7 +249,171 @@ We can see that these changes got recorded with `tig`.
 For now, we have manually downloaded the file and saved it to the
 dataset. However, saving a file from a URL is a common scenario,
 whether we are using a public repository or a local network
-storage. For that, datalad has a `datalad addurls` method. Let's use
-it to download another file:
+storage. For that, datalad has a `datalad download-url` method. Let's
+use it to download another file (making sure that there is a trailing
+slash after the `--path` argument):
 
-TO BE CONTINUED...
+~~~
+datalad download-url --path=inputs/images/ https://unsplash.com/photos/8PxCm4HsPX8/download?force=true
+~~~
+{: .language-bash}
+
+Afterwards, `datalad status` shows us that there is nothing to
+save. The `download-url` command not only downloaded the file, but
+also performed a `datalad save` on our behalf. We can use `tig` to
+inspect the commit message:
+
+~~~
+[DATALAD] Download URLs
+	
+URLs:
+  https://unsplash.com/photos/8PxCm4HsPX8/download?force=true
+~~~
+{: .output}
+
+This is a notable improvement compared to the previous image, because
+in addition to recording the addition of the picture we also stored
+its source. What's more, datalad is aware of that source, and has all
+the information needed to remove and reobtain the file on
+demand... but that's another topic altogether.
+
+To practice saving changes and to make our example dataset more
+similar to the real-life datasets, let's add some more files, this
+time in the form of sidecar metadata. Let's supose we want to store
+the picture author, license under which the file is available, and,
+let's say, the number of penguins visible in the photo. For each
+image, we will create a yaml file (a simple text file following a set
+of rules to store variables) with the same name but different
+extension:
+
+~~~
+nano inputs/images/derek-oyen-3Xd5j9-drDA-unsplash.yaml
+~~~
+{: .language-bash}
+
+~~~
+photographer: Derek Oyen
+license: Unsplash License
+penguin_count: 3
+~~~
+{: .language-yaml}
+
+~~~
+nano inputs/images/derek-oyen-8PxCm4HsPX8-unsplash.yaml
+~~~
+{: .language-bash}
+
+~~~
+photographer: Derek Oyen
+license: Unsplash License
+penguin_count: 2
+~~~
+{: .language-yaml}
+
+We can use the already familiar `datalad save` command to recorde
+these changes (addition of two files):
+
+~~~
+datalad save -m "Add metadata to photos"
+~~~
+{: .language-bash}
+
+### Breaking things (and repairing them)
+
+A huge appeal of version control lies in the ability to return to a
+previously recorded state, which enables experimentation without
+having to worry about breaking things. Let's demonstrate by breaking
+things on purpose. Open the `README.md` file, remove most of its
+contents and save. You can use `cat README.md` to display the file
+contents and make sure that they are, indeed, gone. The `datalad
+status` reports that the file changed, but the change has noot been
+saved in the dataset history:
+
+~~~
+datalad status
+~~~
+{: .language-bash}
+
+~~~
+modified: README.md (file)
+~~~
+{: .output}
+
+In this situation, you can restore the file to its previously recorded
+state by running:
+
+~~~
+git restore README.md
+~~~
+{: .language-bash}
+
+Note that `git` is the one of the programs used by DataLad under the
+hood for version control. While most dataset operations can be
+performed using `datalad` commands, some will require calling `git`
+directly. After running `git restore`, you can use `datalad status` to
+see that is now clean, and `cat README.md` to see that the original
+file contents are back as if nothing happened - disaster
+averted. Finally, check `tig` to see that the dataset history remained
+unaffected.
+
+Now, let's take things one step further and actually `datalad save`
+some undesired changes. Open the `README.md`, wreak havoc, and save
+it:
+
+~~~
+nano README.md
+~~~
+{: .language-bash}
+
+~~~
+# Example dataset
+
+HAHA all description is gone
+~~~
+
+This time we are commiting these changes to the dataset history:
+
+~~~
+datalad save -m "Break things"
+~~~
+{: .language-bash}
+
+The file was changed, and the changes have been commited. Luckily, git
+has a method for undoing such changes, `git revert`, which can work
+even if subsequent `save` operations have been performed on the
+dataset. To call it, we need to know the *commit hash* (unique
+identifier) of the change wihich we want to revert. It is displaye by
+`tig` at the bottom of the window and looks like this:
+`8ddaaad243344f38cd778b013e7e088a5b2aa11b`. Don't worry, we only need
+the first couple characters. Find your commit hash and call `git
+revert`:
+
+~~~
+git revert --no-edit 8ddaaad
+~~~
+{: .language-bash}
+
+With the `--no-edit` option, `git revert` will create a default commit
+message; without it it would open your default editor and let you
+change it. Like previously, after reverting the changes, `datalad
+status` shows that there is nothing to save and `cat README.md` proves
+that the removed file contents are back. This time, `tig` shows that
+history has not been rewritten, and `git revert` made a new commit
+reverting changes instead (note that recent commits can be removed
+from history with `git reset` but this is beyond the scope of this
+lesson).
+
+### Data processing
+
+We have demonstrated building a dataset history by collecting data and
+changing it manually. Now it is time to demonstrate some script-based
+data processing. Let's assume that our project requires us to convert
+the original files to greyscale. We can do this with a simple python
+script. First, let's create two new directories to keep code and
+inputs in designated places:
+
+~~~
+mkdir code
+mkdir -p outputs/images_greyscale
+~~~
+{: .language-bash}
