@@ -417,3 +417,116 @@ mkdir code
 mkdir -p outputs/images_greyscale
 ~~~
 {: .language-bash}
+
+Now, let's "write" our custom script. You can download it using wget
+(below), or copy its content from
+[here](https://github.com/psychoinformatics-de/rdm-course/blob/gh-pages/data/greyscale.py)
+and then save it as part of the dataset
+
+~~~
+wget --prefix outputs https://github.com/psychoinformatics-de/rdm-course/raw/gh-pages/data/greyscale.py
+datalad save -m "Add an image processing script"
+~~~
+{: .language-bash}
+
+This script for greyscale conversion takes two arguments, `input_file`
+and `output file`. You can check this with `python code/greyscale.py
+--help`. Let's apply it for the first image, and place the output in the `outputs/images_greyscale` category, slightly changing the name:
+
+~~~
+python code/greyscale.py inputs/images/derek-oyen-3Xd5j9-drDA-unsplash.jpg outputs/images_greyscale/derek-oyen-3Xd5j9-drDA-greyscale.jpg
+~~~
+{: .language-bash}
+
+Note that our working directory is in the root of the dataset, and we
+are calling the script using *relative paths* (meaning that they are
+relative to the working directory, and do not contain the full path to
+any of the files). This is a good practice: the call looks the same
+regardless of where the dataset is on our drive.
+
+You should be able to verify that the output file has been created and
+that the image is, indeed, converted to greyscale. Now all that
+remains is to save the change in the dataset:
+
+~~~
+datalad save -m "Convert the first image to greyscale"
+~~~
+{: .language-bash}
+
+Let's take a look at our history with `tig`. It already looks pretty
+good: we have recorded all our operations. However, this record is
+only as good as our descriptions. We can take it one step further.
+
+Datalad has the ability to record the exact command which was used,
+and all we have to do is prepend `datalad run` to our command. We can
+also give the commit message, just as we could with `datalad
+save`. Let's try this on the other image:
+
+~~~
+datalad run -m "Convert the second image to greyscale" python code/greyscale.py inputs/images/derek-oyen-8PxCm4HsPX8-unsplash.jpg outputs/images_greyscale/derek-oyen-8PxCm4HsPX8-greyscale.jpg
+~~~
+{: .language-bash}
+
+As we can see, `datalad run` executes the given command and followes
+that by automatically calling `datalad save` to store all changes
+resulting from this command in the dataset. Let's take a look at the
+full commit message with `tig` (highlight the commit you want to see
+and press enter):
+
+~~~
+[DATALAD RUNCMD] Convert second image to grayscale
+
+=== Do not change lines below ===
+{
+"chain": [],
+"cmd": "python code/greyscale.py inputs/images/derek-oyen-8PxCm4HsPX8-unsplash.jpg outputs/images_greyscale/derek-oyen-8PxCm4HsPX8-greyscale.jpg",
+"dsid": "b4ee3e2b-e132-4957-9987-ca8aad2d8dfc",
+"exit": 0,
+"extra_inputs": [],
+"inputs": [],
+"outputs": [],
+"pwd": "."
+}
+^^^ Do not change lines above ^^^
+~~~
+
+There is some automatically generated text, and inside we can easily
+find the command that was execited (under `"cmd"` keyword). The record
+is stored using json formatting, and as such can be read not just by
+us, but also by DataLad. This is very useful: now we will be able to
+rerun the exact command if, for example, input data gets changed, the
+script get changed, or we decide to remove the outputs (we won't try
+that now, but the command to do so is `datalad rerun`).
+
+### Locking and unlocking
+
+Let's try something else: editing an image which already exists. We
+have done so with text files, so why should it be different?
+
+Let's try doing something nonsensical: using the first input image
+(the one with `3Xd` in its name) and writing its greyscale version
+onto the second output image (the one with `8Px` in its name). Of
+course the computer doesn't know what makes sense - the clue is that
+we will be writing to a file which already exists. This time we will
+skip `datalad run` to avoid creating a recod of our little mischief:
+
+~~~
+python code/greyscale.py inputs/images/derek-oyen-3Xd5j9-drDA-unsplash.jpg outputs/images_greyscale/derek-oyen-8PxCm4HsPX8-greyscale.jpg
+~~~
+{: .language-bash}
+
+~~~
+Traceback (most recent call last):
+  File "/home/mszczepanik/Documents/rdm-warmup/example-dataset/code/greyscale.py", line 20, in <module>
+    grey.save(args.output_file)
+  File "/home/mszczepanik/Documents/rdm-temporary/venv/lib/python3.9/site-packages/PIL/Image.py", line 2232, in save
+    fp = builtins.open(filename, "w+b")
+PermissionError: [Errno 13] Permission denied: 'outputs/images_greyscale/derek-oyen-8PxCm4HsPX8-greyscale.jpg'
+~~~
+{: .output}
+
+Something went wrong: `Permission Error: Permission denied` says the
+message. What happened? Why we don't have the permission to change the
+existing output file? To answer that question we have to go back to
+the moment when we created our dataset and introduce a new
+concept. First, look at the first commit messages in `tig`.
