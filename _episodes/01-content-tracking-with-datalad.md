@@ -506,9 +506,10 @@ have done so with text files, so why should it be different?
 Let's try doing something nonsensical: using the first input image
 (the one with `3Xd` in its name) and writing its greyscale version
 onto the second output image (the one with `8Px` in its name). Of
-course the computer doesn't know what makes sense - the clue is that
-we will be writing to a file which already exists. This time we will
-skip `datalad run` to avoid creating a recod of our little mischief:
+course the computer doesn't know what makes sense - the only thing
+which might stop us is that we will be writing to a file which already
+exists. This time we will skip `datalad run` to avoid creating a recod
+of our little mischief:
 
 ~~~
 python code/greyscale.py inputs/images/derek-oyen-3Xd5j9-drDA-unsplash.jpg outputs/images_greyscale/derek-oyen-8PxCm4HsPX8-greyscale.jpg
@@ -526,7 +527,215 @@ PermissionError: [Errno 13] Permission denied: 'outputs/images_greyscale/derek-o
 {: .output}
 
 Something went wrong: `Permission Error: Permission denied` says the
-message. What happened? Why we don't have the permission to change the
-existing output file? To answer that question we have to go back to
-the moment when we created our dataset and introduce a new
-concept. First, look at the first commit messages in `tig`.
+message. What happened? Why don't we have the permission to change the
+existing output file? Why didn't we run into the same problems when
+editing text files? To answer that question we have to introduce the
+concept of *annexed files* and go back to the moment when we created
+our dataset.
+
+Datalad uses two mechanisms to control files: `git` and
+`git-annex`. This duality exists because it is not possible to store
+large files in `git`. While `git` is especially good at tracking text
+files (and can also handle files other than text) it would quickly run
+into performance issues. We will refer to the files controlled by
+`git-annex` as *annexed files*. There are no exact rules for what is a
+*large* file, but a boundary between "regular" and annexed files has
+to be drawn somewhere.
+
+Let's look at the first two commit messages in `tig`. The second says:
+
+~~~
+o Instruct annex to add text files to Git
+~~~
+
+Remember how we created the dataset with `datalad create -c text2git
+my-dataset`? The `-c text2git` option defined the distinction: text
+files are controlled with git, other (binary) files are annexed. By
+default (without `text2git`) all files are annexed; there are
+different configurations and they can also be tweaked manually.
+
+The by-product of the above is that annexed files are write-protected
+to prevent accidental modifications:
+
+![git vs git-annex]({{ page.root }}/fig/git_vs_gitannex.svg)
+
+If we do want to edit the annexed file, we can unlock it:
+
+~~~
+datalad unlock outputs/images_greyscale/derek-oyen-8PxCm4HsPX8-greyscale.jpg
+~~~
+{: .language-bash}
+
+Now, the operation should succeed:
+
+~~~
+python code/greyscale.py inputs/images/derek-oyen-3Xd5j9-drDA-unsplash.jpg outputs/images_greyscale/derek-oyen-8PxCm4HsPX8-greyscale.jpg
+~~~
+{: .language-bash}
+
+We can open the image to see that it changed, and check:
+
+~~~
+datalad status
+~~~
+{: .language-bash}
+
+~~~
+modified: outputs/images_greyscale/derek-oyen-8PxCm4HsPX8-greyscale.jpg (file)
+~~~
+{: .output}
+
+The file will be locked again after running `datalad save`:
+
+~~~
+datalad save -m "Make a mess by overwriting"
+~~~
+
+We could revert the changes we just save, but let's overwrite the file
+using correct inputs instead, to demonstrate another feature of
+`datalad run`. The sequence of actions we just did (unlock - change -
+save) is not uncommon, and `datalad run` has provisions to make all
+three things happen at once, without the explicit `unlock` call. What
+we need is the `--output` argument to tell datalad to prepare the
+given file for writing (unlock it). Additionally, we will also use the
+`--input` option (which tells datalad that this file is needed to run
+the command). Although `--input` is not necessary in the current
+example, we will introduce it for the future. Finally, to avoid
+repetition, we will use `{inputs}` and `{outputs}` placeholder in the
+run call.
+
+~~~
+datalad run \
+    --input inputs/images/derek-oyen-8PxCm4HsPX8-unsplash.jpg \
+    --output outputs/images_greyscale/derek-oyen-8PxCm4HsPX8-greyscale.jpg \
+    -m "Convert the second image again" \
+    python code/greyscale.py {inputs} {outputs}
+~~~
+{: .language-bash}
+
+~~~
+[INFO   ] Making sure inputs are available (this may take some time)
+unlock(ok): outputs/images_greyscale/derek-oyen-8PxCm4HsPX8-greyscale.jpg (file)
+[INFO   ] == Command start (output follows) ===== 
+[INFO   ] == Command exit (modification check follows) ===== 
+add(ok): outputs/images_greyscale/derek-oyen-8PxCm4HsPX8-greyscale.jpg (file)
+~~~
+{: .output}
+
+Success! Time to look at the images, and then check the dataset
+history with `tig`. The commit message contains the following:
+
+~~~
+[DATALAD RUNCMD] Convert the second image again
+
+=== Do not change lines below ===
+{
+ "chain": [],
+ "cmd": "python code/greyscale.py '{inputs}' '{outputs}'",
+ "dsid": "b4ee3e2b-e132-4957-9987-ca8aad2d8dfc",
+ "exit": 0,
+ "extra_inputs": [],
+ "inputs": [
+  "inputs/images/derek-oyen-8PxCm4HsPX8-unsplash.jpg"
+ ],
+ "outputs": [
+  "outputs/images_greyscale/derek-oyen-8PxCm4HsPX8-greyscale.jpg"
+ ],
+ "pwd": "."
+}
+^^^ Do not change lines above ^^^
+~~~
+{: .output}
+	
+### Making some more additions
+
+Let's make a few more changes to the dataset. We will return to it in
+the workshop module on remote collaboration. As an exercise:
+
+- Download the image from this url into the `inputs/images` directory:
+  `https://unsplash.com/photos/8fmTByMm8wE/download?force=true`
+- Create a yaml file with the following content and save changes in the
+  dataset:
+  ~~~
+  photographer: Derek Oyen
+  license: Unsplash License
+  penguin_count: 3
+  ~~~
+  {: .language-yaml}
+- Add the following acknowledgements at the end of the README:
+  ~~~
+  ## Credit
+  
+  Photos by [Derek Oyen](https://unsplash.com/@goosegrease)
+  and [Ian Parker](https://unsplash.com/@evanescentlight)
+  on [Unsplash](https://unsplash.com)
+  ~~~
+  {: .language-markdown}
+
+> ## Solution
+> 
+> Download file using `download-url`:
+> ```
+> datalad download-url \
+>   -m "Add third image" \
+>   --path=inputs/images/ \
+>   "https://unsplash.com/photos/8fmTByMm8wE/download?force=true"
+> ```
+> {: .language-bash}
+> 
+> Create the yaml file, e.g. using nano, and update the dataset:
+> ```
+> nano inputs/images/ian-parker-8fmTByMm8wE-unsplash.yaml
+> # paste the contents and save
+> datalad save -m "Add a description to the third picture"
+> ```
+> Edit the readme file, e.g. using nano, and update the dataset:
+> ```
+> nano README.md
+> # paste the contents and save
+> datalad save -m "Add credit to README"
+> ```
+{: .solution}
+
+> ## Highlighting for other languages
+> You may use other `language-*` classes to activate syntax highlighting
+> for other languages.
+> For example,
+>
+> {% raw %}
+>     ~~~
+>     title: "YAML Highlighting Example"
+>     description: "This is an example of syntax highlighting for YAML."
+>     array_values:
+>         - value_1
+>         - value_2
+>     ~~~
+>     {: .language-yaml }
+> {% endraw %}
+>
+>
+> will produce this:
+>
+> ~~~
+> title: "YAML Highlighting Example"
+> description: "This is an example of syntax highlighting for YAML."
+> array_values:
+>     - value_1
+>     - value_2
+> ~~~
+> {: .language-yaml }
+>
+>
+> Note that using `.language-*` classes other than
+> `.language-bash`
+> `.language-html`,
+> `.language-make`,
+> `.language-matlab`,
+> `.language-python`,
+> `.language-r`,
+> or `.language-sql`
+> will currently cause one of the tests in the lesson template's
+> `make lesson-check` to fail for your lesson,
+> but will not prevent lesson pages from building and rendering correctly.
+>
+{: .solution }
