@@ -10,24 +10,28 @@ objectives:
 - "Work locally to create a dataset"
 - "Introduce basic datalad commands"
 keypoints:
-- "TBD"
+- "With version control, lineage of all files is preserved"
+- "You can record and revert changes made to the dataset"
+- "DataLad can be used to version control a dataset and all its files"
+- "You can manually save changes with `datalad save`"
+- "You can use `datalad download-url` to preserve file origin"
+- "You can use `datalad run` to capture outputs of a command"
+- "Large files are annexed, and protected from changes"
 ---
 
 > ## Dev note
 > 
-> This chapter should introduce the following datalad commands:
+> The goal of this chapter is to introduce the following datalad commands:
 > - datalad help
 > - datalad create
 > - datalad save
-> - datalad run (?)
+> - datalad run
 > 
 > And the following things:
 > - binary vs text distinction
 > - git log (tig)
 >
 > The content / narrative is based on the [introduction to datalad for Yale](https://handbook.datalad.org/en/latest/code_from_chapters/yale.html) chapter from the handbook.
->
-> Work in Progress
 {: .callout}
 
 ## Setting up
@@ -53,11 +57,28 @@ git config --get user.email
 {: .language-bash}
 
 If nothing is returned, you need to configure your Git
-identity. (TODO: explain how)
+identity:
+
+~~~
+git config --global user.name "John Doe"
+git config --global user.email johndoe@example.com
+~~~
+{: .language-bash}
+
+The information will be used to identify you as the author of all
+dataset operations. With the `--global` option, you need to do this
+once on a given system, as the values will be stored for your user
+account. Of course you can change or override them later.
 
 For some examples, you will also need python with pillow library
-installed. The best way to do this is to create a virtual environment
-(TODO: explain how).
+installed. The best way to do this is to create a virtual
+environment. In brief:
+
+~~~
+virtualenv --python=python3 ~/.venvs/rdm-workshop
+source ~/.venvs/rdm-workshop/bin/activate
+pip install pillow
+~~~
 
 If you are using Binder, everything has been prepared for you.
 
@@ -128,19 +149,60 @@ datalad create -c text2git my-dataset
 ~~~
 {: .language-bash}
 
-`bids-data` dataset is now a new directory, and you can change
-directories (`cd`) inside it:
+`my-dataset` is now a new directory, and you can change directories
+(`cd`) inside it:
 
 ~~~
 cd my-dataset
 ~~~
+{: .language-bash}
 
 The "text2git" procedure pre-created a useful dataset configuration
 that will make version control workflows with files of varying sizes and
 types easier.
 
-TODO: inspect what happened inside with ls -a and tig?
+Let's inspect what happened. Let's start by listing all contents,
+including hidden ones (on UNIX-like system, files or folders starting
+with a dot are treated as hidden): 
 
+~~~
+ls -a
+~~~
+{: .language-bash}
+
+~~~
+.  ..  .datalad  .git  .gitattributes
+~~~
+{: .output}
+
+The `.` and `..` represent current and upper directory,
+respectively. More interestingly, there are two hidden folders,
+`.datalad` and `.git` as well as a hidden `.gitattributes` file. They
+are essential for dataset functioning, but typically we have no need
+to touch them.
+
+Next, we can invoke `tig`, a tool which we will use to view the
+dataset history. Tig displays a list of *commits* - a record of
+changes made to the document. Each commit has a date, author, and
+description, and is identified by a unique 40-character sequence
+(displayed at the bottom) called *shasum* or *hash*. You can move up
+and down the commit list using up and down arrows on your keyboard,
+use enter to display commit details, and `q` to close detail view or
+tig itself.
+
+We can see that DataLad has already created two commits on our
+behalf. They are shown with the most recent on top:
+
+~~~
+tig
+~~~
+{: .language-bash}
+
+~~~
+2021-10-18 16:58 +0200 John Doe o [main] Instruct annex to add text files to Git
+2021-10-18 16:58 +0200 John Doe I [DATALAD] new dataset
+~~~
+{: .output}
 
 ## Version control
 
@@ -178,7 +240,7 @@ datalad status
 {: .language-bash}
 
 ~~~
-TODO
+untracked: README.md (file)
 ~~~
 {: .output}
 
@@ -194,7 +256,19 @@ datalad save -m "Add a short README"
 ~~~
 {: .language-bash}
 
-TODO: see that it got recorded in history
+Let's see that it got recorded in history:
+
+~~~
+tig
+~~~
+{: .language-bash}
+
+~~~
+2021-10-18 17:20 +0200 John Doe o [main] Add a short README
+2021-10-18 16:58 +0200 John Doe o Instruct annex to add text files to Git
+2021-10-18 16:58 +0200 John Doe I [DATALAD] new dataset
+~~~
+{: .output}
 
 Let's add some "image data", represented here by jpeg images. For demonstration purposes, we will use photos available with a permissive license from Unsplash. Start by creating a directory for our data. Let's call it inputs, to make it clear what it represents.
 
@@ -208,6 +282,23 @@ Then, let's put a file in it. To avoid leaving terminal, we will use the linux `
 wget --content-disposition --directory-prefix=inputs/images/ "https://unsplash.com/photos/3Xd5j9-drDA/download?force=true"
 ~~~
 {: .language-bash}
+
+We can view the current file / folder structure by using the linux
+`tree` command:
+
+~~~
+tree
+~~~
+{: .language-bash}
+
+~~~
+.
+├── inputs
+│   └── images
+│       └── derek-oyen-3Xd5j9-drDA-unsplash.jpg
+└── README.md
+~~~
+{: .output}
 
 While we're at it, lets open the readme file (`nano README.md`) and
 make a note on how we organise the data (save and exit with Ctrl-O,
@@ -227,16 +318,18 @@ Raw data is kept in `inputs` folder:
 Okay, time to check the `datalad status`:
 
 ~~~
-TODO
+untracked: inputs (directory)
+ modified: README.md (file)
 ~~~
 {: .output}
 
-The README file now differs from its last known state, and it shows up
-as being *modified*, while the image is listed as new. This is a good
-moment to record these changes. Note that `datalad save` will save
-**all** modifications in the dataset at once! If you have several
-modified files, you can supply a path to the file or files you want to
-save. We will do this, and record two separate changes:
+The inputs directory has some new contents, and it is shown as
+*untracked*.  The README file now differs from its last known state,
+and it shows up as *modified*. This is a good moment to record these
+changes. Note that `datalad save` would save **all** modifications in
+the dataset at once! If you have several modified files, you can
+supply a path to the file or files you want to save. We will it this
+way, and record two separate changes:
 
 ~~~
 datalad save -m "Add first penguin image" inputs/images/derek-oyen-3Xd5j9-drDA-unsplash.jpg
@@ -696,46 +789,3 @@ the workshop module on remote collaboration. As an exercise:
 > datalad save -m "Add credit to README"
 > ```
 {: .solution}
-
-> ## Highlighting for other languages
-> You may use other `language-*` classes to activate syntax highlighting
-> for other languages.
-> For example,
->
-> {% raw %}
->     ~~~
->     title: "YAML Highlighting Example"
->     description: "This is an example of syntax highlighting for YAML."
->     array_values:
->         - value_1
->         - value_2
->     ~~~
->     {: .language-yaml }
-> {% endraw %}
->
->
-> will produce this:
->
-> ~~~
-> title: "YAML Highlighting Example"
-> description: "This is an example of syntax highlighting for YAML."
-> array_values:
->     - value_1
->     - value_2
-> ~~~
-> {: .language-yaml }
->
->
-> Note that using `.language-*` classes other than
-> `.language-bash`
-> `.language-html`,
-> `.language-make`,
-> `.language-matlab`,
-> `.language-python`,
-> `.language-r`,
-> or `.language-sql`
-> will currently cause one of the tests in the lesson template's
-> `make lesson-check` to fail for your lesson,
-> but will not prevent lesson pages from building and rendering correctly.
->
-{: .solution }
