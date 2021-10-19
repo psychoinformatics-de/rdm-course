@@ -34,6 +34,49 @@ keypoints:
 > The content / narrative is based on the [introduction to datalad for Yale](https://handbook.datalad.org/en/latest/code_from_chapters/yale.html) chapter from the handbook.
 {: .callout}
 
+## Introduction
+
+Imagine (this in fact might be close to reality) that you are working
+on a project which involves collection and processing of some kind of
+data. When you are working locally, you may want to have an automated
+record of when a given file was added, where it came from, what input
+files were used to generate a given output, or why some things were
+made. Even if you are not sharing the data, this information might be
+essential for the future you, when you return to the project after
+some time. Also, when making changes to your files, you may want them
+to be reversible, in case you discover that a different way of doing
+things is needed. This is local version control.
+
+Imagine also that the project is a collaborative effort. For example,
+the data may be collected by you and several colleagues, and analysed
+by other members of your team (or by an entirely different team). You
+may wish to have a mechanism to synchronise your personal datasets
+with a centralised storage (for example, your laboratory network
+storage), which preserves the origin of files as all of you are making
+simultaneous contributions over time. This is distributed version
+control.
+
+It is also possible that you may want to have a mechanism to publish,
+completely or selectively, your raw data, or outputs, or both. Or to
+work with a large dataset that is stored elsewhere when you only need
+some of the files, without having to download everything.
+
+These are typical data management issues which we will touch during
+this workshop. From the technical point of view we will be using
+DataLad, a data management multitool that can assist you in handling
+the entire life cycle of digital objects. It is a command-line tool,
+free and open source, and available for all major operating
+systems.
+
+The first module will deal only with local version control.  We will
+introduce basic DataLad commands - a technical foundation for all the
+operations above - while building a little example dataset. Later
+during the workshop we will discuss distributed version control,
+publish our dataset and see what it looks like from the perspective of
+data consumers. Within this workshop we will also set the technical
+aspect aside and talk about good practices in managing files and
+datasets.
+
 ## Setting up
 
 In order to code along, you should have a recent DataLad version.  The
@@ -46,9 +89,11 @@ datalad --version
 ~~~
 {: .language-bash}
 
-You should have a configured `Git` identity. If you are unsure if you
-have configured your Git identity already, you can check if your name
-and email are printed to the terminal when you run:
+You should should have a configured `Git` identity. That identity
+(name and email) will be used to to identify you as the author of all
+dataset operations. If you are unsure if you have configured your Git
+identity already, you can check if your name and email are printed to
+the terminal when you run:
 
 ~~~
 git config --get user.name
@@ -56,8 +101,7 @@ git config --get user.email
 ~~~
 {: .language-bash}
 
-If nothing is returned, you need to configure your Git
-identity:
+If nothing is returned, you can set these values with:
 
 ~~~
 git config --global user.name "John Doe"
@@ -65,10 +109,9 @@ git config --global user.email johndoe@example.com
 ~~~
 {: .language-bash}
 
-The information will be used to identify you as the author of all
-dataset operations. With the `--global` option, you need to do this
-once on a given system, as the values will be stored for your user
-account. Of course you can change or override them later.
+With the `--global` option, you need to do this once on a given
+system, as the values will be stored for your user account. Of course
+you can change or override them later.
 
 For some examples, you will also need python with pillow library
 installed. The best way to do this is to create a virtual
@@ -83,11 +126,11 @@ pip install pillow
 If you are using Binder, everything has been prepared for you.
 
 
-## Introduction
+## Objective
 
 In this lesson we will gradually build up a dataset, discovering
-version control and basic datalad concepts in the process. We will use
-images and simple text files as example data.
+version control and basic datalad concepts in the process. Our example
+dataset will contain photos and simple text files.
 
 
 ## How to use DataLad
@@ -98,7 +141,8 @@ scripts such as shell scripts, Python scripts, Jupyter Notebooks, and
 so forth. We will only use the command line interface during the
 workshop.
 
-The first important skill is asking for help. To do so, you can type:
+The first important skill in using a program is asking for help. To do
+so, you can type:
 
 ~~~
 datalad --help
