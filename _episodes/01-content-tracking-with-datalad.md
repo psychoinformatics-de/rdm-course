@@ -89,11 +89,12 @@ datalad --version
 ~~~
 {: .language-bash}
 
-You should should have a configured `Git` identity. That identity
-(name and email) will be used to to identify you as the author of all
-dataset operations. If you are unsure if you have configured your Git
-identity already, you can check if your name and email are printed to
-the terminal when you run:
+You should should have a configured `Git` identity, consisting of your
+name and email (and the command above will display a complaint if you
+don't). That identity will be used to to identify you as the author of
+all dataset operations. If you are unsure if you have configured your
+Git identity already, you can check if your name and email are printed
+to the terminal when you run:
 
 ~~~
 git config --get user.name
@@ -101,7 +102,8 @@ git config --get user.email
 ~~~
 {: .language-bash}
 
-If nothing is returned, you can set these values with:
+If nothing is returned (or the values are incorrect), you can set them
+with:
 
 ~~~
 git config --global user.name "John Doe"
@@ -114,16 +116,9 @@ system, as the values will be stored for your user account. Of course
 you can change or override them later.
 
 For some examples, you will also need python with pillow library
-installed. The best way to do this is to create a virtual
-environment. In brief:
-
-~~~
-virtualenv --python=python3 ~/.venvs/rdm-workshop
-source ~/.venvs/rdm-workshop/bin/activate
-pip install pillow
-~~~
-
-If you are using Binder, everything has been prepared for you.
+installed. If you are using your own machine and you created a virtual
+environment, now is a good time to activate it (e.g. `source
+~/.venvs/rdm-workshop/bin/activate`).
 
 
 ## Objective

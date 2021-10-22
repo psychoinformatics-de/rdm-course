@@ -4,41 +4,79 @@ title: Setup
 root: .
 ---
 
-## Download files
-You need to download some files to follow this lesson.
-
-1. Download [shell-lesson-data.zip][zip-file] and move the file to your Desktop.
-2. Unzip/extract the file.
-   **Let your instructor know if you need help with this step**.
-   You should end up with a new folder called **`shell-lesson-data`** on your Desktop.
-
-## Install software
-If you do not already have the shell software installed, you will need to
-[download and install][install_shell] it.
-
-## Open a new shell
-After installing the software
-3. Open a terminal.
-   If you're not sure how to open a terminal on your operating system, see the instructions below.
-4. In the terminal type `cd` then press the <kbd>Return</kbd> key.
-   This step will make sure you start with your home folder as your working directory.
-
-In the lesson, you will find out how to access the data files in this folder.
-
-> ## Where to type commands: How to open a new shell
+> ## TODO
 >
-> The shell is a program that enables us to send commands to the computer and receive output.
-> It is also referred to as the terminal or command line.
->
-> Some computers include a default Unix Shell program.
-> The steps below describe some methods for identifying and opening
-> a Unix Shell program if you already have one installed.
-> There are also options for identifying and downloading a Unix Shell program,
-> a Linux/UNIX emulator, or a program to access a Unix Shell on a server.
->
-> If none of the options below address your circumstances,
-> try an online search for: Unix shell [your computer model] [your operating system].
+> - Add link to Binder
 {: .callout}
+
+
+## Participate without installation: use Binder
+If you can't or don't want to use your own machine, you can follow all
+exercises through binder (link: TODO). The link opens a jupyter lab
+interface in your browser, where you have access to a command line, a
+basic file browser and a basic text editor. The binder environment
+contains everything that's required during the workshop. However, it
+has two limitations: it is not persistent (all content will be removed
+after you close it) and does not allow outgoing ssh connections
+(meaning that during the lesson about collaboration you won't be able
+to publish all example data).
+
+## Participate with own computer: install software
+
+If you want to follow the exaples on your own machine, you will need
+to install DataLad and some additional software which we will use
+during the walkthrough. Note that Linux or MacOS are strongly
+recommended for this workshop; although DataLad works on all main
+operating systems, on Windows there are some caveats which may
+complicate the presented workflow.
+
+### Datalad
+
+For the installation of DataLad, follow the instructions from the
+[DataLad
+handbook](https://handbook.datalad.org/en/latest/intro/installation.html).
+
+### Python & Pillow
+
+During the workshop, Python will be used to run examples of data
+processing. We will use photos to represent data, so in addition to
+having python installed you will also need the pillow library. The
+best way is to create a virtual environment and install it
+there. Here's how to do it with virtualenv and pip:
+
+~~~
+virtualenv --system-site-packages --python=python3 ~/.venvs/rdm-workshop
+source ~/.venvs/rdm-workshop/bin/activate
+pip install pillow
+~~~
+
+### Tig
+
+Tig (text mode interface for Git) is a small command line program
+which we will use to view dataset history. On Linux you can istall it
+with your package manager (e.g. `apt install tig` on Debian and
+Ubuntu), and on MacOS it's best to install it through
+[homebrew](https://brew.sh) (`brew install tig`), detailed
+instructions for different systems are given
+[here](https://jonas.github.io/tig/INSTALL.html).
+
+## Register a GIN account
+
+[Gin](https://gin.g-node.org/) is a data hosting / management platform
+of the German Neuroinformatics Node. In the module on remote
+collaboration we will be using Gin to demonstrate data publishing. If
+you want to follow the entire walkthrough, you will need to register a
+gin account [here](https://gin.g-node.org/user/sign_up). From the
+registration page:
+
+> For Registration we require only username, password, and a valid
+> email address, but adding your name and affiliation is
+> recommended. Please use an institutional email address for
+> registration to benefit from the full set of features of GIN.
+
+<!---
+Here's some Software Carpentry code to display switchable panes
+for Windows, Linux and MacOS.
 
 {::options parse_block_html="true" /}
 <div>
@@ -105,3 +143,5 @@ you can run it by opening a terminal and typing `bash`.
 [kde-konsole]: https://konsole.kde.org/
 [xterm]: https://en.wikipedia.org/wiki/Xterm
 [install_shell]: https://carpentries.github.io/workshop-template/#shell
+
+-->
