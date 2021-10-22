@@ -433,14 +433,59 @@ bill_length_mm:
 
 Above, we have been dealing mostly with file naming and file types.
 What remains is a way these files are organised into directories.
-This might seem like a trivial issue, but the way files are organised may make script-based analyses easier, or enable the use of automated tools relying on a predefined structure.
+This might seem like a trivial issue, but the way files are organised
+affects:
+- the ease of manual browsing
+- the ease of creating script-based analysis
+- the ability to use automated tools which rely on a predefined
+  structure
 
-In fact, all of us are probably using some sort of rules to organise our data.
-These rules may come from a field-specific or lab-specific standard, or simply follow common sense.
-In either case, the overall logic will probably be similar and try to incorporate (in various orders) levels such as: experiment / subject or specimen / session or repetition / data type or measurement method.
+In fact, all of us are probably using some sort of rules to organise
+our data. These rules may come from a field-specific or lab-specific
+standard, or simply follow common sense. In either case, the overall
+logic will probably be similar and try to incorporate (in various
+orders) levels such as:
+- experiment
+- subject or specimen
+- data acquisition instance (session, repetition)
+- data type or measurement method.
 
-Using a consistent pattern within an experiment makes scripting easier.
-Using a consistent pattern across experiment, or across labs, saves time on repetitive processing steps and simplifies collaboration, as it is much easier to figure out what goes where.
+Using a consistent pattern within an experiment makes scripting
+easier.  Using a consistent pattern across experiment, or across labs,
+saves time on repetitive processing steps and simplifies
+collaboration, as it is much easier to figure out what goes where.
+
+### Full versus relative paths
+
+A *full path* (absolute path) contains complete information of a file
+location. On Linux and MacOS it starts at the *filesystem root*:
+
+~~~
+/home/alice/Documents/project/figures/setup.png
+/Users/bob/Documents/project/figures/setup.png
+~~~
+
+and on Windows it starts with a drive letter:
+
+~~~
+C:\\Users\eve\Documents\project\figures\setup.py
+~~~
+
+A *relative path* does not contain all these elements: as the name
+suggests it is relative to some location (working directory). In the
+Linux and MacOS examples below, if the current working directory is in
+the `project` folder, the relative path is:
+
+~~~
+figures/setup.py
+~~~
+
+This has one important implication. If you move the `project` folder
+between computers, the full paths will most likely change. Therefore,
+if you write scripts for data analysis, you can make them much more
+portable by only using relative paths (which will not depend on where
+the `project` folder is) and launching them from the same working
+directory on all computers.
 
 > ## Tip: use relative paths
 >
@@ -451,13 +496,77 @@ Using a consistent pattern across experiment, or across labs, saves time on repe
 > Then, use relative paths, which won't depend on where the dataset is placed.
 > Alternatively, if you want the code to be in an entirely separate location,
 > you can create a simple configuration file (using one of the text formats
-> presented earlier) and have your scripts read base paths from there.
-> If they change, only the config file will have to be edited.
+> presented earlier), have your scripts read base paths from there and append
+> the relative part. If the base paths change, only the config file will have
+> to be edited.
 {:.callout}
+
+### Example structure
+
+Below is an example structure from
+https://drivendata.github.io/cookiecutter-data-science/ designed for a
+generic data science project:
+
+~~~
+├── LICENSE
+├── Makefile           <- Makefile with commands like `make data` or `make train`
+├── README.md          <- The top-level README for developers using this project.
+├── data
+│   ├── external       <- Data from third party sources.
+│   ├── interim        <- Intermediate data that has been transformed.
+│   ├── processed      <- The final, canonical data sets for modeling.
+│   └── raw            <- The original, immutable data dump.
+│
+├── docs               <- A default Sphinx project; see sphinx-doc.org for details
+│
+├── models             <- Trained and serialized models, model predictions, or model summaries
+│
+├── notebooks          <- Jupyter notebooks. Naming convention is a number (for ordering),
+│                         the creator's initials, and a short `-` delimited description, e.g.
+│                         `1.0-jqp-initial-data-exploration`.
+│
+├── references         <- Data dictionaries, manuals, and all other explanatory materials.
+│
+├── reports            <- Generated analysis as HTML, PDF, LaTeX, etc.
+│   └── figures        <- Generated graphics and figures to be used in reporting
+│
+├── requirements.txt   <- The requirements file for reproducing the analysis environment, e.g.
+│                         generated with `pip freeze > requirements.txt`
+│
+├── setup.py           <- makes project pip installable (pip install -e .) so src can be imported
+├── src                <- Source code for use in this project.
+│   ├── __init__.py    <- Makes src a Python module
+│   │
+│   ├── data           <- Scripts to download or generate data
+│   │   └── make_dataset.py
+│   │
+│   ├── features       <- Scripts to turn raw data into features for modeling
+│   │   └── build_features.py
+│   │
+│   ├── models         <- Scripts to train models and then use trained models to make
+│   │   │                 predictions
+│   │   ├── predict_model.py
+│   │   └── train_model.py
+│   │
+│   └── visualization  <- Scripts to create exploratory and results oriented visualizations
+│       └── visualize.py
+│
+└── tox.ini            <- tox file with settings for running tox; see tox.readthedocs.io
+~~~
+
+Let's identify several features:
+- Top-level `README` file for overview of contents, other READMEs may be
+  added to subfolders
+- `LICENSE` file makes reuse conditions clear
+- In the `data` folder, `raw` / `interim` and `processed` are kept separate
+- A `docs` folder for more extensive descriptions
+- A `requirements.txt` specifies packages and their versions required
+  for the analysis
+- A `Makefile` allows for automated execution of analysis stages
+- The code (`src`) is split in several subdirectories.
 
 TODO:
 
-- discuss absolute vs relative paths in greater detail -- and probably make the tip shorter?
 - give a toy example of planning a directory structure
 - emphasise adding READMEs
 - mention cookiecutter?
