@@ -6,187 +6,284 @@ questions:
 - "What is a good filename?"
 - "How to keep data nicely structured?"
 objectives:
-- "Explain good practices in naming files"
-- "Encourage structured thinking about datasets: files/directories, text vs binary data, tabular files, sidecar metadata strategy"
-- "Explain data modularity"
+- "Discuss good practices in organising data"
+- "Introduce distinction between text vs binary data"
+- "Introduce lightweight text files and how they can be useful"
 keypoints:
 - "TBD"
 ---
 
+## Introduction
+
+This module is dedicated to good practices in data organisation. We
+will discuss little things which may seem prosaic but can go a long
+way in making your life easier: file names, text files, project
+structure.
+
 ## How to name a file?
 
-This section is based on the presentation 
-"[Naming Things](http://www2.stat.duke.edu/~rcs46/lectures_2015/01-markdown-git/slides/naming-slides/naming-slides.pdf)"
-(CC0) by Jenny Bryan.
+This section is based on the presentations "[Naming
+Things](http://www2.stat.duke.edu/~rcs46/lectures_2015/01-markdown-git/slides/naming-slides/naming-slides.pdf)"
+(CC0) by Jenny Bryan and "[Project
+structure](https://slides.djnavarro.net/project-structure/)" by
+Danielle Navarro.
 
-Let's start with some examples. These filenames are not uncommon, but
-could be improved to avoid problems in the future:
+A file name exists to identify its content. There are different
+opinions as to what *exactly* is a good file name, but they ususlly
+revolve around the three main principles:
 
-~~~
-myabstract.docx
-Joe’s Filenames Use Spaces and Punctuation.xlsx
-figure 1.png
-fig 2.png
-JW7d^(2sl@deletethisandyourcareerisoverWx2*.txt
-~~~
+- be machine readable
+- be human readable
+- make sorting and searching easy
 
-These filenames are better:
+A universal gold standard probably does not exist and we do not claim
+to posess one. What we can do, however, is to focus on identifying
+patterns in file naming which can make working with data easier.
 
-~~~
-2014-06-08_abstract-for-sla.docx
-joes-filenames-are-getting-better.xlsx
-fig01_scatterplot-talk-length-vs-interest.png
-fig02_histogram-talk-attendance.png
-1986-01-28_raw-data-from-challenger-o-rings.txt
-~~~
-
-Here is an awesome example of data file names:
+Let's start with a good example for naming what appears to be a
+collection of materials for an english literature class:
 
 ~~~
-2013-06-26_BRAFWTNEGASSAY_Plasmid-Cellline-100-1MutantFraction_A01.csv
-2013-06-26_BRAFWTNEGASSAY_Plasmid-Cellline-100-1MutantFraction_A02.csv
-2013-06-26_BRAFWTNEGASSAY_Plasmid-Cellline-100-1MutantFraction_platefile.csv
-2013-06-26_BRAFWTNEGASSAY_Plasmid-Cellline-100-1MutantFraction_B01.csv
-2014-02-26_BRAFWTNEGASSAY_FFPEDNA-CRC-1-41_A01.csv
-2014-02-26_BRAFWTNEGASSAY_FFPEDNA-CRC-1-41_A02.csv
-2014-02-26_BRAFWTNEGASSAY_FFPEDNA-CRC-1-41_B01.csv
+reading01_shakespeare_romeo-and-juliet_act01.docx
+reading01_shakespeare_romeo-and-juliet_act02.docx
+reading01_shakespeare_romeo-and-juliet_act03.docx
+reading02_shakespeare_othello.docx
+reading19_plath_the-bell-jar.docx
 ~~~
 
-Let's identify and explain three principles for (file) names:
+A "bad" (meaning harder to work with) way of naming the same files
+could look like this:
 
-- machine readable
-- human readable
-- plays well with default ordering
+~~~
+Romeo and Juliet Act 1.docx
+Romeo and juliet act 2.docx
+Shakespeare RJ act3.docx
+shakespeare othello I think?.docx
+belljar plath (1).docx
+~~~
+
+Not only does the first example look much more orderly, it is also
+better at accomplishing the three goals above. Let's take a closer
+look.
 
 ### Machine readable
 
-With the last example, we can use **globbing** to narrow file listing
+#### Avoid whitespaces
+
+A lot of trouble with whitespaces comes from using file names in
+command line or in code. In a command line syntax spaces are used to
+separate arguments. A file name with spaces needs to be enclosed in
+quotes, or the spaces need to be *escaped* with a `\` symbol.
 
 ~~~
-ls *Plasmid*
+edit my file.txt    # won't be understood
+edit "my file.txt"  # names can be quoted
+edit my\ file.txt   # spaces can be escaped
+~~~
+{: .language-bash}
+
+It can be annoying and adds complexity, but it also causes additional
+trouble when names are passed from one script to another (requiring
+escaping the escape character or mixing quote symbols).
+
+With that in mind:
+
+~~~
+✅ romeo-and-juliet_act01.docx
+✅ midsummer-nights-dream.docx
+
+❌ romeo and juliet act 1.docx
+❌ midsummer nights dream.docx
+~~~
+
+#### Use only letters, numbers, hyphens, and underscores
+
+- Sometimes there are character encoding issues (less common now)
+- Some characters (such as `'^.*?$+|`) have special meaning, e.g. `?`
+  may mean "match any character"
+- Some characters are harder to enter: `ü`, `ł`, ...
+- Some are outright forbidden by some operating systems,
+  eg. `<>:"/\|?*` on Windows
+
+~~~
+✅ what-the-cat.docx
+✅ essay_romeo-and-juliet_draft01.docx
+	
+❌ what-the-cat?.docx
+❌ essay "romeo and juliet" draft01.docx
+❌ essay "romeo and juliet" draft01(1).docx
+~~~
+
+#### Don't rely on letter case
+
+- Some operating systems (or file systems) treat upper and lower case
+  differently (`apple` and `Apple` are two files) and some don't
+  (`apple` and `Apple` are the same file)
+- Do not use letter case to distinguish two files
+- Be consistent
+
+~~~
+othello.docx
+✅ romeo-and-juliet.docx
+
+❌ othello.docx
+❌ Othello.docx
+❌ Romeo-and-juliet.docx
+~~~
+
+#### Use separators in a meaningful way:
+
+- Use `-` to join words into one entity.
+- Use `_` to separate entities.
+
+So if a pattern is `[identifier] [author] [title] [section(optional)]`:
+
+~~~
+✅ reading01_shakespeare_romeo-and-juliet_act01.docx
+✅ reading01_shakespeare_romeo-and-juliet_act02.docx
+✅ reading02_shakespeare_othello.docx
+✅ reading19_plath_the-bell-jar.docx
+~~~
+
+Alternatively, if you need to combine flexibility and unambiguity
+(meaning that for a given file you need to include a subset of many
+possible entities, and don't want to consult the documentation for
+what each filename part represents) you may decide to:
+
+- use `-` for key-value encoding,
+- use `_` to separate entities.
+
+For a hypothetical experiment:
+
+~~~
+✅ sub-12_sess-pre_task-fingertapping_run-1.dat
+✅ sub-12_sess-post_task-fingertapping_run-1.dat
+~~~
+
+Most programming languages will have easy ways to split the filenames
+by a given character, and you can work from there.
+
+### Human readable
+
+Especially in a free-form content it's nice to use a *slug* (term
+borrowed by clean website URLs from newspaper publishing, meaning a
+short name):
+
+~~~
+✅ "analysis01_descriptive-statistics.R"
+✅ "analysis02_preregistered-analysis.R"
+✅ "notes01_realising-the-problem.txt"
+✅ "analysis03_departing-from-the-plan.R"
+✅ "notes02_tentative-write-up.docx"
+~~~
+
+### Easy to sort and search
+
+#### Follow ISO 8601 when using dates
+
+Including a date in a file name is rarely needed. For example, if you
+want to keep track of changes it is better to use version control
+tools. However, sometimes the date can be a crucial piece of
+information (e.g. weather data collected daily) or you may wish to
+keep things in chronological order when sorting by file names
+(e.g. meeting notes). If including dates, follow the ISO 8601 standard
+(`YYYY-MM-DD`), which is widely recognised and maintains chronology in
+alphabetical ordering:
+
+~~~
+2021-09-14_preliminary-meeting.org
+2021-09-27_rdm-workshop-planning.org
+2021-10-10_progress-report.org
+~~~
+
+There's a [relevant xkcd](https://xkcd.com/1179).
+
+#### Zero pad numbers
+
+- You can use numbers as a prefix to order files
+- However, it's a double-edged sword: if the order changes, you'll
+  need to rename everything
+- Usually, `10_abc` will come before `2_abc`, so zero-pad as necessary
+
+~~~
+01_preface.docx
+02_introduction.docx
+03_method.docx
+etc...
+	
+19_appendix-tables.docx
+20_appendix-glossary.docx
+~~~
+
+#### Include keywords
+
+Consistent keywords make searching (*globbing*) easier (be it
+graphical interface, terminal, or code):
+
+~~~
+reading01_shakespeare_romeo-and-juliet_act01.docx
+reading01_shakespeare_romeo-and-juliet_act02.docx
+reading01_shakespeare_romeo-and-juliet_act03.docx
+reading02_shakespeare_othello.docx
+reading19_plath_the-bell-jar.docx
+notes02_shakespeare_othello.docx
+notes19_plath_the-bell-jar.docx
+~~~
+
+Most tools and programming languages will provide a way to filter file
+names. For example, to find materials from unit 19 in bash terminal:
+
+~~~
+ls *19_*
 ~~~
 {: .language-bash}
 
 ~~~
-2013-06-26_BRAFWTNEGASSAY_Plasmid-Cellline-100-1MutantFraction_A01.csv
-2013-06-26_BRAFWTNEGASSAY_Plasmid-Cellline-100-1MutantFraction_A02.csv
-2013-06-26_BRAFWTNEGASSAY_Plasmid-Cellline-100-1MutantFraction_platefile.csv
-2013-06-26_BRAFWTNEGASSAY_Plasmid-Cellline-100-1MutantFraction_B01.csv
+reading19_plath_the-bell-jar.docx
+notes19_plath_the-bell-jar.docx
 ~~~
 {: .output}
 
+Or to find notes in python:
+
 ~~~
-glob.glob('*Plasmid*')
+import glob
+glob.glob(notes*)
 ~~~
 {: .language-python}
 
 ~~~
-['2013-06-26_BRAFWTNEGASSAY_Plasmid-Cellline-100-1MutantFraction_A01.csv',
- '2013-06-26_BRAFWTNEGASSAY_Plasmid-Cellline-100-1MutantFraction_A02.csv',
- '2013-06-26_BRAFWTNEGASSAY_Plasmid-Cellline-100-1MutantFraction_platefile.csv',
- '2013-06-26_BRAFWTNEGASSAY_Plasmid-Cellline-100-1MutantFraction_B01.csv']
+notes02_shakespeare_othello.docx
+notes19_plath_the-bell-jar.docx
 ~~~
 {: .output}
 
-~~~
-list.files(pattern = "Plasmid")
-~~~
-{: .language-r}
+### Summary
 
-~~~
-[1] "2013-06-26_BRAFWTNEGASSAY_Plasmid-Cellline-100-1MutantFraction_A01.csv"
-[2] "2013-06-26_BRAFWTNEGASSAY_Plasmid-Cellline-100-1MutantFraction_A02.csv"
-[3] "2013-06-26_BRAFWTNEGASSAY_Plasmid-Cellline-100-1MutantFraction_platefile.csv"
-[4] "2013-06-26_BRAFWTNEGASSAY_Plasmid-Cellline-100-1MutantFraction_B01.csv"
-~~~
-
-Deliberate use of "_" and "-" allows us to recover meta-data from the
-filenames.  For example, the names we are using contain the following
-information: date, assay, sample set, and well. Underscores delimit
-units of meta-data which can be useful later, and hyphens delimit
-words (so they are easier to read).
-
-~~~
-list.files(pattern = "Plasmid") %>%
-	stringr::str_split_fixed(flist, "[_\\.]", 5)
-~~~
-{: .language-r}
-
-~~~
-     [,1]         [,2]             [,3]                                   [,4]  [,5]
-[1,] "2013-06-26" "BRAFWTNEGASSAY" "Plasmid-Cellline-100-1MutantFraction" "A01" "csv"
-[2,] "2013-06-26" "BRAFWTNEGASSAY" "Plasmid-Cellline-100-1MutantFraction" "A02" "csv"
-[3,] "2013-06-26" "BRAFWTNEGASSAY" "Plasmid-Cellline-100-1MutantFraction" "A03" "csv"
-[4,] "2013-06-26" "BRAFWTNEGASSAY" "Plasmid-Cellline-100-1MutantFraction" "B01" "csv"
-[5,] "2013-06-26" "BRAFWTNEGASSAY" "Plasmid-Cellline-100-1MutantFraction" "B02" "csv"
-[6,] "2013-06-26" "BRAFWTNEGASSAY" "Plasmid-Cellline-100-1MutantFraction" "B03" "csv"
-~~~
-{: .output}
-
-New to regular expressions and globbing? Be kind to yourself and avoid
-
-- spaces in file names
-- punctuation
-- accented characters
-- different files named “foo” and “Foo”
-
-> ## In practice, "machine readable" means that:
+> ## In practice
+>
+> You need to know what a file contains, and you need to find the file
+> you need.
+>
+> **Machine readable** means that it's easy to operate on file names and
+> extract information from them:
+>
+> - Avoid whitespaces
+> - Use only letters, numbers, hyphens, and underscores
+> - Don't rely on letter case
+> - Use separators in a meaningful way
 > 
-> - it's easy to search for files later
-> - it's easy to narrow file lists based on names
-> - it's easy to extract info from file names, e.g. by splitting
-{:.callout}
-
-## Human readable
-
-A human readable name contains information on **content**. It connects
-to a concept of a *slug* from [semantic
-URLs](https://en.wikipedia.org/wiki/Clean_URL). The slug may look like
-`pre-dea-filtering` or `explore-dea-results`.
-
-The practice boils down to a question: "which set of files do you want
-at 3 a.m. before a deadline?"
-
-| Slug                          | No slug    |
-| ------------------------------|------------|
-| 01_marshal-data.md            | 01.md      | 
-| 01_marshal-data.r             | 01.r       |
-| 02_pre-dea-filtering.md       | 02.md      |
-| 02_pre-dea-filtering.r        | 02.r       |
-| 03_dea-with-limma-voom.md     | 03.md      |
-| 03_dea-with-limma-voom.r      | 03.r       |
-| 04_explore-dea-results.md     | 04.md      |
-| 04_explore-dea-results.r      | 04.r       |
-| 90_limma-model-term-name-fiasco.md | 90.md |
-| 90_limma-model-term-name-fiasco.r  | 90.r  |
-| Makefile                      | Makefile   |
-| figure                        | figure     |
-| helper01_load-counts.r        | helper01.r |
-| helper02_load-exp-des.r       | helper02.r |
-| helper03_load-focus-statinf.r | helper03.r |
-| helper04_extract-and-tidy.r   | helper04.r |
-| tmp.txt                       | tmp.txt    |
-
-> ## In practice, "human readable" means that:
-> it's easy to figure out what the heck something is, based on its name.
+> **Human readable** means that it's easy to figure out what something
+> is by looking at its name.
+>
+> - Include a slug
+>
+> To make things **easy to sort and search**
+> 
+> - Follow ISO 8601 when using dates
+> - Zero pad numbers
+> - Include keywords
 {: .callout}
-
-## Plays well with default ordering
-
-| Chronological order                                                    | Logical order          |
-| -----------------------------------------------------------------------|------------------------|
-| 2013-06-26_BRAFWTNEGASSAY_Plasmid-Cellline-100-1MutantFraction_A01.csv | 01_marshal-data.r      |
-| 2013-06-26_BRAFWTNEGASSAY_Plasmid-Cellline-100-1MutantFraction_A02.csv | 02_pre-dea-filtering.r |
-| 2013-06-26_BRAFWTNEGASSAY_Plasmid-Cellline-100-1MutantFraction_platefile.csv | 90_limma-model-term-name-fiasco.r |
-| 2014-02-26_BRAFWTNEGASSAY_FFPEDNA-CRC-1-41_A01.csv | helper01_load-counts.r  |
-| 2014-02-26_BRAFWTNEGASSAY_FFPEDNA-CRC-1-41_A02.csv | helper02_load-exp-des.r |
-
-
-> ## To play well with default ordering, it can be useful to:
-> 
-> - put something numeric first
-> - use the ISO 8601 standard for dates: **YYYY-MM-DD** ([relevant xkcd](https://xkcd.com/1179))
-> - left pad numbers with zeros (if you don't pad, `10_something` comes before `1_something`)
 
 ## Avoid leaking undesired information
 
@@ -195,34 +292,47 @@ practice. While, for example, a name composed of birth date and
 initials may be sufficient to distinguish subjects within a study, a
 file with such a name can hardly be considered deidentified.
 
-If a dataset is being version controlled (which means that its history of changes is being recorded), this poses an additional challenge: file name changes are also tracked, and the record of the change is preserved:
+If a dataset is being version controlled (which means that its history
+of changes is being recorded), this poses an additional challenge:
+file name changes are also tracked, and the record of the change is
+preserved.
+
+This is what it may look like in the case of datalad:
 
 ~~~
-git log --pretty=format:"%h  %ar  %s" 
+touch name-with-identifying-information.dat
+datalad save
+~~~
+{: .language-bash}
+
+A few moments later - oops...!
+
+~~~
+git mv name-with-identifying-information.dat a-new-name.dat
+datalad save
+~~~
+{: .language-bash}
+
+However, the rename operation is recorded in dataset
+history. Comparing previous state to the current state:
+
+~~~
+git diff HEAD~1 HEAD
 ~~~
 {: .language-bash}
 
 ~~~
-2d265d2  28 minutes ago  Recode names
-f94c030  29 minutes ago  Add data
-~~~
-{: .output}
-
-
-~~~
-git diff f94c030 2d265d2
-~~~
-{: .language-bash}
-
-~~~
-diff --git a/name-with-identifying-information.dat b/name-recoded.dat
+diff --git a/name-with-identifying-information.dat b/a-new-name.dat
 similarity index 100%
 rename from name-with-identifying-information.dat
-rename to name-recoded.dat
+rename to a-new-name.dat
+
 ~~~
 {: .output}
 
-Therefore, a naming pattern needs to be chosen carefully!
+
+There are ways to "rewrite history", but doing so can be difficult and
+potentially destructive.
 
 ## File types (text vs binary)
 
@@ -272,8 +382,7 @@ A very common format for representing free-form text is Markdown. Markdown a *li
 
 Fairly standardised and very popular, Markdown is recognised by many programs and platforms. While it is readable as-is, many code-hosting websites, such as GitHub, will recognise markdown files (giving special attention to those named README) and render them as html in the web interface. Markdown files are a good choice for describing things in a free narrative - yor project, dataset, or analysis. This course materials have also been written in Markdown!
 
-There are other markup languages for similar purposes, such as reStructuredText (popular choice in the world of python documentation), AsciiDoc, or Org Mode (popular among the users of Emacs text editor). Html is also a markup language, but in most cases it is easier to write in one of the lightweight languages and then convert the documents to html when they are .
-
+There are other markup languages for similar purposes, such as [reStructuredText](https://docutils.sourceforge.io/rst.html) (popular choice in the world of python documentation), [AsciiDoc](https://asciidoc-py.github.io/), or [Org Mode](https://orgmode.org/) (popular among the users of Emacs text editor). Html is also a markup language, but in most cases it is easier to write in one of the lightweight languages and then convert the documents to html.
 
 #### Delimited files: csv, tsv
 
@@ -290,10 +399,51 @@ Adelie,Torgersen,36.7,19.3,193,3450,female,2007
 
 #### Configuration and data serialisation: toml, yaml & json
 
-Some formats were made for serialisation (or interchange) -- converting data objects into an easily transmittable form. They can be useful for storing configurations, or keeping (meta-)data which is best represented as key-value pairs.
+Some formats were made for serialisation (or interchange) --
+converting data objects into an easily transmittable form. They can be
+useful for storing configurations, or keeping (meta-)data which is
+best represented as key-value pairs. Most programming languages will
+have tools for reading and writing these files.
 
-Here's an example in [TOML](https://toml.io/en/), Tom's Obvious Minimal Language (taken from its official website):
+Here are examples of [YAML](https://yaml.org/) (YAML Ain't Markup
+Language), [TOML](https://toml.io/en/) (Tom's Obvious Minimal
+Language), and [JSON](https://www.json.org/) (JavaScript Object
+Notation). The example data were taken from TOML's website:
 
+{::options parse_block_html="true" /}
+<div>
+<ul class="nav nav-tabs nav-justified" role="tablist">
+<li role="presentation" class="active"><a href="#yaml" aria-controls="YAML" role="tab" data-toggle="tab">YAML</a></li>
+<li role="presentation"><a href="#toml" aria-controls="TOML" role="tab" data-toggle="tab">TOML</a></li>
+<li role="presentation"><a href="#json" aria-controls="JSON" role="tab" data-toggle="tab">JSON</a></li>
+</ul>
+
+<div class="tab-content">
+
+<article role="tabpanel" class="tab-pane active" id="yaml">
+~~~
+title: Example
+owner:
+  dob: 1979-05-27 07:32:00-08:00
+  name: Tom Preston-Werner
+database:
+  data:
+  - - delta
+    - phi
+  - - 3.14
+  enabled: true
+  ports:
+  - 8000
+  - 8001
+  - 8002
+  temp_targets:
+    case: 72.0
+    cpu: 79.5
+~~~
+{: .language-yaml}
+</article>
+
+<article role="tabpanel" class="tab-pane" id="toml">
 ~~~
 # This is a TOML document
 
@@ -310,34 +460,9 @@ data = [ ["delta", "phi"], [3.14] ]
 temp_targets = { cpu = 79.5, case = 72.0 }
 ~~~
 {: .language-toml}
+</article>
 
-This is what the same data looks like in [YAML](https://yaml.org/), Yaml Ain't Markup Language:
-
-~~~
-# This is a YAML document
-
-title: Example
-owner:
-  dob: 1979-05-27 07:32:00-08:00
-  name: Tom Preston-Werner
-database:
-  enabled: true
-  ports:
-  - 8000
-  - 8001
-  - 8002
-  data:
-  - - delta
-    - phi
-  - - 3.14
-  temp_targets:
-    case: 72.0
-    cpu: 79.5
-~~~
-{: .language-yaml}
-
-And here is the same data in [JSON](https://www.json.org/), JavaScript Object notation:
-
+<article role="tabpanel" class="tab-pane" id="json">
 ~~~
 {
     "title": "Example",
@@ -369,6 +494,10 @@ And here is the same data in [JSON](https://www.json.org/), JavaScript Object no
 }
 ~~~
 {: .language-json}
+</article>
+</div>
+</div>
+
 
 ## Sidecar metadata strategy
 
@@ -503,67 +632,49 @@ directory on all computers.
 
 ### Example structure
 
-Below is an example structure from
-https://drivendata.github.io/cookiecutter-data-science/ designed for a
-generic data science project:
+A research project will usually contain data, code, and various kinds
+of text (protocols, reports, questionnaires, metadata) which need to
+be organised in some way. Take for example a "[research
+compendium](https://research-compendium.science/)" as described in
+[The Turing
+Way](https://the-turing-way.netlify.app/reproducible-research/compendia.html). A
+minimal example looks like this:
 
 ~~~
-├── LICENSE
-├── Makefile           <- Makefile with commands like `make data` or `make train`
-├── README.md          <- The top-level README for developers using this project.
+compendium/
 ├── data
-│   ├── external       <- Data from third party sources.
-│   ├── interim        <- Intermediate data that has been transformed.
-│   ├── processed      <- The final, canonical data sets for modeling.
-│   └── raw            <- The original, immutable data dump.
-│
-├── docs               <- A default Sphinx project; see sphinx-doc.org for details
-│
-├── models             <- Trained and serialized models, model predictions, or model summaries
-│
-├── notebooks          <- Jupyter notebooks. Naming convention is a number (for ordering),
-│                         the creator's initials, and a short `-` delimited description, e.g.
-│                         `1.0-jqp-initial-data-exploration`.
-│
-├── references         <- Data dictionaries, manuals, and all other explanatory materials.
-│
-├── reports            <- Generated analysis as HTML, PDF, LaTeX, etc.
-│   └── figures        <- Generated graphics and figures to be used in reporting
-│
-├── requirements.txt   <- The requirements file for reproducing the analysis environment, e.g.
-│                         generated with `pip freeze > requirements.txt`
-│
-├── setup.py           <- makes project pip installable (pip install -e .) so src can be imported
-├── src                <- Source code for use in this project.
-│   ├── __init__.py    <- Makes src a Python module
-│   │
-│   ├── data           <- Scripts to download or generate data
-│   │   └── make_dataset.py
-│   │
-│   ├── features       <- Scripts to turn raw data into features for modeling
-│   │   └── build_features.py
-│   │
-│   ├── models         <- Scripts to train models and then use trained models to make
-│   │   │                 predictions
-│   │   ├── predict_model.py
-│   │   └── train_model.py
-│   │
-│   └── visualization  <- Scripts to create exploratory and results oriented visualizations
-│       └── visualize.py
-│
-└── tox.ini            <- tox file with settings for running tox; see tox.readthedocs.io
+│   ├── my_data.csv
+├── analysis
+│   └── my_script.R
+├── DESCRIPTION
+└── README.md
 ~~~
 
-Let's identify several features:
-- Top-level `README` file for overview of contents, other READMEs may be
-  added to subfolders
-- `LICENSE` file makes reuse conditions clear
-- In the `data` folder, `raw` / `interim` and `processed` are kept separate
-- A `docs` folder for more extensive descriptions
-- A `requirements.txt` specifies packages and their versions required
-  for the analysis
-- A `Makefile` allows for automated execution of analysis stages
-- The code (`src`) is split in several subdirectories.
+- Data and methods are separated into folders
+- The required computational environment is described in a designated file.
+- A README document provides a landing page
+
+A more comprehensive example looks like this:
+
+~~~
+compendium/
+├── CITATION              <- instructions on how to cite
+├── code                  <- custom code for this project
+│   ├── analyse_data.R
+│   └── clean_data.R
+├── data_clean            <- intermediate data that has been transformed
+│   └── data_clean.csv
+├── data_raw              <- raw, immutable data
+│   ├── datapackage.json
+│   └── data_raw.csv
+├── Dockerfile            <- computing environment recipe
+├── figures               <- figures
+│   └── flow_chart.jpeg
+├── LICENSE               <- terms for reuse
+├── Makefile              <- steps to automatically generate the results
+├── paper.Rmd             <- text and code combined
+└── README.md             <- top-level description
+~~~
 
 TODO:
 
@@ -572,8 +683,3 @@ TODO:
 - mention cookiecutter?
 - mention BIDS
 - mention YODA?
-
-## [TODO] Other
-
-- Unify headings
-- Consider splitting into several "episodes"

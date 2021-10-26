@@ -69,4 +69,6 @@ either in full, or adapted from existing openly available material.
 Sources include:
 - [DataLad Handbook](https://handbook.datalad.org)
 - [Naming Things](http://www2.stat.duke.edu/~rcs46/lectures_2015/01-markdown-git/slides/naming-slides/naming-slides.pdf)" (CC0) by Jenny Bryan
-- *add sources*
+- [Project structure](https://slides.djnavarro.net/project-structure) by Danielle Navarro
+- [The Turing Way](https://the-turing-way.netlify.app/) (CC-BY 4.0) 
+
