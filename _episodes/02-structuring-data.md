@@ -10,7 +10,12 @@ objectives:
 - "Introduce distinction between text vs binary data"
 - "Introduce lightweight text files and how they can be useful"
 keypoints:
-- "TBD"
+- Use filenames which are machine-readable, human readable, easy to sort and search
+- Avoid including identifying information in filenames from the get-go
+- Files can be categorised as text or binary
+- Lightweight text files can go a long way
+- A well thought-out directory structure simplifies computation
+- Be modular to facilitate reuse
 ---
 
 ## Introduction
@@ -347,9 +352,9 @@ A text file can be viewed and edited using a text editor . The *lines* are delim
 
 One important feature of text files is that they can be version controlled on a line by line basis. So if you have a long file, but only change it in a few places, changes will be recorded for the specific lines. Moreover, it will be easy to display what the modification involved, by portraying it as lines being taken out and added (in programming slang, this is called a file *diff*).
 
-Compare this to a binary file, which does not have a line structure. Version control systems, including datalad, will also track binary files, but they will do so on a per-file basis. TODO: Flesh out
+Compare this to a binary file, which does not have a line structure. It's easy to notice that a file changed, but it's not easy to show what changed inside. Version control systems, including DataLad, will also track binary files, but the (in)ability to distinguish or display lines will make it more similar to a per-file basis.
 
-Datalad introduces one additional distinction between text and binary files. In a typical dataset, binary files will be annexed (TODO: meaning that...) and text files will not (TODO: although...). To protect the data from accidental modifications, datalad will content-lock the annexed files, disabling your permission to edit them. The files can be unlocked manually with `datalad unlock`, but the `datalad run` command performs unlocking automatically.
+DataLad introduces one additional distinction between text and binary files. In the configuration we used in the previous module (which is a reasonable choice for many sotuations), binary files would get annexed (meaning that tracking of information about the file presence and its content would be somewhat separated, with `git-annex` used under the hood) and text files would not (although you might also choose different rules for which files to annex). We have already observed one consequence of annexing: to protect the data from accidental modifications, datalad will content-lock the annexed files, disabling your permission to edit them (the files can be unlocked manually with `datalad unlock` or automatically when using `datalad run`). Another consequence (which we will discuss in the subsequent module) is that not all data hosting services accept annexed content, and you may need to publish it separately.
 
 ### Different flavours of text files
 
@@ -503,11 +508,11 @@ temp_targets = { cpu = 79.5, case = 72.0 }
 
 Sometimes, it is desirable to combine binary and text files to represent the same data object. This could be useful if the binary format does not have the possibility to store some metadata, or simply because we want to make the metadata easily readable to anybody (i.e. without requiring potentially uncommon software which can open our binary format).
 
-Let's assume our dataset contains photographs of penguins, collected for research purposes. Suppose that we want to keep (TODO: decide) in the file name to make it easily searchable, but there is additional metadata that may be needed for analysis. We can decide to store the image data in a jpeg file (binary) and the metadata in a yaml file (text). Thus, we will use two files with the same base name and different extensions:
+Let's assume our dataset contains photographs of penguins, collected for research purposes. Suppose that we want to keep the penguin species, picture identifier, and image type in the file name (to make this information easily searchable), but there is additional metadata that may be needed for analysis. We can decide to store the image data in a jpeg file (binary) and the metadata in a yaml file (text). Thus, we will use two files with the same base name and different extensions:
 
 ~~~
-photo_type-color.jpeg
-photo_type-color.yaml
+adelie_087_color.jpeg
+adelie_087_color.yaml
 ~~~
 
 Content of the yaml file:
@@ -521,8 +526,7 @@ photographer: John
 ~~~
 {: .language-yaml}
 
-
-As a side note, jpeg files do support quite a lot of metadata (Exif specification) but most likely they are neither sufficient nor convenient for our research.
+As a side note, jpeg files do support quite a lot of metadata ([Exif](https://en.wikipedia.org/wiki/Exif)) but most likely they are neither sufficient nor convenient for our research.
 
 ### Describing columns in tabular files
 
@@ -630,7 +634,7 @@ directory on all computers.
 > to be edited.
 {:.callout}
 
-### Example structure
+### Example structure: "research compendium"
 
 A research project will usually contain data, code, and various kinds
 of text (protocols, reports, questionnaires, metadata) which need to
@@ -651,8 +655,11 @@ compendium/
 ~~~
 
 - Data and methods are separated into folders
-- The required computational environment is described in a designated file.
-- A README document provides a landing page
+- The required computational environment is described in a designated
+  file.
+- A README document provides a landing page (it's easy to read by
+  itself and most data hosting platforms will recognize it and display
+  as formatted text)
 
 A more comprehensive example looks like this:
 
@@ -676,10 +683,107 @@ compendium/
 └── README.md             <- top-level description
 ~~~
 
-TODO:
+> ## Side note: cookiecutter
+>
+> If you find yourself needing to re-create the same structure over
+> and over again, you might be interested in
+> [cookiecutter](https://cookiecutter.readthedocs.io/). Cookiecutter
+> allows you to create files and folders based on a template (using
+> your own or one that's available) and user input.
 
-- give a toy example of planning a directory structure
-- emphasise adding READMEs
-- mention cookiecutter?
-- mention BIDS
-- mention YODA?
+### Example structure: YODA principles
+
+One of the [YODA](https://github.com/myyoda/myyoda) (YODA's Organigram
+on Data Analysis) principles says "structure study elements in modular
+components to facilitate reuse within or outside the context of the
+original study". DataLad provides a `yoda` procedure for creating a
+dataset. It creates a few basic elements to start with (and, as a side
+note, sets the code directory, changelog and readme to be tracked by
+git, and everything else annexed):
+
+~~~
+datalad create -c yoda "my_analysis"
+tree
+~~~
+{: .language-bash}
+
+~~~
+.
+├── CHANGELOG.md
+├── code
+│   └── README.md
+└── README.md
+~~~
+{: .output}
+
+Note that in addition to a general readme there is a lower-level one
+in the code directory. Adding descriptions and explanations for people
+using the dataset is always a good idea. This minimal structure can be
+built up into something like this (example taken from the [DataLad
+Handbook](https://handbook.datalad.org/en/latest/basics/101-127-yoda.html#p1-one-thing-one-dataset)):
+
+~~~
+├── ci/                         # continuous integration configuration
+│   └── .travis.yml
+├── code/                       # your code
+│   ├── tests/                  # unit tests to test your code
+│   │   └── test_myscript.py
+│   └── myscript.py
+├── docs                        # documentation about the project
+│   ├── build/
+│   └── source/
+├── envs                        # computational environments
+│   └── Singularity
+├── inputs/                     # dedicated inputs/, will not be changed by an analysis
+│   └─── data/
+│       ├── dataset1/           # one stand-alone data component
+│       │   └── datafile_a
+│       └── dataset2/
+│           └── datafile_a
+├── outputs/                    # outputs away from the input data
+│   └── important_results/
+│       └── figures/
+├── CHANGELOG.md                # notes for fellow humans about your project
+├── HOWTO.md
+└── README.md
+~~~
+
+In this example, two data collections used as inputs are kept as
+independent components. Note that on the level of principles, this
+example is actually very similar to the research compendium above.
+
+### Example structure: BIDS
+
+[BIDS](https://bids.neuroimaging.io/) (Brain Imaging Data Structure)
+is an emerging standard for neuroimaging data organisation. It
+standardises patterns for file naming, directory structure, and
+metadata representation. This is part of an example dataset:
+
+~~~
+.
+├── CHANGES
+├── dataset_description.json
+├── participants.tsv
+├── README
+├── sub-01
+│   ├── anat
+│   │   ├── sub-01_inplaneT2.nii.gz
+│   │   └── sub-01_T1w.nii.gz
+│   └── func
+│       ├── sub-01_task-rhymejudgment_bold.nii.gz
+│       └── sub-01_task-rhymejudgment_events.tsv
+└── task-rhymejudgment_bold.json
+~~~
+
+Few things are worth noticing, as this example combines several
+elements discussed previously:
+
+- There is a readme
+- File names follow a key-value principle, with underscores and dashes
+  (the pattern here is `sub-<label>_[task-<name>]_modality`)
+- Usage of text files where possible:
+  - tsv files are used to store participant tables and event timings.
+  - tson files are used for metadata
+- Sidecar metadata strategy: each .nii.gz (compressed binary file with
+  imaging data) has an accompanying tsv file with timings of
+  experimental events.
