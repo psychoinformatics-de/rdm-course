@@ -179,26 +179,32 @@ dataset from scratch is done with the `datalad create` command.
 `datalad create` only needs a name, and it will subsequently create a
 new directory under this name and instruct DataLad to manage it. Here,
 the command also has an additional option, the `-c text2git`
-option. With the -c option, datasets can be configured in a certain
-way at the time of creation, and `text2git` is a so-called `run
-procedure`
+option. With the -c option, datasets can be pre-configured in a
+certain way at the time of creation, and `text2git` is one of the
+available *run procedures*:
 
 ~~~
 datalad create -c text2git my-dataset
 ~~~
 {: .language-bash}
 
-`my-dataset` is now a new directory, and you can change directories
-(`cd`) inside it:
+~~~
+[INFO   ] Creating a new annex repo at /home/bob/Documents/rdm-workshop/my-dataset
+[INFO   ] Running procedure cfg_text2git
+[INFO   ] == Command start (output follows) =====
+[INFO   ] == Command exit (modification check follows) =====
+create(ok): /home/bob/Documents/rdm-workshop/my-dataset (dataset)
+~~~
+{: .output}
+
+The last output line confirms that the create operation was
+successful. Now, `my-dataset` is a new directory, and you can change
+directories (`cd`) inside it:
 
 ~~~
 cd my-dataset
 ~~~
 {: .language-bash}
-
-The "text2git" procedure pre-created a useful dataset configuration
-that will make version control workflows with files of varying sizes and
-types easier.
 
 Let's inspect what happened. Let's start by listing all contents,
 including hidden ones (on UNIX-like system, files or folders starting
