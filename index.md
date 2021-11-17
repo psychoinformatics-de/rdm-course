@@ -3,24 +3,32 @@ layout: lesson
 root: .
 ---
 
-The Unix shell has been around longer than most of its users
-have been alive. It has survived because it's a powerful tool that
-allows users to perform complex and powerful tasks, often with just
- a few keystrokes or lines of code. It helps users automate repetitive
- tasks and easily combine smaller tasks into larger, more powerful workflows.
+The aim of this workshop is to present a set of good practices in
+research data management, explain version control, and to introduce
+the core features of DataLad software - a data management multitool
+that can assist in handling the entire life cycle of digital
+objects. We will tackle issues ranging from “what is a good file name”
+to “how to publish a version-controlled dataset”.
 
-Use of the shell is fundamental to to a wide range of advanced computing
-tasks, including high-performance computing. These lessons will introduce
-you to this powerful new tool.
+The exercises will provide an opportunity to gain hands-on experience
+of using DataLad to create a basic dataset, track its changes over
+time, and publish its contents. You will also learn how to use data
+created by others and collaborate on datasets. The exercises will be
+based around toy examples, but all operations will be relevant for
+real-world data management.
 
 > ## Prerequisites
 >
-> This lesson guides you through the basics of file systems and the
-> shell.  If you have stored files on a computer at all and recognize
-> the word "file" and either "directory" or "folder" (two common words
-> for the same thing), you're ready for this lesson.
+> The workshop will be based around code-along exercises, however no
+> experience with programming, command line, or version control is
+> required.
 >
-> If you're already comfortable manipulating files and directories,
-> searching for files with `grep` and `find`, and writing simple loops
-> and scripts, you probably want to explore the next lesson: [shell-extras](https://carpentries-incubator.github.io/shell-extras/).
+> [GIN](https://gin.g-node.org/) (G-Node Infrastructure) platform will
+> be used for dataset publication during the Remote Collaboration
+> module. In order to fully complete the exercises, you will need to
+> [sign up](https://gin.g-node.org/user/sign_up) for a GIN account,
+> which requires a username, password, and a valid e-mail address
+> (institutional e-mails are recommended to benefit from the full set
+> of features).
+>
 {: .prereq}
