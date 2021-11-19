@@ -171,4 +171,165 @@ other, but virtually impossible to forge it.
 > file information and non-annexed text files.
 {: .callout}
 
-To generate the SSH keys, we will follow the GitHub guides on [checking for existing](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/checking-for-existing-ssh-keys) and [generating new keys](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent).
+To generate the SSH keys, we will follow the GitHub guides on [checking for existing](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/checking-for-existing-ssh-keys) and [generating new keys](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent). The summary below applies to linux.
+
+You may already have an SSH key and may want to use it. To check for
+existing keys, enter `ls -al ~/.ssh` to check the contents of the
+folder where they are typically stored. By default, a public key file
+would be named `id_rsa.pub`, `id_ecdsa.pub` or `id_ed25519.pub` (the
+names refer to the algorithms used to generate key pairs). If you
+don't see such files, or the `~/.ssh` folder does not exist, you will
+need to generate a new pair.
+
+To generate, use the following command (replacing the placeholder with
+the e-mail used to register on GIN):
+```
+ssh-keygen -t ed25519 -C "your_email@example.com"
+```
+{: .language-bash}
+
+When prompted, accept the default location and choose a password to
+protect the key. You may use no password by accepting an empty
+one. However, especially on a shared machine, setting a password is
+recommended, because it guarantees that a person who gets hold of the
+key cannot use it without knowing the password.
+
+Then, you can add the key to the ssh-agent, a helper program running
+in the background. First, start the agent if necessary with `eval
+"$(ssh-agent -s)"` and add the key with `ssh-add ~/.ssh/id_ed25519`
+(if you chose a different name or location, use it instead).
+
+Finally, you can add the public key to GIN. Log in to the web
+interface, go to settings (click on your avatar in upper right and
+choose "Your Settings"), then select SSH keys in the menu on the left,
+and click "Add Key". This will open a form with two fields. In "Key
+Name", enter something that you will recognise (eg. "Work laptop" or
+"RDM workshop hub"). In "Content", paste the content of the public key
+file. To get it, you can display the file and copy its content, or do
+it with a single command: `pbcopy < ~/.ssh/id_ed25519.pub`. After
+pasting the key, click the "Add key" button.
+
+![Screenshot: adding SSH keys to GIN]({{ page.root }}/fig/GIN_SSH_1.png)
+{: .image-with-shadow }
+
+(Image from DataLad Handbook)
+
+## Publishing to GIN (datalad push)
+
+### Create an empty repository on GIN
+
+We have our dataset, we configured our access, and we are ready to
+publish. To do so, we first need to create a *repository* - a place on
+GIN where things will be stored. To do this, we will go to GIN web
+interface (note: DataLad version 0.16, which at the moment of writing
+is upcoming, introduces a `create-sibling-gin` command which autoates
+this process, but we will use this as an opportunity to take a look at
+the GIN web interface anyway).
+
+![Screenshot: creating a new repository on GIN]({{ page.root }}/fig/GIN_newrepo.png)
+{: .image-with-shadow }
+
+(Image from DataLad Handbook)
+
+Click the plus button on the upper right and select "New
+Repository". Then, enter a repository name (one word, no spaces, but
+dashes and underscores are allowed). You can, optionally, add a short
+description in "Title". In the "Initial files" section, uncheck the
+"Initialize this repository with selected files and template"
+checkbox - we want the repository to be empty. Finally, click the
+button "Create Repository".
+
+### Publish your dataset
+
+To publish your dataset, you need to add the GIN repository as a
+*sibling* of your dataset. To do so, use `datalad siblings add`,
+substituting your user name and dataset name below (note that the url
+is displayed for you on the GIN website after creating the
+repository). Note that since this is the first time you will be
+connecting to the GIN server via SSH, you will likely be asked to
+confirm to connect. This is a safety measure, and you can type “yes”
+to continue.
+
+```
+datalad siblings add \
+    --dataset . \
+    --name gin \
+    --url git@gin.g-node.org:/username/dataset-name.git
+```
+{: .language-bash}
+
+```
+(...)
+```
+{: .output}
+
+The command took three arguments, `dataset` (which dataset is being
+configured, `.` means "here"), `name` is the name by which we will
+later refer to the sibling, and `url` is the address for transferring
+the data.
+
+Afterwards, you can publish your dataset with `datalad push`, using
+the name which we set in the command above:
+
+```
+datalad push --to gin
+```
+{: .language-bash}
+
+```
+(...)
+```
+{: .output}
+
+If you now refresh the GIN website, you will find all of your dataset
+there (note: if the file names look cryptic and you see "Branch:
+git-annex" above the files, pick another branch, likely called "main";
+to make this choice permanent, you can go to repository "Settings",
+pick "Branches", and select a default branch -- this is dependent on
+your git configuration). Observe, that:
+- the README is displayed under the list of files
+- you can click on files to view their content
+
+TODO:
+- add a screenshot
+- `datalad siblings`
+
+## Data consumption: datalad clone
+
+With the dataset published, we can now switch our perspective to that
+of a data consumer. Obtaining a copy of a dataset is called
+*cloning*. To try it out, let's change our working directory outside
+the dataset. Assuming we've been at the dataset root, we can change to
+the upper directory:
+
+```
+cd ..
+```
+
+Then, we can clone the dataset using the SSH URL (the same which we
+used to publish the data). For your convenience, the URL is displayed
+above the file list on GIN.
+
+```
+datalad clone git@gin.g-node.org:/username/dataset-name.git
+```
+{: .language-bash}
+
+```
+(...)
+```
+{: .output}
+
+Note. By default, repositories on GIN are created as private, meaning
+that they are accessible only to their owner and, potentially, other
+users who were explicitly granted that access. A repository can also
+be made public, meaning that it's accessible (for download) to
+anybody. Here, we are cloning our own repository, so we can access it
+freely regardless of settings.
+
+TODO:
+- explain get in a clone
+- new header: make changes in a clone (or maybe in a source) and push them
+- fetch changes
+- explain how it can be useful even if you're working alone on different computers
+- move on to an exercise in collaboration?
