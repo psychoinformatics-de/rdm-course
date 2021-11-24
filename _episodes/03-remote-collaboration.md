@@ -110,7 +110,8 @@ datalad drop inputs/images/derek-oyen-3Xd5j9-drDA-unsplash.jpg
 {: .language-bash}
 
 ```
-...
+drop(error): /home/alice/Documents/rdm-workshop/example-dataset/inputs/images/derek-oyen-3Xd5j9-drDA-unsplash.jpg (file)
+[unsafe; Could only verify the existence of 0 out of 1 necessary copy; (Use --nocheck to override this check, or adjust numcopies.)]
 ```
 {: .output}
 
@@ -126,7 +127,7 @@ datalad get inputs/images/derek-oyen-8PxCm4HsPX8-unsplash.jpg
 ```
 {: .language-bash}
 ```
-...
+get(ok): inputs/images/derek-oyen-8PxCm4HsPX8-unsplash.jpg (file) [from web...]
 ```
 {: .output}
 
@@ -259,7 +260,9 @@ datalad siblings add \
 {: .language-bash}
 
 ```
-(...)
+[INFO   ] Could not enable annex remote gin. This is expected if gin is a pure Git remote, or happens if it is not accessible. 
+[WARNING] Could not detect whether gin carries an annex. If gin is a pure Git remote, this is expected.  
+.: gin(-) [git@gin.g-node.org:/msz/rdm-workshop.git (git)]
 ```
 {: .output}
 
@@ -277,7 +280,17 @@ datalad push --to gin
 {: .language-bash}
 
 ```
-(...)
+datalad push --to gin
+copy(ok): inputs/images/derek-oyen-3Xd5j9-drDA-unsplash.jpg (file) [to gin...]
+copy(ok): inputs/images/derek-oyen-8PxCm4HsPX8-unsplash.jpg (file) [to gin...]
+copy(ok): inputs/images/ian-parker-8fmTByMm8wE-unsplash.jpg (file) [to gin...]
+copy(ok): outputs/images_greyscale/derek-oyen-3Xd5j9-drDA-greyscale.jpg (file) [to gin...]
+copy(ok): outputs/images_greyscale/derek-oyen-8PxCm4HsPX8-greyscale.jpg (file) [to gin...]
+publish(ok): . (dataset) [refs/heads/git-annex->gin:refs/heads/git-annex 80ef82a..af7d450]
+publish(ok): . (dataset) [refs/heads/main->gin:refs/heads/main [new branch]]
+action summary:
+  copy (ok: 5)
+  publish (ok: 2)
 ```
 {: .output}
 
@@ -308,17 +321,20 @@ cd ..
 
 Then, we can clone the dataset using the SSH URL (the same which we
 used to publish the data). For your convenience, the URL is displayed
-above the file list on GIN.
+above the file list on GIN. Let's name the cloned dataset
+`cloned-dataset` to distinguish it from the original (by default,
+clone command uses the name of the repository):
 
 ```
-datalad clone git@gin.g-node.org:/username/dataset-name.git
+datalad clone git@gin.g-node.org:/username/dataset-name.git cloned-dataset
 ```
 {: .language-bash}
 
 ```
-(...)
+install(ok): /home/alice/Documents/rdm-warmup/cloned-dataset (dataset)
 ```
 {: .output}
+
 
 Note. By default, repositories on GIN are created as private, meaning
 that they are accessible only to their owner and, potentially, other
@@ -327,9 +343,199 @@ be made public, meaning that it's accessible (for download) to
 anybody. Here, we are cloning our own repository, so we can access it
 freely regardless of settings.
 
+Let's look inside.
+
+```
+cd cloned-dataset
+```
+{: .language-bash}
+
+- First, we can see that the history is present (`tig`).
+- We can list (`ls`) the files.
+- We can view (e.g. `cat README.md`) the content of text files
+(reminder: when creating the dataset we configured them not to be
+annexed).
+- We cannot view the content of the annexed image files (linux:
+xdg-open `inputs/images/...`).
+
+That's because `clone` operation does not download the annexed
+content. In other words, for annexed files it only retrieves file
+information (which can be very convenient - we can see what's in the
+dataset and then selectively download only the content we need). We
+can confirm that this is the case by asking about the annex status:
+
+```
+datalad status --annex all
+```
+{: .language-bash}
+```
+5 annex'd files (0.0 B/6.3 MB present/total size)
+nothing to save, working tree clean
+```
+{: .output}
+
+We have already encountered the `get` command, and here we will use it
+again. First, however, let's take a look at the output of another
+command to see what datalad knows about *file availability*:
+
+```
+git annex whereis inputs/images/derek-oyen-8PxCm4HsPX8-unsplash.jpg (3 copies)
+```
+{: .language-bash}
+
+```
+whereis inputs/images/derek-oyen-8PxCm4HsPX8-unsplash.jpg (3 copies)
+  	00000000-0000-0000-0000-000000000001 -- web
+   	7775655c-b59d-4e58-938c-698d2205d46a -- git@8242caf9acd8:/data/repos/msz/rdm-workshop.git [origin]
+   	b228d597-3217-45a5-9831-6f10f00a1611 -- My example dataset
+	
+  web: https://unsplash.com/photos/8PxCm4HsPX8/download?force=true
+ok
+```
+{: .output}
+
+This is one of the files originally added through `datalad
+download-url`, and this information was preserved - first line lists
+"web" as source, and the exact link is shown at the bottom. Next,
+there is a line labeled "origin", which means the location from which
+the dataset was cloned. And finally, there is the current dataset.
+
+With this knowledge, let's `get` the file content:
+
+```
+datalad get inputs/images/derek-oyen-8PxCm4HsPX8-unsplash.jpg
+```
+{: .language-bash}
+
+```
+get(ok): inputs/images/derek-oyen-3Xd5j9-drDA-unsplash.jpg (file) [from origin...]
+```
+{: .output}
+
+Now we can verify that the file content is present by opening it. Success!
+
+### Update the dataset
+
+Let's imagine a situation when there's an update to a dataset
+contents: either a new file is added, or a change is made to an
+existing one. In both cases, the mechanism for sharing the change will
+be the same. Let's simulate this situation from the side of the
+original dataset.
+
+We finished the first module by adding a new image file, which we did
+not convert to monochrome like the previous ones. Let's navigate back
+to the original dataset and do the conversion:
+
+```
+cd ../my_dataset
+
+# if using a virtual environment:
+# source ~/.venvs/rdm-workshop/bin/activate
+
+datalad run \
+  --input inputs/images/ian-parker-8fmTByMm8wE-unsplash.jpg \
+  --output outputs/images_greyscale/ian-parker-8fmTByMm8wE-greyscale.jpg \
+  -m "Convert the third image" \
+  python code/greyscale.py {inputs} {outputs}
+```
+{: .language-bash}
+
+```
+[INFO   ] Making sure inputs are available (this may take some time) 
+[INFO   ] == Command start (output follows) ===== 
+[INFO   ] == Command exit (modification check follows) ===== 
+add(ok): outputs/images_greyscale/ian-parker-8fmTByMm8wE-greyscale.jpg (file)
+save(ok): . (dataset)
+```
+{: .output}
+
+This created a new file in `outputs` (always good to check it and see
+that the history got updated). To publish the change (update the
+external repository) we can use the same command that we used when
+publishing the dataset for the first time, i.e. `datalad push`:
+
+```
+datalad push --to gin
+```
+{: .language-bash}
+
+```
+copy(ok): outputs/images_greyscale/ian-parker-8fmTByMm8wE-greyscale.jpg (file) [to gin...]
+publish(ok): . (dataset) [refs/heads/git-annex->gin:refs/heads/git-annex 4e1950b..bb7f8dd]
+publish(ok): . (dataset) [refs/heads/main->gin:refs/heads/main 6e75962..84f56f9]
+action summary:
+  copy (ok: 1)
+  publish (ok: 2)
+```
+{: .output}
+
+In the output we can see that only the new file was copied - datalad
+was aware that other files remained unchanged and did not reupload
+them.
+
+Let's now switch back to the clone. The command for incorporating
+changes from a sibling is `datalad update`:
+
+```
+cd ../cloned-dataset
+datalad update -s origin --how merge
+```
+{: .language-bash}
+
+```
+[INFO   ] Fetching updates for Dataset(/home/alice/Documents/rdm-workshop/cloned-dataset)
+merge(ok): . (dataset) [Merged origin/main]
+update.annex_merge(ok): . (dataset) [Merged annex branch]
+update(ok): . (dataset)
+action summary:
+  merge (ok: 1)
+  update (ok: 1)
+  update.annex_merge (ok: 1)
+```
+{: .output}
+
+As with clone, we can:
+- see that the history is updated (`tig`)
+- see the file can be listed (`ls outputs/images_greyscale`)
+
+We could also `get` this file like any other. However, let's try
+something else - recomputing the result.
+
+### Rerun an operation
+
+In this case, the output image is stored in GIN and we could simply
+use `datalad get` to obtain it. However, imagine that we are
+interested in reproducing its generation (maybe we have a newer
+version of the image processing software, or maybe we had removed all
+copies of the output file to save space). When converting the third
+image, we used `datalad run`. This command preserves inputs, outputs,
+and the command being used, paving way for automatic recomputation.
+
+Use `tig` to view the last commit message and copy (part of) its
+shasum. Then, give it to `datalad rerun`:
+
+```
+datalad rerun 84f56f
+```
+{: .language-bash}
+
+```
+[INFO   ] run commit 84f56f9; (Convert the third...)
+[INFO   ] Making sure inputs are available (this may take some time)
+get(ok): inputs/images/ian-parker-8fmTByMm8wE-unsplash.jpg (file) [from origin...]
+run.remove(ok): outputs/images_greyscale/ian-parker-8fmTByMm8wE-greyscale.jpg (file) [Removed file]
+[INFO   ] == Command start (output follows) =====
+[INFO   ] == Command exit (modification check follows) =====
+add(ok): outputs/images_greyscale/ian-parker-8fmTByMm8wE-greyscale.jpg (file)
+action summary:
+  add (ok: 1)
+  get (ok: 1)
+  run.remove (ok: 1)
+  save (notneeded: 1)
+```
+{: .output}
+
 TODO:
-- explain get in a clone
-- new header: make changes in a clone (or maybe in a source) and push them
-- fetch changes
+- explain what happened in rerun
 - explain how it can be useful even if you're working alone on different computers
 - move on to an exercise in collaboration?
