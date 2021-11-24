@@ -656,9 +656,9 @@ python code/greyscale.py inputs/images/derek-oyen-3Xd5j9-drDA-unsplash.jpg outpu
 
 ~~~
 Traceback (most recent call last):
-  File "/home/mszczepanik/Documents/rdm-warmup/example-dataset/code/greyscale.py", line 20, in <module>
+  File "/home/bob/Documents/rdm-warmup/example-dataset/code/greyscale.py", line 20, in <module>
     grey.save(args.output_file)
-  File "/home/mszczepanik/Documents/rdm-temporary/venv/lib/python3.9/site-packages/PIL/Image.py", line 2232, in save
+  File "/home/bob/Documents/rdm-temporary/venv/lib/python3.9/site-packages/PIL/Image.py", line 2232, in save
     fp = builtins.open(filename, "w+b")
 PermissionError: [Errno 13] Permission denied: 'outputs/images_greyscale/derek-oyen-8PxCm4HsPX8-greyscale.jpg'
 ~~~
