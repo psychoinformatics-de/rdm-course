@@ -10,7 +10,13 @@ objectives:
 - Exercise publishing and consuming data
 - Demonstrate the dissociation between a dataset and its contents
 keypoints:
-- TBD
+- A dataset can be published with datalad push
+- A dataset can be cloned with datalad clone
+- The clone operation does not obtain annexed file content, the contents can be obtained selectively
+- Annexed file contents can be removed (drop) and reobtained (get) as long as a copy exists somewhere
+- A dataset can be synchronised with its copy (sibling) with datalad update
+- GIN is one of the platforms with which DataLad can interact
+- GIN can serve as a store for both annexed and non-annexed contents
 ---
 
 > ## Prerequisites
@@ -535,7 +541,53 @@ action summary:
 ```
 {: .output}
 
+Notice that we did not have to `get` the input file in advance - the
+(re)run command did that on its own. The `datalad run` command, when
+given both `--input` and `--output` argument does the following:
+- gets the inputs
+- unlocks the outputs (to make sure that they are writable)
+- saves the dataset after completion
+
+Consequently, the same is done by `datalad rerun`.
+
+### Interim summary: interacting with remote datasets
+
+![Collaboration: basic operations]({{ page.root }}/fig/collaboration.svg)
+{: .image-with-shadow }
+(Image from DataLad Handbook)
+
+In the examples above we went through the basic operations for
+interaction with remote datasets. A basic workflow involves:
+- creating a sibling dataset to publish or update from: `datalad
+  create-sibling`
+- publishing the dataset: `datalad push`
+- consuming an existing dataset: `datalad clone`
+- obtaining annexed file content: `datalad get`
+- keeping siblings in sync: `datalad update`
+
+This is a core procedure, and can be flexibly adjusted to many
+contexts. In the example above, we created a dataset in one folder,
+published it to GIN, and cloned into another folder, collaborating
+only with ourselves. By itself, this is not very practical, but all
+the steps would be identical if the clone was on another computer. For
+example, we could follow this process to keep our laptop and desktop
+computer in sync (while also having a backup on GIN). Or we could
+prototype our analysis on a laptop, run it on a a shared server or
+cluster, and get back the outputs. In this way, the workflow can be
+very useful even when working alone.
+
+That being said, the real joy of remote dataset storage comes with
+collaboration. In this scenario, GIN could function as a central
+storage, with which several people could interact, adding and
+retrieving content. The `push` and `update` operations are the same as
+previously, but they can be done by different people. Since the
+dataset history (with authorship information and commit messages) is
+recorded and can be automatically updated, communicating and sharing
+changes is greatly simplified.
+
+In the remainder of this module we will exercise such collaboration.
+
+### Exercise: remote collaboration
+
 TODO:
-- explain what happened in rerun
-- explain how it can be useful even if you're working alone on different computers
-- move on to an exercise in collaboration?
+- outline an exercise
