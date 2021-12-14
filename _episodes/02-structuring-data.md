@@ -358,7 +358,7 @@ DataLad introduces one additional distinction between text and binary files. In 
 
 ### Different flavours of text files
 
-Text files may be simple in their structure, but they can be very powerful in their ability to store content. All the example formats below are human- and machine-readable. They have all become widely accepted standards and you will likely find a library for reading these files in your favourite programming language.
+Text files may be simple in their structure, but they can be very powerful in their ability to store content. Tabular data, sets of parameters, key-value metadata, configuration options, free-form descriptions... there's a good chance that you'll find a text-based representation that will be easy to create and easy to work with. With that in mind, let's look at different flavours of text files. All the example formats below are human- and machine-readable. They have all become widely accepted standards and you will likely find a library for reading these files in your favourite programming language.
 
 #### Plain text
 
