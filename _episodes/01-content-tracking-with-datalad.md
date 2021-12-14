@@ -1,7 +1,7 @@
 ---
 title: "Content tracking with DataLad"
-teaching: 90
-exercises: 0
+teaching: 30
+exercises: 60
 questions:
 - "What does version control mean for datasets"
 - "How to create a datalad datasets"
