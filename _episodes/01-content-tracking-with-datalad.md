@@ -16,7 +16,7 @@ keypoints:
 - "You can manually save changes with `datalad save`"
 - "You can use `datalad download-url` to preserve file origin"
 - "You can use `datalad run` to capture outputs of a command"
-- "Large files are annexed, and protected from changes"
+- "Large files are annexed, and protected from accidental modifications"
 ---
 
 > ## Dev note
