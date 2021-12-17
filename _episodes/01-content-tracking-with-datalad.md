@@ -3,8 +3,8 @@ title: "Content tracking with DataLad"
 teaching: 30
 exercises: 60
 questions:
-- "What does version control mean for datasets"
-- "How to create a datalad datasets"
+- "What does version control mean for datasets?"
+- "How to create a datalad datasets?"
 objectives:
 - "Cover basics of version control"
 - "Work locally to create a dataset"
