@@ -124,7 +124,7 @@ environment, now is a good time to activate it (e.g. `source
 ## Objective
 
 In this lesson we will gradually build up a dataset, discovering
-version control and basic datalad concepts in the process. Our example
+version control and basic DataLad concepts in the process. Our example
 dataset will contain photos and simple text files.
 
 
@@ -352,7 +352,7 @@ enter, Ctrl-X):
 ~~~
 # Example dataset
 
-This is an example datalad dataset.
+This is an example DataLad dataset.
 
 Raw data is kept in `inputs` folder:
 - penguin photos are in `inputs/images`
@@ -387,7 +387,7 @@ We can see that these changes got recorded with `tig`.
 For now, we have manually downloaded the file and saved it to the
 dataset. However, saving a file from a URL is a common scenario,
 whether we are using a public repository or a local network
-storage. For that, datalad has a `datalad download-url` method. Let's
+storage. For that, DataLad has a `datalad download-url` method. Let's
 use it to download another file (making sure that there is a trailing
 slash after the `--path` argument):
 
@@ -411,7 +411,7 @@ URLs:
 
 This is a notable improvement compared to the previous image, because
 in addition to recording the addition of the picture we also stored
-its source. What's more, datalad is aware of that source, and has all
+its source. What's more, DataLad is aware of that source, and has all
 the information needed to remove and reobtain the file on
 demand... but that's another topic altogether.
 
