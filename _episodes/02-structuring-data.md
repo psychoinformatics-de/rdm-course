@@ -302,7 +302,7 @@ of changes is being recorded), this poses an additional challenge:
 file name changes are also tracked, and the record of the change is
 preserved.
 
-This is what it may look like in the case of datalad:
+This is what it may look like in the case of DataLad:
 
 ~~~
 touch name-with-identifying-information.dat
@@ -354,7 +354,7 @@ One important feature of text files is that they can be version controlled on a 
 
 Compare this to a binary file, which does not have a line structure. It's easy to notice that a file changed, but it's not easy to show what changed inside. Version control systems, including DataLad, will also track binary files, but the (in)ability to distinguish or display lines will make it more similar to a per-file basis.
 
-DataLad introduces one additional distinction between text and binary files. In the configuration we used in the previous module (which is a reasonable choice for many situations), binary files would get annexed (meaning that tracking of information about the file presence and its content would be somewhat separated, with `git-annex` used under the hood) and text files would not (although you might also choose different rules for which files to annex). We have already observed one consequence of annexing: to protect the data from accidental modifications, datalad will content-lock the annexed files, disabling your permission to edit them (the files can be unlocked manually with `datalad unlock` or automatically when using `datalad run`). Another consequence (which we will discuss in the subsequent module) is that not all data hosting services accept annexed content, and you may need to publish it separately.
+DataLad introduces one additional distinction between text and binary files. In the configuration we used in the previous module (which is a reasonable choice for many situations), binary files would get annexed (meaning that tracking of information about the file presence and its content would be somewhat separated, with `git-annex` used under the hood) and text files would not (although you might also choose different rules for which files to annex). We have already observed one consequence of annexing: to protect the data from accidental modifications, DataLad will content-lock the annexed files, disabling your permission to edit them (the files can be unlocked manually with `datalad unlock` or automatically when using `datalad run`). Another consequence (which we will discuss in the subsequent module) is that not all data hosting services accept annexed content, and you may need to publish it separately.
 
 ### Different flavors of text files
 
