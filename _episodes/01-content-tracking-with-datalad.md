@@ -6,9 +6,9 @@ questions:
 - "What does version control mean for datasets?"
 - "How to create a datalad datasets?"
 objectives:
-- "Cover basics of version control"
+- "Learn basics of version control"
 - "Work locally to create a dataset"
-- "Introduce basic datalad commands"
+- "Practice basic datalad commands"
 keypoints:
 - "With version control, lineage of all files is preserved"
 - "You can record and revert changes made to the dataset"
