@@ -6,9 +6,9 @@ questions:
 - "What is a good filename?"
 - "How to keep data nicely structured?"
 objectives:
-- "Discuss good practices in organizing data"
-- "Introduce distinction between text vs binary data"
-- "Introduce lightweight text files and how they can be useful"
+- "Name good practices in organizing data"
+- "Distinguish between text vs binary data"
+- "Explore lightweight text files and how they can be useful"
 keypoints:
 - Use filenames which are machine-readable, human readable, easy to sort and search
 - Avoid including identifying information in filenames from the get-go
