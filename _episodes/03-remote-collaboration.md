@@ -81,12 +81,12 @@ Change the working directory to the dataset root (the folder which we
 called `my-dataset` when the dataset was created) and then do:
 
 ```
-datalad drop inputs/images/derek-oyen-8PxCm4HsPX8-unsplash.jpg
+datalad drop inputs/images/chinstrap_02.jpg
 ```
 {: .language-bash}
 
 ```
-drop(ok): /home/alice/Documents/rdm-workshop/my-dataset/inputs/images/derek-oyen-8PxCm4HsPX8-unsplash.jpg
+drop(ok): /home/alice/Documents/rdm-workshop/my-dataset/inputs/images/chinstrap_02.jpg
 ```
 {: .output}
 
@@ -111,12 +111,12 @@ Let's try dropping the file which we put in the dataset manually
 (i.e. using `wget` and not `datalad download-url`):
 
 ```
-datalad drop inputs/images/derek-oyen-3Xd5j9-drDA-unsplash.jpg
+datalad drop inputs/images/chinstrap_01.jpg
 ```
 {: .language-bash}
 
 ```
-drop(error): /home/alice/Documents/rdm-workshop/example-dataset/inputs/images/derek-oyen-3Xd5j9-drDA-unsplash.jpg (file)
+drop(error): /home/alice/Documents/rdm-workshop/example-dataset/inputs/images/chinstrap_01.jpg (file)
 [unsafe; Could only verify the existence of 0 out of 1 necessary copy; (Use --nocheck to override this check, or adjust numcopies.)]
 ```
 {: .output}
@@ -129,11 +129,11 @@ obtains file contents from a known source. Let's use it to reobtain
 the previously dropped file:
 
 ```
-datalad get inputs/images/derek-oyen-8PxCm4HsPX8-unsplash.jpg
+datalad get inputs/images/chinstrap_02.jpg
 ```
 {: .language-bash}
 ```
-get(ok): inputs/images/derek-oyen-8PxCm4HsPX8-unsplash.jpg (file) [from web...]
+get(ok): inputs/images/chinstrap_02.jpg (file) [from web...]
 ```
 {: .output}
 
@@ -287,11 +287,11 @@ datalad push --to gin
 
 ```
 datalad push --to gin
-copy(ok): inputs/images/derek-oyen-3Xd5j9-drDA-unsplash.jpg (file) [to gin...]
-copy(ok): inputs/images/derek-oyen-8PxCm4HsPX8-unsplash.jpg (file) [to gin...]
-copy(ok): inputs/images/ian-parker-8fmTByMm8wE-unsplash.jpg (file) [to gin...]
-copy(ok): outputs/images_greyscale/derek-oyen-3Xd5j9-drDA-greyscale.jpg (file) [to gin...]
-copy(ok): outputs/images_greyscale/derek-oyen-8PxCm4HsPX8-greyscale.jpg (file) [to gin...]
+copy(ok): inputs/images/chinstrap_01.jpg (file) [to gin...]
+copy(ok): inputs/images/chinstrap_02.jpg (file) [to gin...]
+copy(ok): inputs/images/king_01.jpg (file) [to gin...]
+copy(ok): outputs/images_greyscale/chinstrap_01_grey.jpg (file) [to gin...]
+copy(ok): outputs/images_greyscale/chinstrap_02_grey.jpg (file) [to gin...]
 publish(ok): . (dataset) [refs/heads/git-annex->gin:refs/heads/git-annex 80ef82a..af7d450]
 publish(ok): . (dataset) [refs/heads/main->gin:refs/heads/main [new branch]]
 action summary:
@@ -385,12 +385,12 @@ again. First, however, let's take a look at the output of another
 command to see what datalad knows about *file availability*:
 
 ```
-git annex whereis inputs/images/derek-oyen-8PxCm4HsPX8-unsplash.jpg (3 copies)
+git annex whereis inputs/images/chinstrap_02.jpg (3 copies)
 ```
 {: .language-bash}
 
 ```
-whereis inputs/images/derek-oyen-8PxCm4HsPX8-unsplash.jpg (3 copies)
+whereis inputs/images/chinstrap_02.jpg (3 copies)
   	00000000-0000-0000-0000-000000000001 -- web
    	7775655c-b59d-4e58-938c-698d2205d46a -- git@8242caf9acd8:/data/repos/msz/rdm-workshop.git [origin]
    	b228d597-3217-45a5-9831-6f10f00a1611 -- My example dataset
@@ -409,12 +409,12 @@ the dataset was cloned. And finally, there is the current dataset.
 With this knowledge, let's `get` the file content:
 
 ```
-datalad get inputs/images/derek-oyen-8PxCm4HsPX8-unsplash.jpg
+datalad get inputs/images/chinstrap_02.jpg
 ```
 {: .language-bash}
 
 ```
-get(ok): inputs/images/derek-oyen-3Xd5j9-drDA-unsplash.jpg (file) [from origin...]
+get(ok): inputs/images/chinstrap_02.jpg (file) [from origin...]
 ```
 {: .output}
 
@@ -439,8 +439,8 @@ cd ../my_dataset
 # source ~/.venvs/rdm-workshop/bin/activate
 
 datalad run \
-  --input inputs/images/ian-parker-8fmTByMm8wE-unsplash.jpg \
-  --output outputs/images_greyscale/ian-parker-8fmTByMm8wE-greyscale.jpg \
+  --input inputs/images/king_01.jpg \
+  --output outputs/images_greyscale/king_01_grey.jpg \
   -m "Convert the third image" \
   python code/greyscale.py {inputs} {outputs}
 ```
@@ -450,7 +450,7 @@ datalad run \
 [INFO   ] Making sure inputs are available (this may take some time) 
 [INFO   ] == Command start (output follows) ===== 
 [INFO   ] == Command exit (modification check follows) ===== 
-add(ok): outputs/images_greyscale/ian-parker-8fmTByMm8wE-greyscale.jpg (file)
+add(ok): outputs/images_greyscale/king_01_grey.jpg (file)
 save(ok): . (dataset)
 ```
 {: .output}
@@ -466,7 +466,7 @@ datalad push --to gin
 {: .language-bash}
 
 ```
-copy(ok): outputs/images_greyscale/ian-parker-8fmTByMm8wE-greyscale.jpg (file) [to gin...]
+copy(ok): outputs/images_greyscale/king_01_grey.jpg (file) [to gin...]
 publish(ok): . (dataset) [refs/heads/git-annex->gin:refs/heads/git-annex 4e1950b..bb7f8dd]
 publish(ok): . (dataset) [refs/heads/main->gin:refs/heads/main 6e75962..84f56f9]
 action summary:
@@ -528,11 +528,11 @@ datalad rerun 84f56f
 ```
 [INFO   ] run commit 84f56f9; (Convert the third...)
 [INFO   ] Making sure inputs are available (this may take some time)
-get(ok): inputs/images/ian-parker-8fmTByMm8wE-unsplash.jpg (file) [from origin...]
-run.remove(ok): outputs/images_greyscale/ian-parker-8fmTByMm8wE-greyscale.jpg (file) [Removed file]
+get(ok): inputs/images/king_01.jpg (file) [from origin...]
+run.remove(ok): outputs/images_greyscale/king_01_grey.jpg (file) [Removed file]
 [INFO   ] == Command start (output follows) =====
 [INFO   ] == Command exit (modification check follows) =====
-add(ok): outputs/images_greyscale/ian-parker-8fmTByMm8wE-greyscale.jpg (file)
+add(ok): outputs/images_greyscale/king_01_grey.jpg (file)
 action summary:
   add (ok: 1)
   get (ok: 1)
