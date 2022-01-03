@@ -322,9 +322,11 @@ mkdir -p inputs/images
 ~~~
 
 Then, let's put a file in it. To avoid leaving terminal, we will use the linux `wget` command. This is just for convenience - the effect would be the same if we opened the link in the browser and saved the file from there.
+The `-O` option specifies the output file - since this is a photo of chinstrap penguins, and we may expect multiple of those, let's name the file `chinstrap_01.jpg`.
+We are putting the URL in brackets, to avoid confusing our computer with the `?` character, which can be interpreted as a placeholder for any character.
 
 ~~~
-wget --content-disposition --directory-prefix=inputs/images/ "https://unsplash.com/photos/3Xd5j9-drDA/download?force=true"
+wget -O inputs/images/chinstrap_01.jpg "https://unsplash.com/photos/3Xd5j9-drDA/download?force=true"
 ~~~
 {: .language-bash}
 
@@ -340,7 +342,7 @@ tree
 .
 ├── inputs
 │   └── images
-│       └── derek-oyen-3Xd5j9-drDA-unsplash.jpg
+│       └── chinstrap_01.jpg
 └── README.md
 ~~~
 {: .output}
@@ -377,7 +379,7 @@ supply a path to the file or files you want to save. We will it this
 way, and record two separate changes:
 
 ~~~
-datalad save -m "Add first penguin image" inputs/images/derek-oyen-3Xd5j9-drDA-unsplash.jpg
+datalad save -m "Add first penguin image" inputs/images/chinstrap_01.jpg
 datalad save -m "Update readme" README.md
 ~~~
 {: .language-bash}
@@ -388,11 +390,11 @@ For now, we have manually downloaded the file and saved it to the
 dataset. However, saving a file from a URL is a common scenario,
 whether we are using a public repository or a local network
 storage. For that, DataLad has a `datalad download-url` method. Let's
-use it to download another file (making sure that there is a trailing
-slash after the `--path` argument):
+use it to download another file (this command also provides the `-O`
+option to specify an output path, similar to wget):
 
 ~~~
-datalad download-url --path=inputs/images/ https://unsplash.com/photos/8PxCm4HsPX8/download?force=true
+datalad download-url -O inputs/images/chinstrap_02.jpg "https://unsplash.com/photos/8PxCm4HsPX8/download?force=true"
 ~~~
 {: .language-bash}
 
@@ -425,7 +427,7 @@ of rules to store variables) with the same name but different
 extension:
 
 ~~~
-nano inputs/images/derek-oyen-3Xd5j9-drDA-unsplash.yaml
+nano inputs/images/chinstrap_01.yaml
 ~~~
 {: .language-bash}
 
@@ -437,7 +439,7 @@ penguin_count: 3
 {: .language-yaml}
 
 ~~~
-nano inputs/images/derek-oyen-8PxCm4HsPX8-unsplash.yaml
+nano inputs/images/chinstrap_02.yaml
 ~~~
 {: .language-bash}
 
@@ -452,7 +454,7 @@ We can use the already familiar `datalad save` command to record
 these changes (addition of two files):
 
 ~~~
-datalad save -m "Add metadata to photos"
+datalad save -m "Add sidecar metadata to photos"
 ~~~
 {: .language-bash}
 
@@ -562,7 +564,7 @@ Now, let's "write" our custom script. You can download it using wget
 and then save it as part of the dataset
 
 ~~~
-wget --prefix outputs https://github.com/psychoinformatics-de/rdm-course/raw/gh-pages/data/greyscale.py
+wget -O code.greyscale.py https://github.com/psychoinformatics-de/rdm-course/raw/gh-pages/data/greyscale.py
 datalad save -m "Add an image processing script"
 ~~~
 {: .language-bash}
@@ -572,7 +574,7 @@ and `output file`. You can check this with `python code/greyscale.py
 --help`. Let's apply it for the first image, and place the output in the `outputs/images_greyscale` category, slightly changing the name:
 
 ~~~
-python code/greyscale.py inputs/images/derek-oyen-3Xd5j9-drDA-unsplash.jpg outputs/images_greyscale/derek-oyen-3Xd5j9-drDA-greyscale.jpg
+python code/greyscale.py inputs/images/chinstrap_01.jpg outputs/images_greyscale/chinstrap_01_grey.jpg
 ~~~
 {: .language-bash}
 
@@ -601,7 +603,7 @@ also give the commit message, just as we could with `datalad
 save`. Let's try this on the other image:
 
 ~~~
-datalad run -m "Convert the second image to greyscale" python code/greyscale.py inputs/images/derek-oyen-8PxCm4HsPX8-unsplash.jpg outputs/images_greyscale/derek-oyen-8PxCm4HsPX8-greyscale.jpg
+datalad run -m "Convert the second image to greyscale" python code/greyscale.py inputs/images/chinstrap_02.jpg outputs/images_greyscale/chinstrap_02_grey.jpg
 ~~~
 {: .language-bash}
 
@@ -617,7 +619,7 @@ and press enter):
 === Do not change lines below ===
 {
 "chain": [],
-"cmd": "python code/greyscale.py inputs/images/derek-oyen-8PxCm4HsPX8-unsplash.jpg outputs/images_greyscale/derek-oyen-8PxCm4HsPX8-greyscale.jpg",
+"cmd": "python code/greyscale.py inputs/images/chinstrap_02.jpg outputs/images_greyscale/chinstrap_02_grey.jpg",
 "dsid": "b4ee3e2b-e132-4957-9987-ca8aad2d8dfc",
 "exit": 0,
 "extra_inputs": [],
@@ -650,7 +652,7 @@ exists. This time we will skip `datalad run` to avoid creating a record
 of our little mischief:
 
 ~~~
-python code/greyscale.py inputs/images/derek-oyen-3Xd5j9-drDA-unsplash.jpg outputs/images_greyscale/derek-oyen-8PxCm4HsPX8-greyscale.jpg
+python code/greyscale.py inputs/images/chinstrap_01.jpg outputs/images_greyscale/chinstrap_02_grey.jpg
 ~~~
 {: .language-bash}
 
@@ -660,7 +662,7 @@ Traceback (most recent call last):
     grey.save(args.output_file)
   File "/home/bob/Documents/rdm-temporary/venv/lib/python3.9/site-packages/PIL/Image.py", line 2232, in save
     fp = builtins.open(filename, "w+b")
-PermissionError: [Errno 13] Permission denied: 'outputs/images_greyscale/derek-oyen-8PxCm4HsPX8-greyscale.jpg'
+PermissionError: [Errno 13] Permission denied: 'outputs/images_greyscale/chinstrap_02_grey.jpg'
 ~~~
 {: .output}
 
@@ -700,14 +702,14 @@ to prevent accidental modifications:
 If we do want to edit the annexed file, we can unlock it:
 
 ~~~
-datalad unlock outputs/images_greyscale/derek-oyen-8PxCm4HsPX8-greyscale.jpg
+datalad unlock outputs/images_greyscale/chinstrap_02_grey.jpg
 ~~~
 {: .language-bash}
 
 Now, the operation should succeed:
 
 ~~~
-python code/greyscale.py inputs/images/derek-oyen-3Xd5j9-drDA-unsplash.jpg outputs/images_greyscale/derek-oyen-8PxCm4HsPX8-greyscale.jpg
+python code/greyscale.py inputs/images/chinstrap_01.jpg outputs/images_greyscale/chinstrap_02_grey.jpg
 ~~~
 {: .language-bash}
 
@@ -719,7 +721,7 @@ datalad status
 {: .language-bash}
 
 ~~~
-modified: outputs/images_greyscale/derek-oyen-8PxCm4HsPX8-greyscale.jpg (file)
+modified: outputs/images_greyscale/chinstrap_02-grey.jpg (file)
 ~~~
 {: .output}
 
@@ -744,8 +746,8 @@ run call.
 
 ~~~
 datalad run \
-    --input inputs/images/derek-oyen-8PxCm4HsPX8-unsplash.jpg \
-    --output outputs/images_greyscale/derek-oyen-8PxCm4HsPX8-greyscale.jpg \
+    --input inputs/images/chinstrap_02.jpg \
+    --output outputs/images_greyscale/chinstrap_02_grey.jpg \
     -m "Convert the second image again" \
     python code/greyscale.py {inputs} {outputs}
 ~~~
@@ -753,10 +755,10 @@ datalad run \
 
 ~~~
 [INFO   ] Making sure inputs are available (this may take some time)
-unlock(ok): outputs/images_greyscale/derek-oyen-8PxCm4HsPX8-greyscale.jpg (file)
+unlock(ok): outputs/images_greyscale/chinstrap_02_grey.jpg (file)
 [INFO   ] == Command start (output follows) ===== 
 [INFO   ] == Command exit (modification check follows) ===== 
-add(ok): outputs/images_greyscale/derek-oyen-8PxCm4HsPX8-greyscale.jpg (file)
+add(ok): outputs/images_greyscale/chinstrap_02_grey.jpg (file)
 ~~~
 {: .output}
 
@@ -774,10 +776,10 @@ history with `tig`. The commit message contains the following:
  "exit": 0,
  "extra_inputs": [],
  "inputs": [
-  "inputs/images/derek-oyen-8PxCm4HsPX8-unsplash.jpg"
+  "inputs/images/chinstrap_02.jpg"
  ],
  "outputs": [
-  "outputs/images_greyscale/derek-oyen-8PxCm4HsPX8-greyscale.jpg"
+  "outputs/images_greyscale/chinstrap_02_grey.jpg"
  ],
  "pwd": "."
 }
@@ -788,16 +790,18 @@ history with `tig`. The commit message contains the following:
 ### Making some more additions
 
 Let's make a few more changes to the dataset. We will return to it in
-the workshop module on remote collaboration. As an exercise:
+the workshop module on remote collaboration. As an exercise, do these
+things under DataLad control:
 
-- Download the image from this url into the `inputs/images` directory:
+- Download the king penguin image from this url:
   `https://unsplash.com/photos/8fmTByMm8wE/download?force=true`
+  and save it as `inputs/images/king_01.jpg`
 - Create a yaml file with the following content and save changes in the
   dataset:
   ~~~
-  photographer: Derek Oyen
+  photographer: Ian Parker
   license: Unsplash License
-  penguin_count: 3
+  penguin_count: 5
   ~~~
   {: .language-yaml}
 - Add the following acknowledgments at the end of the README:
@@ -816,14 +820,14 @@ the workshop module on remote collaboration. As an exercise:
 > ```
 > datalad download-url \
 >   -m "Add third image" \
->   --path=inputs/images/ \
+>   -O inputs/images/king01.jpg \
 >   "https://unsplash.com/photos/8fmTByMm8wE/download?force=true"
 > ```
 > {: .language-bash}
 > 
 > Create the yaml file, e.g. using nano, and update the dataset:
 > ```
-> nano inputs/images/ian-parker-8fmTByMm8wE-unsplash.yaml
+> nano inputs/images/king_01.yaml
 > # paste the contents and save
 > datalad save -m "Add a description to the third picture"
 > ```
