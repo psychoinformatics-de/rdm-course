@@ -50,8 +50,8 @@ things is needed. This is local version control.
 Imagine also that the project is a collaborative effort. For example,
 the data may be collected by you and several colleagues, and analyzed
 by other members of your team (or by an entirely different team). You
-may wish to have a mechanism to synchronizes your personal datasets
-with a centralist storage (for example, your laboratory network
+may wish to have a mechanism to synchronize your personal datasets
+with a centralized storage (for example, your laboratory network
 storage), which preserves the origin of files as all of you are making
 simultaneous contributions over time. This is distributed version
 control.
@@ -348,8 +348,10 @@ tree
 {: .output}
 
 While we're at it, lets open the readme file (`nano README.md`) and
-make a note on how we organize the data (save and exit with Ctrl-O,
-enter, Ctrl-X):
+make a note on how we organize the data. Note the unobtrusive markdown
+syntax for headers, monospace, and list items, which may be used for
+rendering by software or websites. With nano, save and exit with:
+Ctrl-O, enter, Ctrl-X:
 
 ~~~
 # Example dataset
@@ -524,9 +526,10 @@ even if subsequent `save` operations have been performed on the
 dataset. To call it, we need to know the *commit hash* (unique
 identifier) of the change which we want to revert. It is displayed by
 `tig` at the bottom of the window and looks like this:
-`8ddaaad243344f38cd778b013e7e088a5b2aa11b`. Don't worry, we only need
-the first couple characters. Find your commit hash and call `git
-revert`:
+`8ddaaad243344f38cd778b013e7e088a5b2aa11b` (note: because of the
+algorithm used by git, yours will be different). Don't worry, we only
+need the first couple characters. Find your commit hash and call `git
+revert` taking the beginning characters (seven should be plenty):
 
 ~~~
 git revert --no-edit 8ddaaad
