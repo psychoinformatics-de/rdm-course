@@ -3,12 +3,12 @@ title: "Content tracking with DataLad"
 teaching: 30
 exercises: 60
 questions:
-- "What does version control mean for datasets"
-- "How to create a datalad datasets"
+- "What does version control mean for datasets?"
+- "How to create a datalad datasets?"
 objectives:
-- "Cover basics of version control"
+- "Learn basics of version control"
 - "Work locally to create a dataset"
-- "Introduce basic datalad commands"
+- "Practice basic datalad commands"
 keypoints:
 - "With version control, lineage of all files is preserved"
 - "You can record and revert changes made to the dataset"
@@ -16,7 +16,7 @@ keypoints:
 - "You can manually save changes with `datalad save`"
 - "You can use `datalad download-url` to preserve file origin"
 - "You can use `datalad run` to capture outputs of a command"
-- "Large files are annexed, and protected from changes"
+- "Large files are annexed, and protected from accidental modifications"
 ---
 
 > ## Dev note
@@ -37,7 +37,7 @@ keypoints:
 ## Introduction
 
 Imagine (this in fact might be close to reality) that you are working
-on a project which involves collection and processing of some kind of
+on a project which involves collecting and processing of some kind of
 data. When you are working locally, you may want to have an automated
 record of when a given file was added, where it came from, what input
 files were used to generate a given output, or why some things were
@@ -48,10 +48,10 @@ to be reversible, in case you discover that a different way of doing
 things is needed. This is local version control.
 
 Imagine also that the project is a collaborative effort. For example,
-the data may be collected by you and several colleagues, and analysed
+the data may be collected by you and several colleagues, and analyzed
 by other members of your team (or by an entirely different team). You
-may wish to have a mechanism to synchronise your personal datasets
-with a centralised storage (for example, your laboratory network
+may wish to have a mechanism to synchronizes your personal datasets
+with a centralist storage (for example, your laboratory network
 storage), which preserves the origin of files as all of you are making
 simultaneous contributions over time. This is distributed version
 control.
@@ -61,9 +61,9 @@ completely or selectively, your raw data, or outputs, or both. Or to
 work with a large dataset that is stored elsewhere when you only need
 some of the files, without having to download everything.
 
-These are typical data management issues which we will touch during
+These are typical data management issues which we will touch upon during
 this workshop. From the technical point of view we will be using
-DataLad, a data management multitool that can assist you in handling
+DataLad, a data management multi-tool that can assist you in handling
 the entire life cycle of digital objects. It is a command-line tool,
 free and open source, and available for all major operating
 systems.
@@ -124,7 +124,7 @@ environment, now is a good time to activate it (e.g. `source
 ## Objective
 
 In this lesson we will gradually build up a dataset, discovering
-version control and basic datalad concepts in the process. Our example
+version control and basic DataLad concepts in the process. Our example
 dataset will contain photos and simple text files.
 
 
@@ -153,12 +153,12 @@ Usage: datalad [global-opts] command [command-opts]
 {: .output}
 
 This means that to use DataLad you will need to type in the main
-command (`datalad`) followed by a subcommand. The (sub-)commands are
+command (`datalad`) followed by a sub-command. The (sub-)commands are
 listed in the help message. The most important for now are `datalad
 create` and `datalad save`, and we will explain them in detail during
 this lesson.
 
-Both the main command and the subcommand can accept options. Options
+Both the main command and the sub-command can accept options. Options
 usually start with a dash (single letter, e.g. `-m`) or two dashes
 (longer names, e.g. `--help` which we have just used). Some commands
 will have both the long form and the short form.
@@ -321,7 +321,7 @@ Let's add some "image data", represented here by jpeg images. For demonstration 
 mkdir -p inputs/images
 ~~~
 
-Then, let's put a file in it. To avoid leaving terminal, we will use the linux `wget` command. This is just for convenience - an effect would be the same if we opened the link in the browser and saved the file from there.
+Then, let's put a file in it. To avoid leaving terminal, we will use the linux `wget` command. This is just for convenience - the effect would be the same if we opened the link in the browser and saved the file from there.
 
 ~~~
 wget --content-disposition --directory-prefix=inputs/images/ "https://unsplash.com/photos/3Xd5j9-drDA/download?force=true"
@@ -346,13 +346,13 @@ tree
 {: .output}
 
 While we're at it, lets open the readme file (`nano README.md`) and
-make a note on how we organise the data (save and exit with Ctrl-O,
+make a note on how we organize the data (save and exit with Ctrl-O,
 enter, Ctrl-X):
 
 ~~~
 # Example dataset
 
-This is an example datalad dataset.
+This is an example DataLad dataset.
 
 Raw data is kept in `inputs` folder:
 - penguin photos are in `inputs/images`
@@ -387,7 +387,7 @@ We can see that these changes got recorded with `tig`.
 For now, we have manually downloaded the file and saved it to the
 dataset. However, saving a file from a URL is a common scenario,
 whether we are using a public repository or a local network
-storage. For that, datalad has a `datalad download-url` method. Let's
+storage. For that, DataLad has a `datalad download-url` method. Let's
 use it to download another file (making sure that there is a trailing
 slash after the `--path` argument):
 
@@ -411,13 +411,13 @@ URLs:
 
 This is a notable improvement compared to the previous image, because
 in addition to recording the addition of the picture we also stored
-its source. What's more, datalad is aware of that source, and has all
+its source. What's more, DataLad is aware of that source, and has all
 the information needed to remove and reobtain the file on
 demand... but that's another topic altogether.
 
 To practice saving changes and to make our example dataset more
 similar to the real-life datasets, let's add some more files, this
-time in the form of sidecar metadata. Let's supose we want to store
+time in the form of sidecar metadata. Let's suppose we want to store
 the picture author, license under which the file is available, and,
 let's say, the number of penguins visible in the photo. For each
 image, we will create a yaml file (a simple text file following a set
@@ -448,7 +448,7 @@ penguin_count: 2
 ~~~
 {: .language-yaml}
 
-We can use the already familiar `datalad save` command to recorde
+We can use the already familiar `datalad save` command to record
 these changes (addition of two files):
 
 ~~~
@@ -464,7 +464,7 @@ having to worry about breaking things. Let's demonstrate by breaking
 things on purpose. Open the `README.md` file, remove most of its
 contents and save. You can use `cat README.md` to display the file
 contents and make sure that they are, indeed, gone. The `datalad
-status` reports that the file changed, but the change has noot been
+status` reports that the file changed, but the change has not been
 saved in the dataset history:
 
 ~~~
@@ -509,18 +509,18 @@ nano README.md
 HAHA all description is gone
 ~~~
 
-This time we are commiting these changes to the dataset history:
+This time we are committing these changes to the dataset history:
 
 ~~~
 datalad save -m "Break things"
 ~~~
 {: .language-bash}
 
-The file was changed, and the changes have been commited. Luckily, git
+The file was changed, and the changes have been committed. Luckily, git
 has a method for undoing such changes, `git revert`, which can work
 even if subsequent `save` operations have been performed on the
 dataset. To call it, we need to know the *commit hash* (unique
-identifier) of the change wihich we want to revert. It is displaye by
+identifier) of the change which we want to revert. It is displayed by
 `tig` at the bottom of the window and looks like this:
 `8ddaaad243344f38cd778b013e7e088a5b2aa11b`. Don't worry, we only need
 the first couple characters. Find your commit hash and call `git
@@ -605,7 +605,7 @@ datalad run -m "Convert the second image to greyscale" python code/greyscale.py 
 ~~~
 {: .language-bash}
 
-As we can see, `datalad run` executes the given command and followes
+As we can see, `datalad run` executes the given command and follows
 that by automatically calling `datalad save` to store all changes
 resulting from this command in the dataset. Let's take a look at the
 full commit message with `tig` (highlight the commit you want to see
@@ -629,7 +629,7 @@ and press enter):
 ~~~
 
 There is some automatically generated text, and inside we can easily
-find the command that was execited (under `"cmd"` keyword). The record
+find the command that was executed (under `"cmd"` keyword). The record
 is stored using json formatting, and as such can be read not just by
 us, but also by DataLad. This is very useful: now we will be able to
 rerun the exact command if, for example, input data gets changed, the
@@ -646,7 +646,7 @@ Let's try doing something nonsensical: using the first input image
 onto the second output image (the one with `8Px` in its name). Of
 course the computer doesn't know what makes sense - the only thing
 which might stop us is that we will be writing to a file which already
-exists. This time we will skip `datalad run` to avoid creating a recod
+exists. This time we will skip `datalad run` to avoid creating a record
 of our little mischief:
 
 ~~~
@@ -800,7 +800,7 @@ the workshop module on remote collaboration. As an exercise:
   penguin_count: 3
   ~~~
   {: .language-yaml}
-- Add the following acknowledgements at the end of the README:
+- Add the following acknowledgments at the end of the README:
   ~~~
   ## Credit
   
