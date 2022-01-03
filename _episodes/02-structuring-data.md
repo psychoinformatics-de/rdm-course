@@ -6,13 +6,13 @@ questions:
 - "What is a good filename?"
 - "How to keep data nicely structured?"
 objectives:
-- "Discuss good practices in organising data"
-- "Introduce distinction between text vs binary data"
-- "Introduce lightweight text files and how they can be useful"
+- "Name good practices in organizing data"
+- "Distinguish between text vs binary data"
+- "Explore lightweight text files and how they can be useful"
 keypoints:
 - Use filenames which are machine-readable, human readable, easy to sort and search
 - Avoid including identifying information in filenames from the get-go
-- Files can be categorised as text or binary
+- Files can be categorized as text or binary
 - Lightweight text files can go a long way
 - A well thought-out directory structure simplifies computation
 - Be modular to facilitate reuse
@@ -20,7 +20,7 @@ keypoints:
 
 ## Introduction
 
-This module is dedicated to good practices in data organisation. We
+This module is dedicated to good practices in data organization. We
 will discuss little things which may seem prosaic but can go a long
 way in making your life easier: file names, text files, project
 structure.
@@ -34,7 +34,7 @@ structure](https://slides.djnavarro.net/project-structure/)" by
 Danielle Navarro.
 
 A file name exists to identify its content. There are different
-opinions as to what *exactly* is a good file name, but they ususlly
+opinions as to what *exactly* is a good file name, but they usually
 revolve around the three main principles:
 
 - be machine readable
@@ -42,11 +42,11 @@ revolve around the three main principles:
 - make sorting and searching easy
 
 A universal gold standard probably does not exist and we do not claim
-to posess one. What we can do, however, is to focus on identifying
+to posses one. What we can do, however, is to focus on identifying
 patterns in file naming which can make working with data easier.
 
 Let's start with a good example for naming what appears to be a
-collection of materials for an english literature class:
+collection of materials for an English literature class:
 
 ~~~
 reading01_shakespeare_romeo-and-juliet_act01.docx
@@ -73,9 +73,9 @@ look.
 
 ### Machine readable
 
-#### Avoid whitespaces
+#### Avoid white spaces
 
-A lot of trouble with whitespaces comes from using file names in
+A lot of trouble with white spaces comes from using file names in
 command line or in code. In a command line syntax spaces are used to
 separate arguments. A file name with spaces needs to be enclosed in
 quotes, or the spaces need to be *escaped* with a `\` symbol.
@@ -192,7 +192,7 @@ tools. However, sometimes the date can be a crucial piece of
 information (e.g. weather data collected daily) or you may wish to
 keep things in chronological order when sorting by file names
 (e.g. meeting notes). If including dates, follow the ISO 8601 standard
-(`YYYY-MM-DD`), which is widely recognised and maintains chronology in
+(`YYYY-MM-DD`), which is widely recognized and maintains chronology in
 alphabetical ordering:
 
 ~~~
@@ -273,7 +273,7 @@ notes19_plath_the-bell-jar.docx
 > **Machine readable** means that it's easy to operate on file names and
 > extract information from them:
 >
-> - Avoid whitespaces
+> - Avoid white spaces
 > - Use only letters, numbers, hyphens, and underscores
 > - Don't rely on letter case
 > - Use separators in a meaningful way
@@ -302,7 +302,7 @@ of changes is being recorded), this poses an additional challenge:
 file name changes are also tracked, and the record of the change is
 preserved.
 
-This is what it may look like in the case of datalad:
+This is what it may look like in the case of DataLad:
 
 ~~~
 touch name-with-identifying-information.dat
@@ -354,11 +354,11 @@ One important feature of text files is that they can be version controlled on a 
 
 Compare this to a binary file, which does not have a line structure. It's easy to notice that a file changed, but it's not easy to show what changed inside. Version control systems, including DataLad, will also track binary files, but the (in)ability to distinguish or display lines will make it more similar to a per-file basis.
 
-DataLad introduces one additional distinction between text and binary files. In the configuration we used in the previous module (which is a reasonable choice for many sotuations), binary files would get annexed (meaning that tracking of information about the file presence and its content would be somewhat separated, with `git-annex` used under the hood) and text files would not (although you might also choose different rules for which files to annex). We have already observed one consequence of annexing: to protect the data from accidental modifications, datalad will content-lock the annexed files, disabling your permission to edit them (the files can be unlocked manually with `datalad unlock` or automatically when using `datalad run`). Another consequence (which we will discuss in the subsequent module) is that not all data hosting services accept annexed content, and you may need to publish it separately.
+DataLad introduces one additional distinction between text and binary files. In the configuration we used in the previous module (which is a reasonable choice for many situations), binary files would get annexed (meaning that tracking of information about the file presence and its content would be somewhat separated, with `git-annex` used under the hood) and text files would not (although you might also choose different rules for which files to annex). We have already observed one consequence of annexing: to protect the data from accidental modifications, DataLad will content-lock the annexed files, disabling your permission to edit them (the files can be unlocked manually with `datalad unlock` or automatically when using `datalad run`). Another consequence (which we will discuss in the subsequent module) is that not all data hosting services accept annexed content, and you may need to publish it separately.
 
-### Different flavours of text files
+### Different flavors of text files
 
-Text files may be simple in their structure, but they can be very powerful in their ability to store content. Tabular data, sets of parameters, key-value metadata, configuration options, free-form descriptions... there's a good chance that you'll find a text-based representation that will be easy to create and easy to work with. With that in mind, let's look at different flavours of text files. All the example formats below are human- and machine-readable. They have all become widely accepted standards and you will likely find a library for reading these files in your favourite programming language.
+Text files may be simple in their structure, but they can be very powerful in their ability to store content. Tabular data, sets of parameters, key-value metadata, configuration options, free-form descriptions... there's a good chance that you'll find a text-based representation that will be easy to create and easy to work with. With that in mind, let's look at different flavors of text files. All the example formats below are human- and machine-readable. They have all become widely accepted standards and you will likely find a library for reading these files in your favorite programming language.
 
 #### Plain text
 
@@ -385,7 +385,7 @@ A very common format for representing free-form text is Markdown. Markdown a *li
 - Some `inline code` (and code blocks, not shown)
 ~~~
 
-Fairly standardised and very popular, Markdown is recognised by many programs and platforms. While it is readable as-is, many code-hosting websites, such as GitHub, will recognise markdown files (giving special attention to those named README) and render them as html in the web interface. Markdown files are a good choice for describing things in a free narrative - yor project, dataset, or analysis. This course materials have also been written in Markdown!
+Fairly standardized and very popular, Markdown is recognized by many programs and platforms. While it is readable as-is, many code-hosting websites, such as GitHub, will recognize markdown files (giving special attention to those named README) and render them as html in the web interface. Markdown files are a good choice for describing things in a free narrative - your project, dataset, or analysis. This course materials have also been written in Markdown!
 
 There are other markup languages for similar purposes, such as [reStructuredText](https://docutils.sourceforge.io/rst.html) (popular choice in the world of python documentation), [AsciiDoc](https://asciidoc-py.github.io/), or [Org Mode](https://orgmode.org/) (popular among the users of Emacs text editor). Html is also a markup language, but in most cases it is easier to write in one of the lightweight languages and then convert the documents to html.
 
@@ -402,9 +402,9 @@ Adelie,Torgersen,NA,NA,NA,NA,NA,2007
 Adelie,Torgersen,36.7,19.3,193,3450,female,2007
 ~~~
 
-#### Configuration and data serialisation: toml, yaml & json
+#### Configuration and data serialization: toml, yaml & json
 
-Some formats were made for serialisation (or interchange) --
+Some formats were made for serialization (or interchange) --
 converting data objects into an easily transmittable form. They can be
 useful for storing configurations, or keeping (meta-)data which is
 best represented as key-value pairs. Most programming languages will
@@ -667,7 +667,7 @@ A more comprehensive example looks like this:
 compendium/
 ├── CITATION              <- instructions on how to cite
 ├── code                  <- custom code for this project
-│   ├── analyse_data.R
+│   ├── analyze_data.R
 │   └── clean_data.R
 ├── data_clean            <- intermediate data that has been transformed
 │   └── data_clean.csv
