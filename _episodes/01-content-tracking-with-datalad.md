@@ -79,10 +79,11 @@ datasets.
 
 ## Setting up
 
-In order to code along, you should have a recent DataLad version.  The
-workshop was developed based on DataLad version `0.15`. If you are
-unsure about your version of DataLad, you can check it using the
-following command:
+In order to code along, you should have a recent DataLad version. The
+workshop was developed based on DataLad version `0.15`. Installation
+instructions are included in the [Setup]({{ page.root }}{% link
+setup.md %}) page. If you are unsure about your version of DataLad,
+you can check it using the following command:
 
 ~~~
 datalad --version
@@ -115,10 +116,11 @@ With the `--global` option, you need to do this once on a given
 system, as the values will be stored for your user account. Of course
 you can change or override them later.
 
-For some examples, you will also need python with pillow library
-installed. If you are using your own machine and you created a virtual
-environment, now is a good time to activate it (e.g. `source
-~/.venvs/rdm-workshop/bin/activate`).
+Note for participants using their own computers. Some examples used to
+illustrate data processing require python with pillow library. If you
+are using a virtual environment, now is a good time to activate it
+(e.g. `source ~/.venvs/rdm-workshop/bin/activate`). You'll find more
+details in the [Setup]({{ page.root }}{% link setup.md %}) page.
 
 
 ## Objective
