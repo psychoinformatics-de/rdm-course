@@ -66,16 +66,22 @@ this workshop. From the technical point of view we will be using
 DataLad, a data management multi-tool that can assist you in handling
 the entire life cycle of digital objects. It is a command-line tool,
 free and open source, and available for all major operating
-systems.
+systems. The first module will deal only with local version control. In the
+next one, we will set the technical details aside and talk about good
+practices in file management. Later during the workshop we will
+discuss distributed version control, publish a dataset, and see what
+it looks like from the perspective of data consumers. In the last
+module we will talk about more complex scenarios with linked datasets.
 
-The first module will deal only with local version control.  We will
-introduce basic DataLad commands - a technical foundation for all the
-operations above - while building a little example dataset. Later
-during the workshop we will discuss distributed version control,
-publish our dataset and see what it looks like from the perspective of
-data consumers. Within this workshop we will also set the technical
-aspect aside and talk about good practices in managing files and
-datasets.
+In this lesson we will gradually build up an example dataset,
+discovering version control and basic DataLad concepts in the
+process. Along the way, we will introduce basic DataLad commands - a
+technical foundation for all the operations outlined above. Since
+DataLad is agnostic about the kind of data it manages, we will use
+photographs and text files to represent our dataset content. We will
+add these files, record their origin, make changes, track these
+changes, and undo things we don't want to keep.
+
 
 ## Setting up
 
@@ -121,13 +127,6 @@ illustrate data processing require python with pillow library. If you
 are using a virtual environment, now is a good time to activate it
 (e.g. `source ~/.venvs/rdm-workshop/bin/activate`). You'll find more
 details in the [Setup]({{ page.root }}{% link setup.md %}) page.
-
-
-## Objective
-
-In this lesson we will gradually build up a dataset, discovering
-version control and basic DataLad concepts in the process. Our example
-dataset will contain photos and simple text files.
 
 
 ## How to use DataLad
