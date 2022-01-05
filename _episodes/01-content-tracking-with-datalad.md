@@ -36,30 +36,38 @@ keypoints:
 
 ## Introduction
 
-Imagine (this in fact might be close to reality) that you are working
-on a project which involves collecting and processing of some kind of
-data. When you are working locally, you may want to have an automated
-record of when a given file was added, where it came from, what input
-files were used to generate a given output, or why some things were
-made. Even if you are not sharing the data, this information might be
-essential for the future you, when you return to the project after
-some time. Also, when making changes to your files, you may want them
-to be reversible, in case you discover that a different way of doing
-things is needed. This is local version control.
+Alice is a PhD student. She works on a fairly typical research
+project, which involves collection and processing of data. The exact
+kind of data she works with is not relevant for us, what's relevant is
+that getting from the first sample to the final result is a cumulative
+process.
 
-Imagine also that the project is a collaborative effort. For example,
-the data may be collected by you and several colleagues, and analyzed
-by other members of your team (or by an entirely different team). You
-may wish to have a mechanism to synchronize your personal datasets
-with a centralized storage (for example, your laboratory network
-storage), which preserves the origin of files as all of you are making
-simultaneous contributions over time. This is distributed version
+When Alice is working locally, she likes to have an automated record
+of when a given file was last changed, where it came from, what input
+files were used to generate a given output, or why some things were
+done. Even if she won't be sharing the data with anyone, these records
+might be essential for her future self, when she needs to return to
+the project after some time. Moreover, Alice's project is exploratory,
+and she often makes large changes to her analysis scripts. She enjoys
+the comfort of being able to return all files to a previously recorded
+state if she makes a mistake or figures out a better solution. This is
+local version control.
+
+Alice's work is not confined to a single computer. She has a laptop
+and a desktop, and she uses a remote server to run some time-consuming
+analysis steps. She likes having an automatic and efficient way to
+synchronise her project files between these places. Moreover, some of
+the data within the project is collected or analysed by her
+colleagues, possibly from another team. She uses the same mechanism to
+synchronise the data with a centralized storage (e.g. network storage
+owned by her lab), preserving origin and authorship of files, and
+combining simultaneous contributions. This is distributed version
 control.
 
-It is also possible that you may want to have a mechanism to publish,
-completely or selectively, your raw data, or outputs, or both. Or to
-work with a large dataset that is stored elsewhere when you only need
-some of the files, without having to download everything.
+Finally, Alice wants to have a mechanism to publish, completely or
+selectively, her raw data, or outputs, or both. Or to work selectively
+with a large collection of files - keeping all of them on a server,
+and only fetching some to her laptop.
 
 These are typical data management issues which we will touch upon during
 this workshop. From the technical point of view we will be using
