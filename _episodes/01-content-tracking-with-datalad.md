@@ -19,21 +19,6 @@ keypoints:
 - "\"Large\" files are annexed, and protected from accidental modifications"
 ---
 
-> ## Dev note
-> 
-> The goal of this chapter is to introduce the following datalad commands:
-> - datalad help
-> - datalad create
-> - datalad save
-> - datalad run
-> 
-> And the following things:
-> - binary vs text distinction
-> - git log (tig)
->
-> The content / narrative is based on the [introduction to datalad for Yale](https://handbook.datalad.org/en/latest/code_from_chapters/yale.html) chapter from the handbook.
-{: .callout}
-
 ## Introduction
 
 Alice is a PhD student. She works on a fairly typical research
