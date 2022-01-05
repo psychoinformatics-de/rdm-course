@@ -16,7 +16,7 @@ keypoints:
 - "You can manually save changes with `datalad save`"
 - "You can use `datalad download-url` to preserve file origin"
 - "You can use `datalad run` to capture outputs of a command"
-- "Large files are annexed, and protected from accidental modifications"
+- "\"Large\" files are annexed, and protected from accidental modifications"
 ---
 
 > ## Dev note
@@ -190,7 +190,8 @@ new directory under this name and instruct DataLad to manage it. Here,
 the command also has an additional option, the `-c text2git`
 option. With the -c option, datasets can be pre-configured in a
 certain way at the time of creation, and `text2git` is one of the
-available *run procedures*:
+available *run procedures* (later we'll explain why we chose to use it
+in this example):
 
 ~~~
 datalad create -c text2git my-dataset
@@ -701,13 +702,18 @@ o Instruct annex to add text files to Git
 ~~~
 
 Remember how we created the dataset with `datalad create -c text2git
-my-dataset`? The `-c text2git` option defined the distinction: text
-files are controlled with git, other (binary) files are annexed. By
-default (without `text2git`) all files are annexed; there are
-different configurations and they can also be tweaked manually.
+my-dataset`? The `-c text2git` option defined the distinction in a
+particular way: text files are controlled with git, other (binary)
+files are annexed. By default (without `text2git`) all files would be
+annexed. There are also other predefined configuration, and it's easy
+to tweak the setting manually (however, we won't do this in this
+tutorial). As a general rule you will probably want to hand some text
+files to git (code, descriptions), and annex other (especially those
+huge in size or number). In other words, while `text2git` works well
+for our example, you should not treat the default approach.
 
-The by-product of the above is that annexed files are write-protected
-to prevent accidental modifications:
+One essential by-product of the above distinction is that annexed
+files are write-protected to prevent accidental modifications:
 
 ![git vs git-annex]({{ page.root }}/fig/git_vs_gitannex.svg)
 
