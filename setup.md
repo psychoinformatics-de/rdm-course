@@ -10,16 +10,25 @@ root: .
 {: .callout}
 
 
+## Participate without installation: Jupyter Hub
+If you are participating in an organised workshop, the organisers may
+have provided you with an access to a Jupyter Hub. In this case you
+will be working on a remote server, with all required software,
+through a web browser interface. This interface, called Jupyter Lab,
+gives you access to a command line, a basic file browser and a basic
+text editor.
+
 ## Participate without installation: use Binder
-If you can't or don't want to use your own machine, you can follow all
-exercises through binder (link: TODO). The link opens a jupyter lab
-interface in your browser, where you have access to a command line, a
-basic file browser and a basic text editor. The binder environment
-contains everything that's required during the workshop. However, it
-has two limitations: it is not persistent (all content will be removed
-after you close it) and does not allow outgoing ssh connections
-(meaning that during the lesson about collaboration you won't be able
-to publish all example data).
+If you don't have access to a premade environment (such as the Jupyter
+Hub above) and can't or don't want to install anything on your own
+machine, you can follow all exercises through
+[Binder](https://mybinder.org/v2/gh/datalad-handbook/datalad-tutorial-binder/HEAD).
+The link opens a Jupyter Lab interface in your browser (see
+above). The binder environment has everything that's needed during the
+workshop. However, it has two limitations: it is not persistent (all
+content will be removed after you close it) and does not allow
+outgoing ssh connections (meaning that during the lesson about
+collaboration you won't be able to publish all example data).
 
 ## Participate with own computer: install software
 
