@@ -585,7 +585,7 @@ bill_length_mm:
 {: .language-yaml}
 
 
-## [WIP] File / directory structure
+## File / directory structure
 
 Above, we have been dealing mostly with file naming and file types.
 What remains is a way these files are organised into directories.
@@ -595,6 +595,7 @@ affects:
 - the ease of creating script-based analysis
 - the ability to use automated tools which rely on a predefined
   structure
+- the ability of others to understand your project
 
 In fact, all of us are probably using some sort of rules to organise
 our data. These rules may come from a field-specific or lab-specific
@@ -607,9 +608,59 @@ orders) levels such as:
 - data type or measurement method.
 
 Using a consistent pattern within an experiment makes scripting
-easier.  Using a consistent pattern across experiment, or across labs,
+easier. Using a consistent pattern across experiment, or across labs,
 saves time on repetitive processing steps and simplifies
 collaboration, as it is much easier to figure out what goes where.
+
+### Keeping inputs and outputs separately
+
+Consider the following:
+
+~~~
+/dataset
+├── sample1
+│   └── a001.dat
+├── sample2
+│   └── a001.dat
+...
+~~~
+
+which after applying a transform (preprocessing, analysis, ...) becomes:
+
+~~~
+/dataset
+├── sample1
+│   ├── ps34t.dat
+│   └── a001.dat
+├── sample2
+│   ├── ps34t.dat
+│   └── a001.dat
+...
+~~~
+
+Without expert / domain knowledge, no distinction between original and
+derived data is possible anymore. Compare it to a case with a clearer
+separation of semantics:
+
+~~~
+/derived_dataset
+├── sample1
+│   └── ps34t.dat
+├── sample2
+│   └── ps34t.dat
+├── ...
+└── inputs
+    └── raw
+        ├── sample1
+        │   └── a001.dat
+        ├── sample2
+        │   └── a001.dat
+        ...
+~~~
+
+Additionally, the example above demonstrates a nesting strategy, where
+the input dataset is contained (or linked) within the output dataset,
+rather than placed alongside.
 
 ### Full versus relative paths
 
@@ -713,6 +764,7 @@ compendium/
 > [cookiecutter](https://cookiecutter.readthedocs.io/). Cookiecutter
 > allows you to create files and folders based on a template (using
 > your own or one that's available) and user input.
+{: .callout}
 
 ### Example structure: YODA principles
 
