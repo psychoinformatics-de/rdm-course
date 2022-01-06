@@ -348,6 +348,27 @@ Any dataset will likely store different kinds of data, and use different file fo
 
 A text file can be viewed and edited using a text editor . The *lines* are delimited by a newline character, typically written as `\n`. Note that although some editors will *wrap* lines for display purposes, this is purely visual, as the line endings are stored in the file.
 
+Here's a quick overview of commonly found text and binary files. Note that although we are identifying them by extension, on UNIX-like systems the extensions are just part of a file name and are customary rather than essential.
+
+| Text                                            | Binary                                             |
+|-------------------------------------------------|----------------------------------------------------|
+| .txt                                            | images: .jpg, .png, .tiff                          |
+| markup: .md, .rst, .html                        | documents: docx, .xlsx, .pdf                       |
+| source code: .py, .R, .m                        | compiled files: .pyc, .o, .exe                     |
+| text-serialised formats: .toml, yaml, json, xml | binary-serialised formats: .pickle, .feather, .hdf |
+| delimited files: .tsv, .csv                     | domain-specific: .nii, .edf                        |
+| vector graphics: .svg                           | compressed: .zip .gz, .7z                          |
+| ...                                             | ...
+
+We'll take a closer look at "markup", "serialised" and "delimited" files a bit later.
+Now, note some potentially surprising facts:
+- Scalable Vector Graphics (SVG) is actually a text file, where all objects are described with XML notation.
+  For example, this is a blue rectangle with a black border: `<rect width="300" height="100" style="fill:rgb(0,0,255);stroke-width:3;stroke:rgb(0,0,0)" />`.
+- A Word document (.docx) is not a text file, but actually a zipped XML, and therefore binary.
+  It follows the Office Open XML specification.
+  Although what you see is mostly text, the file can pack different contents.
+  The same goes, for example, for .xlsx.
+
 ### Version control
 
 One important feature of text files is that they can be version controlled on a line by line basis. So if you have a long file, but only change it in a few places, changes will be recorded for the specific lines. Moreover, it will be easy to display what the modification involved, by portraying it as lines being taken out and added (in programming slang, this is called a file *diff*).
