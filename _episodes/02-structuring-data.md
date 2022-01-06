@@ -348,13 +348,36 @@ Any dataset will likely store different kinds of data, and use different file fo
 
 A text file can be viewed and edited using a text editor . The *lines* are delimited by a newline character, typically written as `\n`. Note that although some editors will *wrap* lines for display purposes, this is purely visual, as the line endings are stored in the file.
 
-### Version control
+Here's a quick overview of commonly found text and binary files. Note that although we are identifying them by extension, on UNIX-like systems the extensions are just part of a file name and are customary rather than essential.
+
+| Text                                            | Binary                                             |
+|-------------------------------------------------|----------------------------------------------------|
+| .txt                                            | images: .jpg, .png, .tiff                          |
+| markup: .md, .rst, .html                        | documents: docx, .xlsx, .pdf                       |
+| source code: .py, .R, .m                        | compiled files: .pyc, .o, .exe                     |
+| text-serialised formats: .toml, yaml, json, xml | binary-serialised formats: .pickle, .feather, .hdf |
+| delimited files: .tsv, .csv                     | domain-specific: .nii, .edf                        |
+| vector graphics: .svg                           | compressed: .zip .gz, .7z                          |
+| ...                                             | ...
+
+We'll take a closer look at "markup", "serialised" and "delimited" files a bit later.
+Now, note some potentially surprising facts:
+- Scalable Vector Graphics (SVG) is actually a text file, where all objects are described with XML notation.
+  For example, this is a blue rectangle with a black border: `<rect width="300" height="100" style="fill:rgb(0,0,255);stroke-width:3;stroke:rgb(0,0,0)" />`.
+- A Word document (.docx) is not a text file, but actually a zipped XML, and therefore binary.
+  It follows the Office Open XML specification.
+  Although what you see is mostly text, the file can pack different contents.
+  The same goes, for example, for .xlsx.
+
+### Implications of file types for version control
 
 One important feature of text files is that they can be version controlled on a line by line basis. So if you have a long file, but only change it in a few places, changes will be recorded for the specific lines. Moreover, it will be easy to display what the modification involved, by portraying it as lines being taken out and added (in programming slang, this is called a file *diff*).
 
 Compare this to a binary file, which does not have a line structure. It's easy to notice that a file changed, but it's not easy to show what changed inside. Version control systems, including DataLad, will also track binary files, but the (in)ability to distinguish or display lines will make it more similar to a per-file basis.
 
-DataLad introduces one additional distinction between text and binary files. In the configuration we used in the previous module (which is a reasonable choice for many situations), binary files would get annexed (meaning that tracking of information about the file presence and its content would be somewhat separated, with `git-annex` used under the hood) and text files would not (although you might also choose different rules for which files to annex). We have already observed one consequence of annexing: to protect the data from accidental modifications, DataLad will content-lock the annexed files, disabling your permission to edit them (the files can be unlocked manually with `datalad unlock` or automatically when using `datalad run`). Another consequence (which we will discuss in the subsequent module) is that not all data hosting services accept annexed content, and you may need to publish it separately.
+The distinction is relevant for many DataLad datasets. While DataLad provides a single interface for all files, it may treat them differently according to certain rules. By the default rule, all files are annexed (information about the file presence and its content are somewhat separated, and `git-annex` is the program used under the hood for file tracking). This is good for large files, but less so for smaller text files when we care about single-line changes (eg. source code). For this reason, in the previous module we used the `text2git` configuration, dividing the files into text (not annexed, controlled by `git`) and binary (annexed, controlled by `git-annex`). However, in real-life this might not be a good solution either, as it can unnecessarily burden the non-annexed part of the dataset (imagine having tons of svg files, or html reports with embedded graphics). For this reason you may wish to set the rules by specific folders, filename patterns, or file sizes instead (we won't do it now, but an [explanation](https://handbook.datalad.org/en/latest/basics/101-123-config2.html) can be found in the DataLad handbook).
+
+In addition to performance, there are other visible consequences of annexing. We have already observed one: to protect the data from accidental modifications, DataLad will content-lock the annexed files, disabling your permission to edit them (the files can be unlocked manually with `datalad unlock` or automatically when using `datalad run`). Two more consequences will become apparent in the subsequent module dedicated to data publishing and consumption. First, not all data hosting services accept annexed content, and you may need to publish it separately. Second, when you retrieve a copy of dataset from elsewhere, the annexed content is obtained on demand, rather than immediately.
 
 ### Different flavors of text files
 
@@ -562,7 +585,7 @@ bill_length_mm:
 {: .language-yaml}
 
 
-## [WIP] File / directory structure
+## File / directory structure
 
 Above, we have been dealing mostly with file naming and file types.
 What remains is a way these files are organised into directories.
@@ -572,6 +595,7 @@ affects:
 - the ease of creating script-based analysis
 - the ability to use automated tools which rely on a predefined
   structure
+- the ability of others to understand your project
 
 In fact, all of us are probably using some sort of rules to organise
 our data. These rules may come from a field-specific or lab-specific
@@ -584,9 +608,59 @@ orders) levels such as:
 - data type or measurement method.
 
 Using a consistent pattern within an experiment makes scripting
-easier.  Using a consistent pattern across experiment, or across labs,
+easier. Using a consistent pattern across experiment, or across labs,
 saves time on repetitive processing steps and simplifies
 collaboration, as it is much easier to figure out what goes where.
+
+### Keeping inputs and outputs separately
+
+Consider the following:
+
+~~~
+/dataset
+├── sample1
+│   └── a001.dat
+├── sample2
+│   └── a001.dat
+...
+~~~
+
+which after applying a transform (preprocessing, analysis, ...) becomes:
+
+~~~
+/dataset
+├── sample1
+│   ├── ps34t.dat
+│   └── a001.dat
+├── sample2
+│   ├── ps34t.dat
+│   └── a001.dat
+...
+~~~
+
+Without expert / domain knowledge, no distinction between original and
+derived data is possible anymore. Compare it to a case with a clearer
+separation of semantics:
+
+~~~
+/derived_dataset
+├── sample1
+│   └── ps34t.dat
+├── sample2
+│   └── ps34t.dat
+├── ...
+└── inputs
+    └── raw
+        ├── sample1
+        │   └── a001.dat
+        ├── sample2
+        │   └── a001.dat
+        ...
+~~~
+
+Additionally, the example above demonstrates a nesting strategy, where
+the input dataset is contained (or linked) within the output dataset,
+rather than placed alongside.
 
 ### Full versus relative paths
 
@@ -690,6 +764,7 @@ compendium/
 > [cookiecutter](https://cookiecutter.readthedocs.io/). Cookiecutter
 > allows you to create files and folders based on a template (using
 > your own or one that's available) and user input.
+{: .callout}
 
 ### Example structure: YODA principles
 
