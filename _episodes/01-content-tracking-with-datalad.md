@@ -16,73 +16,73 @@ keypoints:
 - "You can manually save changes with `datalad save`"
 - "You can use `datalad download-url` to preserve file origin"
 - "You can use `datalad run` to capture outputs of a command"
-- "Large files are annexed, and protected from accidental modifications"
+- "\"Large\" files are annexed, and protected from accidental modifications"
 ---
-
-> ## Dev note
-> 
-> The goal of this chapter is to introduce the following datalad commands:
-> - datalad help
-> - datalad create
-> - datalad save
-> - datalad run
-> 
-> And the following things:
-> - binary vs text distinction
-> - git log (tig)
->
-> The content / narrative is based on the [introduction to datalad for Yale](https://handbook.datalad.org/en/latest/code_from_chapters/yale.html) chapter from the handbook.
-{: .callout}
 
 ## Introduction
 
-Imagine (this in fact might be close to reality) that you are working
-on a project which involves collecting and processing of some kind of
-data. When you are working locally, you may want to have an automated
-record of when a given file was added, where it came from, what input
-files were used to generate a given output, or why some things were
-made. Even if you are not sharing the data, this information might be
-essential for the future you, when you return to the project after
-some time. Also, when making changes to your files, you may want them
-to be reversible, in case you discover that a different way of doing
-things is needed. This is local version control.
+Alice is a PhD student. She works on a fairly typical research
+project, which involves collection and processing of data. The exact
+kind of data she works with is not relevant for us, what's relevant is
+that getting from the first sample to the final result is a cumulative
+process.
 
-Imagine also that the project is a collaborative effort. For example,
-the data may be collected by you and several colleagues, and analyzed
-by other members of your team (or by an entirely different team). You
-may wish to have a mechanism to synchronizes your personal datasets
-with a centralist storage (for example, your laboratory network
-storage), which preserves the origin of files as all of you are making
-simultaneous contributions over time. This is distributed version
+When Alice is working locally, she likes to have an automated record
+of when a given file was last changed, where it came from, what input
+files were used to generate a given output, or why some things were
+done. Even if she won't be sharing the data with anyone, these records
+might be essential for her future self, when she needs to return to
+the project after some time. Moreover, Alice's project is exploratory,
+and she often makes large changes to her analysis scripts. She enjoys
+the comfort of being able to return all files to a previously recorded
+state if she makes a mistake or figures out a better solution. This is
+local version control.
+
+Alice's work is not confined to a single computer. She has a laptop
+and a desktop, and she uses a remote server to run some time-consuming
+analysis steps. She likes having an automatic and efficient way to
+synchronise her project files between these places. Moreover, some of
+the data within the project is collected or analysed by her
+colleagues, possibly from another team. She uses the same mechanism to
+synchronise the data with a centralized storage (e.g. network storage
+owned by her lab), preserving origin and authorship of files, and
+combining simultaneous contributions. This is distributed version
 control.
 
-It is also possible that you may want to have a mechanism to publish,
-completely or selectively, your raw data, or outputs, or both. Or to
-work with a large dataset that is stored elsewhere when you only need
-some of the files, without having to download everything.
+Finally, Alice wants to have a mechanism to publish, completely or
+selectively, her raw data, or outputs, or both. Or to work selectively
+with a large collection of files - keeping all of them on a server,
+and only fetching some to her laptop.
 
 These are typical data management issues which we will touch upon during
 this workshop. From the technical point of view we will be using
 DataLad, a data management multi-tool that can assist you in handling
 the entire life cycle of digital objects. It is a command-line tool,
 free and open source, and available for all major operating
-systems.
+systems. The first module will deal only with local version control. In the
+next one, we will set the technical details aside and talk about good
+practices in file management. Later during the workshop we will
+discuss distributed version control, publish a dataset, and see what
+it looks like from the perspective of data consumers. In the last
+module we will talk about more complex scenarios with linked datasets.
 
-The first module will deal only with local version control.  We will
-introduce basic DataLad commands - a technical foundation for all the
-operations above - while building a little example dataset. Later
-during the workshop we will discuss distributed version control,
-publish our dataset and see what it looks like from the perspective of
-data consumers. Within this workshop we will also set the technical
-aspect aside and talk about good practices in managing files and
-datasets.
+In this lesson we will gradually build up an example dataset,
+discovering version control and basic DataLad concepts in the
+process. Along the way, we will introduce basic DataLad commands - a
+technical foundation for all the operations outlined above. Since
+DataLad is agnostic about the kind of data it manages, we will use
+photographs and text files to represent our dataset content. We will
+add these files, record their origin, make changes, track these
+changes, and undo things we don't want to keep.
+
 
 ## Setting up
 
-In order to code along, you should have a recent DataLad version.  The
-workshop was developed based on DataLad version `0.15`. If you are
-unsure about your version of DataLad, you can check it using the
-following command:
+In order to code along, you should have a recent DataLad version. The
+workshop was developed based on DataLad version `0.15`. Installation
+instructions are included in the [Setup]({{ page.root }}{% link
+setup.md %}) page. If you are unsure about your version of DataLad,
+you can check it using the following command:
 
 ~~~
 datalad --version
@@ -115,17 +115,11 @@ With the `--global` option, you need to do this once on a given
 system, as the values will be stored for your user account. Of course
 you can change or override them later.
 
-For some examples, you will also need python with pillow library
-installed. If you are using your own machine and you created a virtual
-environment, now is a good time to activate it (e.g. `source
-~/.venvs/rdm-workshop/bin/activate`).
-
-
-## Objective
-
-In this lesson we will gradually build up a dataset, discovering
-version control and basic DataLad concepts in the process. Our example
-dataset will contain photos and simple text files.
+Note for participants using their own computers. Some examples used to
+illustrate data processing require python with pillow library. If you
+are using a virtual environment, now is a good time to activate it
+(e.g. `source ~/.venvs/rdm-workshop/bin/activate`). You'll find more
+details in the [Setup]({{ page.root }}{% link setup.md %}) page.
 
 
 ## How to use DataLad
@@ -181,7 +175,8 @@ new directory under this name and instruct DataLad to manage it. Here,
 the command also has an additional option, the `-c text2git`
 option. With the -c option, datasets can be pre-configured in a
 certain way at the time of creation, and `text2git` is one of the
-available *run procedures*:
+available *run procedures* (later we'll explain why we chose to use it
+in this example):
 
 ~~~
 datalad create -c text2git my-dataset
@@ -322,9 +317,11 @@ mkdir -p inputs/images
 ~~~
 
 Then, let's put a file in it. To avoid leaving terminal, we will use the linux `wget` command. This is just for convenience - the effect would be the same if we opened the link in the browser and saved the file from there.
+The `-O` option specifies the output file - since this is a photo of chinstrap penguins, and we may expect multiple of those, let's name the file `chinstrap_01.jpg`.
+We are putting the URL in brackets, to avoid confusing our computer with the `?` character, which can be interpreted as a placeholder for any character.
 
 ~~~
-wget --content-disposition --directory-prefix=inputs/images/ "https://unsplash.com/photos/3Xd5j9-drDA/download?force=true"
+wget -O inputs/images/chinstrap_01.jpg "https://unsplash.com/photos/3Xd5j9-drDA/download?force=true"
 ~~~
 {: .language-bash}
 
@@ -340,14 +337,16 @@ tree
 .
 ├── inputs
 │   └── images
-│       └── derek-oyen-3Xd5j9-drDA-unsplash.jpg
+│       └── chinstrap_01.jpg
 └── README.md
 ~~~
 {: .output}
 
 While we're at it, lets open the readme file (`nano README.md`) and
-make a note on how we organize the data (save and exit with Ctrl-O,
-enter, Ctrl-X):
+make a note on how we organize the data. Note the unobtrusive markdown
+syntax for headers, monospace, and list items, which may be used for
+rendering by software or websites. With nano, save and exit with:
+Ctrl-O, enter, Ctrl-X:
 
 ~~~
 # Example dataset
@@ -377,7 +376,7 @@ supply a path to the file or files you want to save. We will it this
 way, and record two separate changes:
 
 ~~~
-datalad save -m "Add first penguin image" inputs/images/derek-oyen-3Xd5j9-drDA-unsplash.jpg
+datalad save -m "Add first penguin image" inputs/images/chinstrap_01.jpg
 datalad save -m "Update readme" README.md
 ~~~
 {: .language-bash}
@@ -388,11 +387,11 @@ For now, we have manually downloaded the file and saved it to the
 dataset. However, saving a file from a URL is a common scenario,
 whether we are using a public repository or a local network
 storage. For that, DataLad has a `datalad download-url` method. Let's
-use it to download another file (making sure that there is a trailing
-slash after the `--path` argument):
+use it to download another file (this command also provides the `-O`
+option to specify an output path, similar to wget):
 
 ~~~
-datalad download-url --path=inputs/images/ https://unsplash.com/photos/8PxCm4HsPX8/download?force=true
+datalad download-url -O inputs/images/chinstrap_02.jpg "https://unsplash.com/photos/8PxCm4HsPX8/download?force=true"
 ~~~
 {: .language-bash}
 
@@ -425,7 +424,7 @@ of rules to store variables) with the same name but different
 extension:
 
 ~~~
-nano inputs/images/derek-oyen-3Xd5j9-drDA-unsplash.yaml
+nano inputs/images/chinstrap_01.yaml
 ~~~
 {: .language-bash}
 
@@ -437,7 +436,7 @@ penguin_count: 3
 {: .language-yaml}
 
 ~~~
-nano inputs/images/derek-oyen-8PxCm4HsPX8-unsplash.yaml
+nano inputs/images/chinstrap_02.yaml
 ~~~
 {: .language-bash}
 
@@ -452,7 +451,7 @@ We can use the already familiar `datalad save` command to record
 these changes (addition of two files):
 
 ~~~
-datalad save -m "Add metadata to photos"
+datalad save -m "Add sidecar metadata to photos"
 ~~~
 {: .language-bash}
 
@@ -522,9 +521,10 @@ even if subsequent `save` operations have been performed on the
 dataset. To call it, we need to know the *commit hash* (unique
 identifier) of the change which we want to revert. It is displayed by
 `tig` at the bottom of the window and looks like this:
-`8ddaaad243344f38cd778b013e7e088a5b2aa11b`. Don't worry, we only need
-the first couple characters. Find your commit hash and call `git
-revert`:
+`8ddaaad243344f38cd778b013e7e088a5b2aa11b` (note: because of the
+algorithm used by git, yours will be different). Don't worry, we only
+need the first couple characters. Find your commit hash and call `git
+revert` taking the beginning characters (seven should be plenty):
 
 ~~~
 git revert --no-edit 8ddaaad
@@ -562,7 +562,7 @@ Now, let's "write" our custom script. You can download it using wget
 and then save it as part of the dataset
 
 ~~~
-wget --prefix outputs https://github.com/psychoinformatics-de/rdm-course/raw/gh-pages/data/greyscale.py
+wget -O code.greyscale.py https://github.com/psychoinformatics-de/rdm-course/raw/gh-pages/data/greyscale.py
 datalad save -m "Add an image processing script"
 ~~~
 {: .language-bash}
@@ -572,7 +572,7 @@ and `output file`. You can check this with `python code/greyscale.py
 --help`. Let's apply it for the first image, and place the output in the `outputs/images_greyscale` category, slightly changing the name:
 
 ~~~
-python code/greyscale.py inputs/images/derek-oyen-3Xd5j9-drDA-unsplash.jpg outputs/images_greyscale/derek-oyen-3Xd5j9-drDA-greyscale.jpg
+python code/greyscale.py inputs/images/chinstrap_01.jpg outputs/images_greyscale/chinstrap_01_grey.jpg
 ~~~
 {: .language-bash}
 
@@ -601,7 +601,7 @@ also give the commit message, just as we could with `datalad
 save`. Let's try this on the other image:
 
 ~~~
-datalad run -m "Convert the second image to greyscale" python code/greyscale.py inputs/images/derek-oyen-8PxCm4HsPX8-unsplash.jpg outputs/images_greyscale/derek-oyen-8PxCm4HsPX8-greyscale.jpg
+datalad run -m "Convert the second image to greyscale" python code/greyscale.py inputs/images/chinstrap_02.jpg outputs/images_greyscale/chinstrap_02_grey.jpg
 ~~~
 {: .language-bash}
 
@@ -617,7 +617,7 @@ and press enter):
 === Do not change lines below ===
 {
 "chain": [],
-"cmd": "python code/greyscale.py inputs/images/derek-oyen-8PxCm4HsPX8-unsplash.jpg outputs/images_greyscale/derek-oyen-8PxCm4HsPX8-greyscale.jpg",
+"cmd": "python code/greyscale.py inputs/images/chinstrap_02.jpg outputs/images_greyscale/chinstrap_02_grey.jpg",
 "dsid": "b4ee3e2b-e132-4957-9987-ca8aad2d8dfc",
 "exit": 0,
 "extra_inputs": [],
@@ -650,7 +650,7 @@ exists. This time we will skip `datalad run` to avoid creating a record
 of our little mischief:
 
 ~~~
-python code/greyscale.py inputs/images/derek-oyen-3Xd5j9-drDA-unsplash.jpg outputs/images_greyscale/derek-oyen-8PxCm4HsPX8-greyscale.jpg
+python code/greyscale.py inputs/images/chinstrap_01.jpg outputs/images_greyscale/chinstrap_02_grey.jpg
 ~~~
 {: .language-bash}
 
@@ -660,7 +660,7 @@ Traceback (most recent call last):
     grey.save(args.output_file)
   File "/home/bob/Documents/rdm-temporary/venv/lib/python3.9/site-packages/PIL/Image.py", line 2232, in save
     fp = builtins.open(filename, "w+b")
-PermissionError: [Errno 13] Permission denied: 'outputs/images_greyscale/derek-oyen-8PxCm4HsPX8-greyscale.jpg'
+PermissionError: [Errno 13] Permission denied: 'outputs/images_greyscale/chinstrap_02_grey.jpg'
 ~~~
 {: .output}
 
@@ -687,27 +687,32 @@ o Instruct annex to add text files to Git
 ~~~
 
 Remember how we created the dataset with `datalad create -c text2git
-my-dataset`? The `-c text2git` option defined the distinction: text
-files are controlled with git, other (binary) files are annexed. By
-default (without `text2git`) all files are annexed; there are
-different configurations and they can also be tweaked manually.
+my-dataset`? The `-c text2git` option defined the distinction in a
+particular way: text files are controlled with git, other (binary)
+files are annexed. By default (without `text2git`) all files would be
+annexed. There are also other predefined configuration, and it's easy
+to tweak the setting manually (however, we won't do this in this
+tutorial). As a general rule you will probably want to hand some text
+files to git (code, descriptions), and annex other (especially those
+huge in size or number). In other words, while `text2git` works well
+for our example, you should not treat the default approach.
 
-The by-product of the above is that annexed files are write-protected
-to prevent accidental modifications:
+One essential by-product of the above distinction is that annexed
+files are write-protected to prevent accidental modifications:
 
 ![git vs git-annex]({{ page.root }}/fig/git_vs_gitannex.svg)
 
 If we do want to edit the annexed file, we can unlock it:
 
 ~~~
-datalad unlock outputs/images_greyscale/derek-oyen-8PxCm4HsPX8-greyscale.jpg
+datalad unlock outputs/images_greyscale/chinstrap_02_grey.jpg
 ~~~
 {: .language-bash}
 
 Now, the operation should succeed:
 
 ~~~
-python code/greyscale.py inputs/images/derek-oyen-3Xd5j9-drDA-unsplash.jpg outputs/images_greyscale/derek-oyen-8PxCm4HsPX8-greyscale.jpg
+python code/greyscale.py inputs/images/chinstrap_01.jpg outputs/images_greyscale/chinstrap_02_grey.jpg
 ~~~
 {: .language-bash}
 
@@ -719,7 +724,7 @@ datalad status
 {: .language-bash}
 
 ~~~
-modified: outputs/images_greyscale/derek-oyen-8PxCm4HsPX8-greyscale.jpg (file)
+modified: outputs/images_greyscale/chinstrap_02-grey.jpg (file)
 ~~~
 {: .output}
 
@@ -744,8 +749,8 @@ run call.
 
 ~~~
 datalad run \
-    --input inputs/images/derek-oyen-8PxCm4HsPX8-unsplash.jpg \
-    --output outputs/images_greyscale/derek-oyen-8PxCm4HsPX8-greyscale.jpg \
+    --input inputs/images/chinstrap_02.jpg \
+    --output outputs/images_greyscale/chinstrap_02_grey.jpg \
     -m "Convert the second image again" \
     python code/greyscale.py {inputs} {outputs}
 ~~~
@@ -753,10 +758,10 @@ datalad run \
 
 ~~~
 [INFO   ] Making sure inputs are available (this may take some time)
-unlock(ok): outputs/images_greyscale/derek-oyen-8PxCm4HsPX8-greyscale.jpg (file)
+unlock(ok): outputs/images_greyscale/chinstrap_02_grey.jpg (file)
 [INFO   ] == Command start (output follows) ===== 
 [INFO   ] == Command exit (modification check follows) ===== 
-add(ok): outputs/images_greyscale/derek-oyen-8PxCm4HsPX8-greyscale.jpg (file)
+add(ok): outputs/images_greyscale/chinstrap_02_grey.jpg (file)
 ~~~
 {: .output}
 
@@ -774,10 +779,10 @@ history with `tig`. The commit message contains the following:
  "exit": 0,
  "extra_inputs": [],
  "inputs": [
-  "inputs/images/derek-oyen-8PxCm4HsPX8-unsplash.jpg"
+  "inputs/images/chinstrap_02.jpg"
  ],
  "outputs": [
-  "outputs/images_greyscale/derek-oyen-8PxCm4HsPX8-greyscale.jpg"
+  "outputs/images_greyscale/chinstrap_02_grey.jpg"
  ],
  "pwd": "."
 }
@@ -788,16 +793,18 @@ history with `tig`. The commit message contains the following:
 ### Making some more additions
 
 Let's make a few more changes to the dataset. We will return to it in
-the workshop module on remote collaboration. As an exercise:
+the workshop module on remote collaboration. As an exercise, do these
+things under DataLad control:
 
-- Download the image from this url into the `inputs/images` directory:
+- Download the king penguin image from this url:
   `https://unsplash.com/photos/8fmTByMm8wE/download?force=true`
+  and save it as `inputs/images/king_01.jpg`
 - Create a yaml file with the following content and save changes in the
   dataset:
   ~~~
-  photographer: Derek Oyen
+  photographer: Ian Parker
   license: Unsplash License
-  penguin_count: 3
+  penguin_count: 5
   ~~~
   {: .language-yaml}
 - Add the following acknowledgments at the end of the README:
@@ -816,14 +823,14 @@ the workshop module on remote collaboration. As an exercise:
 > ```
 > datalad download-url \
 >   -m "Add third image" \
->   --path=inputs/images/ \
+>   -O inputs/images/king01.jpg \
 >   "https://unsplash.com/photos/8fmTByMm8wE/download?force=true"
 > ```
 > {: .language-bash}
 > 
 > Create the yaml file, e.g. using nano, and update the dataset:
 > ```
-> nano inputs/images/ian-parker-8fmTByMm8wE-unsplash.yaml
+> nano inputs/images/king_01.yaml
 > # paste the contents and save
 > datalad save -m "Add a description to the third picture"
 > ```
