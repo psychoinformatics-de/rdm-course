@@ -591,3 +591,25 @@ In the remainder of this module we will exercise such collaboration.
 
 TODO:
 - outline an exercise
+
+(Divide participants, ask to add each other as contributors and clone each other's dataset)
+
+With a cloned dataset, you can do the following:
+
+- Change a (text) file. For example, in the
+  `inputs/images/chinstrap_02.yaml` file we entered `penguin_count:
+  2`, but if you look closely at the related fotograph, there are
+  actually three penguins (one is partially behind a rock). Edit the
+  file and save the changes with an informative commit message, such
+  as "Include penguins occluded by rocks in the count" or something
+  similar.
+- Add a file. For example, you can use `datalad download-url` to get
+  this image of Gentoo penguins in a sandstorm
+  https://unsplash.com/photos/ptcOlmmtb8w or this image of king
+  penguins diving (both by Ian Parker). Don't forget to add a
+  meaningful message!
+- If you want to practice saving, edit more files. For example you can
+  add location to the yaml files.
+- (Check if we have an unconverted image for datalad run)
+
+(When ready, contribute back by pushing)
