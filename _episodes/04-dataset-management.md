@@ -14,7 +14,7 @@ keypoints:
 
 ## Introduction
 
-A typical analysis relies on input data, and produces output data.
+The simplest analysis takes some input data, and produces output data.
 However, the same input dataset can be used in multiple analyses, and output (e.g. transformed or preprocessed) data produced by one analysis may serve as input for subsequent analysis.
 
 To address these usecases, DataLad provides a mechanism for linking datasets:
@@ -24,7 +24,11 @@ To address these usecases, DataLad provides a mechanism for linking datasets:
 
 (Image from DataLad Handbook)
 
-Subdatasets can also be useful if your data is in the order of hundreds of thousands of files, and splitting them into subdatasets will improve performance.
+You may be interested in subdatasets if:
+- there is a logical need to make your data modular (eg. raw data - preprocessing - analysis - paper)
+- there is a technical need to do so (with data in the order of hundreds of thousands of files, splitting them into subdatasets will improve performance).
+
+In this module, we will take a closer look at this mechanism.
 
 ## Real-life example: using nested datasets
 
@@ -41,9 +45,10 @@ Observe the following.
 - The README provides an overview of the content, hinting that the `data` folder contains input datasets.
 - If you navigate to `code`, you will see that most files with R code are there, hosted on GitHub.
 - If you navigate to `data`, you will see links that take you to *other GitHub repositories* (technical detail - this is how GitHub displays submodules).
-- Side note, if you go to one of the data directories, and navigate all the way to a single `.nii.gz` file, you will see GitHub showing that it is a symlink, not an actual data file.
+- Side note, if you go to one of the data directories, and navigate all the way to a single `.nii.gz` or `png` file, you will see GitHub showing that it is a symlink, not an actual data file.
+- Try for example navigating to `highspeed-decoding/decoding/sub-01/plots/sub-01_run-01_tmap_masked.png`: it's a symbolic link pointing to `.git/annex/objects...`. Let's see if we have the ability to obtain this file through DataLad.
 
-Both the README content and the existence of submodules tell us that we are dealing with subdatasets.
+Both the README content and the existence of submodules told us that we are dealing with subdatasets.
 But we could learn the same through DataLad after installing the dataset.
 Let's install:
 
@@ -57,14 +62,15 @@ datalad clone https://github.com/lnnrtwttkhn/highspeed-analysis.git
 [INFO   ] Remote origin not usable by git-annex; setting annex-ignore
 [INFO   ] https://github.com/lnnrtwttkhn/highspeed-bids.git/config download failed: Not Found
 [INFO   ] access to 1 dataset sibling keeper not auto-enabled, enable with:
-| 		datalad siblings -d "/home/mszczepanik/Documents/rdm-course/highspeed-bids" enable -s keeper
-install(ok): /home/mszczepanik/Documents/rdm-course/highspeed-bids (dataset)
+| 		datalad siblings -d "/home/alice/Documents/rdm-course/highspeed-analysis" enable -s keeper
+install(ok): /home/alice/Documents/rdm-course/highspeed-analysis (dataset)
 ~~~
 {: .output}
 
 Now, let's change directory into the dataset and ask about its subdatasets:
 
 ~~~
+cd highspeed-bids
 datalad subdatasets
 ~~~
 {: .language-bash}
@@ -76,7 +82,71 @@ subdataset(ok): data/decoding (dataset)
 ~~~
 {: .output}
 
-TODO: consider also showing siblings.
+Our goal is to retrieve a file from the "decoding" (sub)dataset.
+
+If we try to list its contents, we see... nothing:
+
+~~~
+ls data/decoding/
+~~~
+{: .language-bash}
+
+~~~
+~~~
+{: .output}
+
+Think of it this way: subdataset is a logically separate entity, and
+you probably don't need its contents from the outset.
+
+To work with a subdataset, we need to install it.
+Subdatasets can be installed with the already familiar `datalad get` command.
+In this case we want to use `--no-data` to only obtain placeholders for annexed files.
+Without the option we would start downloading what could potentially be a ton of files.
+Instead, we'll just get an overview, and `datalad get` the specific file afterwards.
+
+~~~
+datalad get --no-data data/decoding
+~~~
+{: .language-bash}
+
+~~~
+[INFO   ] scanning for annexed files (this may take some time)
+[INFO   ] Remote origin not usable by git-annex; setting annex-ignore
+[INFO   ] https://github.com/lnnrtwttkhn/highspeed-decoding.git/config download failed: Not Found
+install(ok): /home/jupyter-mslw/highspeed-analysis/data/decoding (dataset) [Installed subdataset in order to get /home/alice/Documents/rdm-course/highspeed-analysis/data/decoding]
+~~~
+{: .output}
+
+Now we can list the contents:
+
+~~~
+ls data/decoding
+~~~
+{: .language-bash}
+
+~~~
+CHANGELOG.md  LICENSE  README.md  bids  code  datacite.yml  decoding  fmriprep  glm  highspeed-decoding.Rproj  logs  masks
+~~~
+{: .output}
+
+Let's get the file we wanted (first plot from the first subject):
+
+~~~
+datalad get data/decoding/decoding/sub-01/plots/sub-01_run-01_tvalue_distribution.png
+~~~
+{: .language-bash}
+
+~~~
+get(ok): data/decoding/decoding/sub-01/plots/sub-01_run-01_tmap_masked.png (file) [from gin...]
+~~~
+{: .output}
+
+We successfully obtained the file from the subdataset and can view it.
+
+Why it matters?
+The file we opened was, seemingly, a diagnostic image for visual quality control.
+In a high-level dataset (statistical analysis, paper...) we are probably not very interested in the raw data.
+However, it's convenient to have an easy way to retrieve the low-level dataset when needed.
 
 ## Toy example: creating subdatasets
 
@@ -95,7 +165,6 @@ This is the folder structure we're aiming for:
 ~~~
 ...
 ~~~
-
 
 ### Create a dataset within a dataset
 
