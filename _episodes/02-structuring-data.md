@@ -4,9 +4,9 @@ teaching: 90
 exercises: 0
 questions:
 - "What is a good filename?"
-- "How to keep data nicely structured?"
+- "How to keep data neatly structured?"
 objectives:
-- "Name good practices in organizing data"
+- "List good practices in organizing data"
 - "Distinguish between text vs binary data"
 - "Explore lightweight text files and how they can be useful"
 keypoints:
@@ -42,29 +42,29 @@ revolve around the three main principles:
 - make sorting and searching easy
 
 A universal gold standard probably does not exist and we do not claim
-to posses one. What we can do, however, is to focus on identifying
+to possess one. What we can do, however, is to focus on identifying
 patterns in file naming which can make working with data easier.
 
 Let's start with a good example for naming what appears to be a
 collection of materials for an English literature class:
 
 ~~~
-reading01_shakespeare_romeo-and-juliet_act01.docx
-reading01_shakespeare_romeo-and-juliet_act02.docx
-reading01_shakespeare_romeo-and-juliet_act03.docx
-reading02_shakespeare_othello.docx
-reading19_plath_the-bell-jar.docx
+✅ reading01_shakespeare_romeo-and-juliet_act01.docx
+✅ reading01_shakespeare_romeo-and-juliet_act02.docx
+✅ reading01_shakespeare_romeo-and-juliet_act03.docx
+✅ reading02_shakespeare_othello.docx
+✅ reading19_plath_the-bell-jar.docx
 ~~~
 
 A "bad" (meaning harder to work with) way of naming the same files
 could look like this:
 
 ~~~
-Romeo and Juliet Act 1.docx
-Romeo and juliet act 2.docx
-Shakespeare RJ act3.docx
-shakespeare othello I think?.docx
-belljar plath (1).docx
+❌ Romeo and Juliet Act 1.docx
+❌ Romeo and juliet act 2.docx
+❌ Shakespeare RJ act3.docx
+❌ shakespeare othello I think?.docx
+❌ belljar plath (1).docx
 ~~~
 
 Not only does the first example look much more orderly, it is also
@@ -104,8 +104,8 @@ With that in mind:
 #### Use only letters, numbers, hyphens, and underscores
 
 - Sometimes there are character encoding issues (less common now)
-- Some characters (such as `'^.*?$+|`) have special meaning, e.g. `?`
-  may mean "match any character"
+- Some characters (such as `'^.*?$+|`) have special meaning for
+  command line tools, e.g. `?` may mean "match any character"
 - Some characters are harder to enter: `ü`, `ł`, ...
 - Some are outright forbidden by some operating systems,
   eg. `<>:"/\|?*` on Windows
@@ -128,7 +128,7 @@ With that in mind:
 - Be consistent
 
 ~~~
-othello.docx
+✅ othello.docx
 ✅ romeo-and-juliet.docx
 
 ❌ othello.docx
@@ -249,7 +249,7 @@ notes19_plath_the-bell-jar.docx
 ~~~
 {: .output}
 
-Or to find notes in python:
+Or to find notes in Python:
 
 ~~~
 import glob
@@ -407,10 +407,11 @@ A very common format for representing free-form text is Markdown. Markdown a *li
 - Links, such as [example](https://example.com)
 - Some `inline code` (and code blocks, not shown)
 ~~~
+{: .language-markdown}
 
-Fairly standardized and very popular, Markdown is recognized by many programs and platforms. While it is readable as-is, many code-hosting websites, such as GitHub, will recognize markdown files (giving special attention to those named README) and render them as html in the web interface. Markdown files are a good choice for describing things in a free narrative - your project, dataset, or analysis. This course materials have also been written in Markdown!
+Fairly standardized and very popular, Markdown is recognized by many programs and platforms. While it is readable as-is, many code-hosting websites, such as GitHub, will recognize markdown files (giving special attention to those named README) and render them as html in the web interface. Markdown files are a good choice for describing things in a free narrative - your project, dataset, or analysis. This course's materials have also been written in Markdown!
 
-There are other markup languages for similar purposes, such as [reStructuredText](https://docutils.sourceforge.io/rst.html) (popular choice in the world of python documentation), [AsciiDoc](https://asciidoc-py.github.io/), or [Org Mode](https://orgmode.org/) (popular among the users of Emacs text editor). Html is also a markup language, but in most cases it is easier to write in one of the lightweight languages and then convert the documents to html.
+There are other markup languages for similar purposes, such as [reStructuredText](https://docutils.sourceforge.io/rst.html) (popular choice in the world of Python documentation), [AsciiDoc](https://asciidoc-py.github.io/), or [Org Mode](https://orgmode.org/) (popular among the users of Emacs text editor). Html is also a markup language, but in most cases it is easier to write in one of the lightweight languages and then convert the documents to html.
 
 #### Delimited files: csv, tsv
 
@@ -850,15 +851,15 @@ metadata representation. This is part of an example dataset:
 └── task-rhymejudgment_bold.json
 ~~~
 
-Few things are worth noticing, as this example combines several
-elements discussed previously:
+Several aspects are worth noticing, as this example combines a
+number of elements discussed previously:
 
 - There is a readme
 - File names follow a key-value principle, with underscores and dashes
   (the pattern here is `sub-<label>_[task-<name>]_modality`)
 - Usage of text files where possible:
   - tsv files are used to store participant tables and event timings.
-  - tson files are used for metadata
+  - json files are used for metadata
 - Sidecar metadata strategy: each .nii.gz (compressed binary file with
   imaging data) has an accompanying tsv file with timings of
   experimental events.

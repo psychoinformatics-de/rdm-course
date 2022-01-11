@@ -6,7 +6,7 @@ root: .
 
 ## Participate without installation: Jupyter Hub
 If you are participating in an organised workshop, the organisers may
-have provided you with an access to a Jupyter Hub. In this case you
+have provided you with access to a Jupyter Hub. In this case you
 will be working on a remote server, with all required software,
 through a web browser interface. This interface, called Jupyter Lab,
 gives you access to a command line, a basic file browser and a basic
@@ -16,12 +16,12 @@ text editor.
 If you don't have access to a premade environment (such as the Jupyter
 Hub above) and can't or don't want to install anything on your own
 machine, you can follow all exercises through
-[Binder](https://mybinder.org/v2/gh/datalad-handbook/datalad-tutorial-binder/HEAD).
+[Binder](https://mybinder.org/v2/gh/datalad/datalad-binder/HEAD).
 The link opens a Jupyter Lab interface in your browser (see
 above). The binder environment has the most important software needed
-during the workshop. However, it has two limitations: it is not
-persistent (all content will be removed after you close it) and does
-not allow outgoing ssh connections (meaning that during the lesson
+during the workshop. However, it has two limitations:
+- it is not persistent (all content will be removed after you close it)
+- it does not allow outgoing ssh connections (meaning that during the lesson
 about collaboration you won't be able to publish all example data).
 
 ## Participate with own computer: install software
@@ -43,23 +43,23 @@ handbook](https://handbook.datalad.org/en/latest/intro/installation.html).
 
 Tig (text mode interface for Git) is a small command line program
 which we will use to view dataset history. On Linux you can istall it
-with your package manager (e.g. `apt install pandoc` on Debian and
+with your package manager (e.g. `apt install tig` on Debian and
 Ubuntu), and on MacOS it's best to install it through
-[homebrew](https://brew.sh) (`brew install tig`), detailed
+[homebrew](https://brew.sh) (`brew install tig`). Detailed
 instructions for different systems are given
 [here](https://jonas.github.io/tig/INSTALL.html).
 
-### Python & modules
+### Python and modules
 
 During the workshop, we will use photos and comma separated files to
 represent data, and custom Python scripts will serve as a model of
 data processing. In addition to Python you will need the following
 libraries:
-- pillow (processing images - examples in Modules 1 and 3)
-- pandas & seaborn (tabular data, plots - examples in Module 4)
+- `pillow` (processing images - examples in Modules 1 and 3)
+- `pandas` and `seaborn` (tabular data, plots - examples in Module 4)
 
 The best way is to create a virtual environment and install the
-packages there. One way to do it is with virtualenv and pip:
+packages there. One way to do it is with `virtualenv` and `pip`:
 
 ~~~
 virtualenv --system-site-packages --python=python3 ~/.venvs/rdm-workshop
@@ -72,18 +72,18 @@ pip install pandas seaborn
 
 [Pandoc](https://pandoc.org/) is a tool for converting files from one
 markup format into another. We will use it in one of the examples in
-module 4. Like with Tig, you can install it with your package manager
-on Linux (e.g. `apt install tig`) or with homebrew on MacOS (`brew
+Module 4. Like with Tig, you can install it with your package manager
+on Linux (e.g. `apt install pandoc`) or with homebrew on MacOS (`brew
 install pandoc`), and you can read about all installation methods and
 systems [here](https://pandoc.org/installing.html).
 
 ## Register a GIN account
 
-[Gin](https://gin.g-node.org/) is a data hosting / management platform
+[GIN](https://gin.g-node.org/) is a data hosting / management platform
 of the German Neuroinformatics Node. In the module on remote
-collaboration we will be using Gin to demonstrate data publishing. If
+collaboration we will be using GIN to demonstrate data publishing. If
 you want to follow the entire walkthrough, you will need to register a
-Gin account [here](https://gin.g-node.org/user/sign_up). From the
+GIN account [here](https://gin.g-node.org/user/sign_up). From the
 registration page:
 
 > For Registration we require only username, password, and a valid

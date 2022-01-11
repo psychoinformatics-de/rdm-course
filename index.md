@@ -11,7 +11,7 @@ objects. We will tackle issues ranging from “what is a good file name”
 to “how to publish a version-controlled dataset”.
 
 The exercises will provide an opportunity to gain hands-on experience
-of using DataLad to create a basic dataset, track its changes over
+with using DataLad to create a basic dataset, track its changes over
 time, and publish its contents. You will also learn how to use data
 created by others and collaborate on datasets. The exercises will be
 based around toy examples, but all operations will be relevant for
