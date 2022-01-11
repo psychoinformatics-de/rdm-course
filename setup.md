@@ -16,7 +16,7 @@ text editor.
 If you don't have access to a premade environment (such as the Jupyter
 Hub above) and can't or don't want to install anything on your own
 machine, you can follow all exercises through
-[Binder](https://mybinder.org/v2/gh/datalad-handbook/datalad-tutorial-binder/HEAD).
+[Binder](https://mybinder.org/v2/gh/datalad/datalad-binder/HEAD).
 The link opens a Jupyter Lab interface in your browser (see
 above). The binder environment has the most important software needed
 during the workshop. However, it has two limitations:
