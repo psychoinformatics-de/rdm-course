@@ -296,7 +296,7 @@ datalad save -m "Add a short README"
 ~~~
 {: .language-bash}
 
-Let's verfify that it got recorded in history:
+Let's verify that it got recorded in history:
 
 ~~~
 tig
@@ -651,8 +651,8 @@ Let's try something else: editing an image which already exists. We
 have done so with text files, so why should it be different?
 
 Let's try doing something nonsensical: using the first input image
-(the one with `3Xd` in its name) and writing its greyscale version
-onto the second output image (the one with `8Px` in its name). Of
+(chinstrap_01.jpg) and writing its greyscale version
+onto the second output image (chinstrap_02_grey.jpg). Of
 course the computer doesn't know what makes sense - the only thing
 which might stop us is that we will be writing to a file which already
 exists. This time we will skip `datalad run` to avoid creating a record
