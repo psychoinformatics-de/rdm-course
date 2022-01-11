@@ -3,18 +3,18 @@ title: "Remote collaboration"
 teaching: 45
 exercises: 45
 questions:
-- How to create a dataset collaboratively?
-- How to publish a dataset?
-- How to consume a dataset?
+- How to create a DataLad dataset collaboratively?
+- How to publish a DataLad dataset?
+- How to consume a DataLad dataset?
 objectives:
 - Exercise publishing and consuming data
 - Demonstrate the dissociation between a dataset and its contents
 keypoints:
-- A dataset can be published with datalad push
-- A dataset can be cloned with datalad clone
+- A dataset can be published with `datalad push`
+- A dataset can be cloned with `datalad clone`
 - The clone operation does not obtain annexed file content, the contents can be obtained selectively
-- Annexed file contents can be removed (drop) and reobtained (get) as long as a copy exists somewhere
-- A dataset can be synchronised with its copy (sibling) with datalad update
+- Annexed file contents can be removed (`drop`) and reobtained (`get`) as long as a copy exists somewhere
+- A dataset can be synchronised with its copy (sibling) with `datalad update`
 - GIN is one of the platforms with which DataLad can interact
 - GIN can serve as a store for both annexed and non-annexed contents
 ---
@@ -93,8 +93,8 @@ drop(ok): /home/alice/Documents/rdm-workshop/my-dataset/inputs/images/chinstrap_
 What are the results? The file is still visible (you can list files
 with `ls inputs/images` or check the directory in your file browser),
 but has no contents: you can try opening it (from your file browser or
-with `xdg-open` if you're on linux) ends in an error. You can verify
-that this has freed up disk space by typing:
+with `xdg-open` if you're on Linux) but this yields an error.
+You can verify that this has freed up disk space by typing:
 
 ```
 datalad status --annex all
@@ -137,10 +137,10 @@ get(ok): inputs/images/chinstrap_02.jpg (file) [from web...]
 ```
 {: .output}
 
-The output shows that it was reobtained from the stored url. You can
+The output shows that it was reobtained from the stored URL. You can
 now verify that the file has its contents and can be opened again.
 
-The datalad `get` / `drop` mechanism is used a lot. Soon, we will
+The datalad `get` / `drop` mechanism is used often. Soon, we will
 demonstrate it in action with datasets downloaded from external
 sources. However, you can already imagine its potential use cases. If
 you have a dataset with many large files and a backup location, you
@@ -169,7 +169,7 @@ other, but virtually impossible to forge it.
 
 > ## Note on Binder (no ssh)
 > 
-> If you are working from the datalad Binder, you will not be able to
+> If you are working from the DataLad Binder, you will not be able to
 > use the ssh protocol, as it is disabled. You can skip the key
 > generation part, and replace all URLs below with their https
 > counterparts (i.e. `https://gin.g-node.org/` instead of
@@ -178,7 +178,7 @@ other, but virtually impossible to forge it.
 > file information and non-annexed text files.
 {: .callout}
 
-To generate the SSH keys, we will follow the GitHub guides on [checking for existing](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/checking-for-existing-ssh-keys) and [generating new keys](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent). The summary below applies to linux.
+To generate the SSH keys, we will follow the GitHub guides on [checking for existing](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/checking-for-existing-ssh-keys) and [generating new keys](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent). The summary below applies to Linux.
 
 You may already have an SSH key and may want to use it. To check for
 existing keys, enter `ls -al ~/.ssh` to check the contents of the
@@ -250,7 +250,7 @@ button "Create Repository".
 
 To publish your dataset, you need to add the GIN repository as a
 *sibling* of your dataset. To do so, use `datalad siblings add`,
-substituting your user name and dataset name below (note that the url
+substituting your user name and dataset name below (note that the URL
 is displayed for you on the GIN website after creating the
 repository). Note that since this is the first time you will be
 connecting to the GIN server via SSH, you will likely be asked to
@@ -278,7 +278,8 @@ later refer to the sibling, and `url` is the address for transferring
 the data.
 
 Afterwards, you can publish your dataset with `datalad push`, using
-the name which we set in the command above:
+the name which we set in the command above together with the `--to`
+option:
 
 ```
 datalad push --to gin
@@ -318,8 +319,8 @@ TODO:
 With the dataset published, we can now switch our perspective to that
 of a data consumer. Obtaining a copy of a dataset is called
 *cloning*. To try it out, let's change our working directory outside
-the dataset. Assuming we've been at the dataset root, we can change to
-the upper directory:
+the dataset. Assuming we've been at the dataset root, we can navigate to
+its parent directory:
 
 ```
 cd ..
@@ -329,7 +330,7 @@ Then, we can clone the dataset using the SSH URL (the same which we
 used to publish the data). For your convenience, the URL is displayed
 above the file list on GIN. Let's name the cloned dataset
 `cloned-dataset` to distinguish it from the original (by default,
-clone command uses the name of the repository):
+the `datalad clone` command uses the name of the repository):
 
 ```
 datalad clone git@gin.g-node.org:/username/dataset-name.git cloned-dataset
@@ -382,7 +383,7 @@ nothing to save, working tree clean
 
 We have already encountered the `get` command, and here we will use it
 again. First, however, let's take a look at the output of another
-command to see what datalad knows about *file availability*:
+command to see what DataLad knows about *file availability*:
 
 ```
 git annex whereis inputs/images/chinstrap_02.jpg (3 copies)
@@ -401,7 +402,7 @@ ok
 {: .output}
 
 This is one of the files originally added through `datalad
-download-url`, and this information was preserved - first line lists
+download-url`, and this information was preserved - the first line lists
 "web" as source, and the exact link is shown at the bottom. Next,
 there is a line labeled "origin", which means the location from which
 the dataset was cloned. And finally, there is the current dataset.
@@ -422,8 +423,8 @@ Now we can verify that the file content is present by opening it. Success!
 
 ### Update the dataset
 
-Let's imagine a situation when there's an update to a dataset
-contents: either a new file is added, or a change is made to an
+Let's imagine a situation when there's an update to a dataset's
+content: either a new file is added, or a change is made to an
 existing one. In both cases, the mechanism for sharing the change will
 be the same. Let's simulate this situation from the side of the
 original dataset.
@@ -480,7 +481,9 @@ was aware that other files remained unchanged and did not reupload
 them.
 
 Let's now switch back to the clone. The command for incorporating
-changes from a sibling is `datalad update`:
+changes from a sibling is `datalad update`, additionally specifying
+the source location via the `-s` option and the type of update via
+the `--how` option:
 
 ```
 cd ../cloned-dataset
@@ -500,7 +503,7 @@ action summary:
 ```
 {: .output}
 
-As with clone, we can:
+As with `datalad clone`, we can:
 - see that the history is updated (`tig`)
 - see the file can be listed (`ls outputs/images_greyscale`)
 
@@ -515,7 +518,7 @@ interested in reproducing its generation (maybe we have a newer
 version of the image processing software, or maybe we had removed all
 copies of the output file to save space). When converting the third
 image, we used `datalad run`. This command preserves inputs, outputs,
-and the command being used, paving way for automatic recomputation.
+and the command being used, paving the way for automatic recomputation.
 
 Use `tig` to view the last commit message and copy (part of) its
 shasum. Then, give it to `datalad rerun`:
@@ -572,7 +575,7 @@ only with ourselves. By itself, this is not very practical, but all
 the steps would be identical if the clone was on another computer. For
 example, we could follow this process to keep our laptop and desktop
 computer in sync (while also having a backup on GIN). Or we could
-prototype our analysis on a laptop, run it on a a shared server or
+prototype our analysis on a laptop, run it on a shared server or
 cluster, and get back the outputs. In this way, the workflow can be
 very useful even when working alone.
 
