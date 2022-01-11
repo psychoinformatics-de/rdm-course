@@ -21,7 +21,7 @@ keypoints:
 The simplest analysis takes some input data, and produces output data.
 However, the same input dataset can be used in multiple analyses, and output (e.g. transformed or preprocessed) data produced by one analysis may serve as input for subsequent analysis.
 
-To address these usecases, DataLad provides a mechanism for linking datasets (Image from DataLad Handbook):
+To address these use cases, DataLad provides a mechanism for linking datasets (Image from DataLad Handbook):
 
 ![Subdataset linkage]({{ page.root }}/fig/linkage_subds.svg)
 {: .image-with-shadow}
@@ -36,9 +36,9 @@ In this module, we will take a closer look at this mechanism.
 
 We will work with the [Highspeed analysis](https://github.com/lnnrtwttkhn/highspeed-analysis) dataset containing data and code from:
 
-> Wittkuhn, L., Schuck, N.W.
-> Dynamics of fMRI patterns reflect sub-second activation sequences and reveal replay in human visual cortex. Nat Commun 12, 1795 (2021).
-> https://doi.org/10.1038/s41467-021-21970-2
+> *Wittkuhn, L., Schuck, N.W.*
+> *Dynamics of fMRI patterns reflect sub-second activation sequences and reveal replay in human visual cortex. Nat Commun 12, 1795 (2021).*
+> *[https://doi.org/10.1038/s41467-021-21970-2](https://doi.org/10.1038/s41467-021-21970-2)*
 
 Let's start by inspecting the dataset's GitHub page.
 Observe the following.
@@ -47,7 +47,7 @@ Observe the following.
 - The README provides an overview of the content, hinting that the `data` folder contains input datasets.
 - If you navigate to `code`, you will see that most files with R code are there, hosted on GitHub.
 - If you navigate to `data`, you will see links that take you to *other GitHub repositories* (technical detail - this is how GitHub displays submodules).
-- Side note, if you go to one of the data directories, and navigate all the way to a single `.nii.gz` or `png` file, you will see GitHub showing that it is a symlink, not an actual data file.
+- Side note: if you go to one of the data directories, and navigate all the way to a single `.nii.gz` or `png` file, you will see GitHub showing that it is a symlink, not an actual data file.
 - Try for example navigating to `highspeed-decoding/decoding/sub-01/plots/sub-01_run-01_tmap_masked.png`: it's a symbolic link pointing to `.git/annex/objects...`. Let's see if we have the ability to obtain this file through DataLad.
 
 Both the README content and the existence of submodules told us that we are dealing with subdatasets.
@@ -97,14 +97,15 @@ ls data/decoding/
 ~~~
 {: .output}
 
-Think of it this way: subdataset is a logically separate entity, and
+Think of it this way: a subdataset is a logically separate entity, and
 you probably don't need its contents from the outset.
 
 To work with a subdataset, we need to install it.
 Subdatasets can be installed with the already familiar `datalad get` command.
 In this case we want to use `--no-data` to only obtain placeholders for annexed files.
-Without the option we would start downloading what could potentially be a ton of files.
-Instead, we'll just get an overview, and `datalad get` the specific file afterwards.
+Without the `--no-data` option we would start downloading what could potentially be a
+ton of files. Instead, we'll just get an overview, and `datalad get` the specific file
+afterwards.
 
 ~~~
 datalad get --no-data data/decoding
@@ -131,7 +132,7 @@ CHANGELOG.md  LICENSE  README.md  bids  code  datacite.yml  decoding  fmriprep  
 ~~~
 {: .output}
 
-Let's get the file we wanted (first plot from the first subject):
+Let's get the file we wanted (the first plot from the first subject):
 
 ~~~
 datalad get data/decoding/decoding/sub-01/plots/sub-01_run-01_tvalue_distribution.png
@@ -145,7 +146,7 @@ get(ok): data/decoding/decoding/sub-01/plots/sub-01_run-01_tmap_masked.png (file
 
 We successfully obtained the file from the subdataset and can view it.
 
-Why it matters?
+Why does this matter?
 The file we opened was, seemingly, a diagnostic image for visual quality control.
 In a high-level dataset (statistical analysis, paper...) we are probably not very interested in the raw data.
 However, it's convenient to have an easy way to retrieve the low-level dataset when needed.
@@ -158,7 +159,7 @@ This time, our goal is to write a short report on penguins, based on the data ma
 Let's say we want to investigate the relationship between flipper length and body mass in three different penguin species.
 
 We will:
-- Create a main dataset for our report, and create a subdataset within to store inputs
+- Create a main dataset for our report, and create a subdataset within which to store inputs
 - Populate the subdataset with data
 - Run an analysis, producing a figure in the main dataset
 - Write our "report"
@@ -181,7 +182,7 @@ penguin-report/
 ### Create a dataset within a dataset
 
 Let's start by creating our main dataset and changing our working directory.
-We're using the text2git configuration again:
+We're using the `text2git` configuration again:
 
 ~~~
 datalad create -c text2git penguin-report
@@ -257,7 +258,7 @@ datalad download-url -d inputs -m "Add Chinstrap data" -O inputs/chinstrap.csv h
 {: .language-bash}
 
 Let's preview one csv file to see what content we're dealing with.
-An easy way to do so without leaving the command line is with the `head` command, which will print the first n lines of a text file (default n=10):
+An easy way to do so without leaving the command line is with the `head` command, which will print the first `n` lines of a text file (default n=10):
 
 ~~~
 head -n 2 inputs/adelie.csv
@@ -358,7 +359,7 @@ index b9c6cc5..a194b15 160000
 {: .output}
 
 From the parent dataset (superdataset) perspective, only the *subproject commit* has changed (if you went back into the subdataset and look at its history you could see that this is indeed the shasum of the latest commit).
-This is important: a subdataset does not record individual changes within the subdataset, it only records the state of the subdataset.
+This is important: a *superdataset* does not record individual changes within the *subdataset*, it only records the state of the *subdataset*.
 In other words, it points to the subdataset location and a point in its life (indicated by a specific commit).
 
 Let's acknowledge that we want our superdataset to point to the updated version of the subdataset (ie. that which has all three tabular files) by saving this change in the superdataset's history.
@@ -445,8 +446,8 @@ datalad save -d . -m "Add code" process.py
 ### Run the analysis
 
 We'll use `datalad run` to create a record of data processing in the superdataset.
-Here, we are giving the `--input` command several times with different files, and referring to all of them with the `{inputs}` placeholder.
-The caveat is that when we are doing so, we need to put the command in quotes (ie. as a string) so that the expanded inputs will not be surrounded by quotes (or vice versa; here we don't want that, but DataLad caters for different situations).
+Here, we are providing the `--input` option several times with different files, and referring to all of them with the `{inputs}` placeholder.
+The caveat is that when we are doing so, we need to put the run command in quotes (ie. as a string) so that the expanded inputs will not be surrounded by quotes (or vice versa; here we don't want that, but DataLad caters for different situations).
 To see what the expanded command would look like, without actually executing the command, we'll use the `--dry-run basic` option (useful for more complex commands):
 
 ~~~
@@ -479,7 +480,6 @@ Everything looks good, so let's run for real:
 
 ~~~
 datalad run \
-  --dry-run basic \
   -d . \
   -m "Create correlations plot" \
   -i inputs/adelie.csv \
@@ -530,7 +530,7 @@ This was not surprising.
 
 Hint: if you are working in Jupyter Lab, you can right click the file and select Open With → Markdown Preview to see the rendered version.
 
-Then, save our changes with:
+Then, save your changes with:
 
 ~~~
 datalad save -d . -m "Draft the report" report.md
@@ -567,5 +567,5 @@ save(ok): . (dataset)
 {: .output}
 
 The end! We have produced a nested datset:
-- the superdataset (penguin-report) directly contains our code, figures, and report (tracking their history), and includes inputs as a subdatset...
+- the superdataset (penguin-report) directly contains our code, figures, and report (tracking their history), and includes inputs as a subdatset.
 - the subdataset (inputs) tracks the history of the raw data files.
