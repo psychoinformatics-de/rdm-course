@@ -268,7 +268,7 @@ datalad siblings add \
 ```
 [INFO   ] Could not enable annex remote gin. This is expected if gin is a pure Git remote, or happens if it is not accessible. 
 [WARNING] Could not detect whether gin carries an annex. If gin is a pure Git remote, this is expected.  
-.: gin(-) [git@gin.g-node.org:/msz/rdm-workshop.git (git)]
+.: gin(-) [git@gin.g-node.org:/username/rdm-workshop.git (git)]
 ```
 {: .output}
 
@@ -307,12 +307,27 @@ git-annex" above the files, pick another branch, likely called "main";
 to make this choice permanent, you can go to repository "Settings",
 pick "Branches", and select a default branch -- this is dependent on
 your git configuration). Observe, that:
-- the README is displayed under the list of files
-- you can click on files to view their content
+- the README is displayed under the list of files,
+- you can click on files to view their content.
 
-TODO:
-- add a screenshot
-- `datalad siblings`
+![Screenshot: GIN project page after upload]({{ page.root }}/fig/GIN_published.png)
+{: .image-with-shadow }
+
+Finally, going back to the command line, you can use the `datalad
+siblings` command to report all known dataset siblings. In this case
+there are two: one called *here* (obviously) and one called *gin* (the
+one we added). The `(+)` symbols mean that both store annexed content:
+
+```
+datalad siblings
+```
+{: .language-bash}
+
+```
+.: here(+) [git]
+.: gin(+) [git@gin.g-node.org:/username/rdm-workshop.git (git)]
+```
+{: .output}
 
 ## Data consumption: datalad clone
 
