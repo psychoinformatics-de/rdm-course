@@ -125,7 +125,7 @@ details in the [Setup]({{ page.root }}{% link setup.md %}) page.
 ## How to use DataLad
 
 DataLad is a command line tool and it has a Python API. It is operated
-in your terminal using the command line (as done above), or used it in
+in your terminal using the command line (as done above), or used in
 scripts such as shell scripts, Python scripts, Jupyter Notebooks, and
 so forth. We will only use the command line interface during the
 workshop.
@@ -215,7 +215,7 @@ ls -a
 ~~~
 {: .output}
 
-The `.` and `..` represent current and upper directory,
+The `.` and `..` represent current and parent directory,
 respectively. More interestingly, there are two hidden folders,
 `.datalad` and `.git` as well as a hidden `.gitattributes` file. They
 are essential for dataset functioning, but typically we have no need
@@ -253,7 +253,7 @@ previous file versions. Datalad datasets can version control their
 contents, regardless of size. Let's start small, and just create a
 `README`.
 
-We will be using a text editor called nano to work without leaving the
+We will use a text editor called nano to work without leaving the
 command line. You can, of course, use an editor of your
 preference. Open the editor by typing `nano` and write the file
 content:
@@ -271,8 +271,8 @@ Out) the file, hit Ctrl-O, type the file name (`README.md`), and hit
 enter. Then, use Ctrl-X to exit.
 
 `datalad status` can report on the state of a dataset, and we will use
-it a lot. As we added a new file, the README show up as being
-*untracked* if you run it:
+it a lot. As we added a new file, `README` will show up as being
+*untracked* if you run `datalad status`:
 
 ~~~
 datalad status
@@ -286,7 +286,7 @@ untracked: README.md (file)
 
 In order to save a modification in a dataset use the `datalad save`
 command.  `datalad save` will save the current state of your dataset:
-It will save both modifications to known files and yet untracked
+It will save both, modifications to known files and yet untracked
 files. The `-m/--message` option lets you attach a concise summary of
 your changes. Such a *commit message* makes it easier for others and
 your later self to understand a dataset's history:
@@ -296,7 +296,7 @@ datalad save -m "Add a short README"
 ~~~
 {: .language-bash}
 
-Let's see that it got recorded in history:
+Let's verfify that it got recorded in history:
 
 ~~~
 tig
@@ -310,15 +310,15 @@ tig
 ~~~
 {: .output}
 
-Let's add some "image data", represented here by jpeg images. For demonstration purposes, we will use photos available with a permissive license from Unsplash. Start by creating a directory for our data. Let's call it inputs, to make it clear what it represents.
+Let's add some "image data", represented here by jpeg images. For demonstration purposes, we will use photos available with a permissive license from Unsplash. Start by creating a directory for our data. Let's call it *inputs/images*, to make clear what it represents.
 
 ~~~
 mkdir -p inputs/images
 ~~~
 
-Then, let's put a file in it. To avoid leaving terminal, we will use the linux `wget` command. This is just for convenience - the effect would be the same if we opened the link in the browser and saved the file from there.
+Then, let's put a file in it. To avoid leaving the terminal, we will use the linux `wget` command. This is just for convenience - the effect would be the same if we opened the link in the browser and saved the file from there.
 The `-O` option specifies the output file - since this is a photo of chinstrap penguins, and we may expect multiple of those, let's name the file `chinstrap_01.jpg`.
-We are putting the URL in brackets, to avoid confusing our computer with the `?` character, which can be interpreted as a placeholder for any character.
+We are putting the URL in double quotes, i.e. `"`, to avoid confusing our computer with the `?` character, which can be interpreted as a placeholder for any character.
 
 ~~~
 wget -O inputs/images/chinstrap_01.jpg "https://unsplash.com/photos/3Xd5j9-drDA/download?force=true"
@@ -372,7 +372,7 @@ The inputs directory has some new contents, and it is shown as
 and it shows up as *modified*. This is a good moment to record these
 changes. Note that `datalad save` would save **all** modifications in
 the dataset at once! If you have several modified files, you can
-supply a path to the file or files you want to save. We will it this
+supply a path to the file or files you want to save. We will do it this
 way, and record two separate changes:
 
 ~~~
@@ -384,7 +384,7 @@ datalad save -m "Update readme" README.md
 We can see that these changes got recorded with `tig`.
 
 For now, we have manually downloaded the file and saved it to the
-dataset. However, saving a file from a URL is a common scenario,
+dataset. However, saving a file from an URL is a common scenario,
 whether we are using a public repository or a local network
 storage. For that, DataLad has a `datalad download-url` method. Let's
 use it to download another file (this command also provides the `-O`
@@ -484,11 +484,11 @@ git restore README.md
 ~~~
 {: .language-bash}
 
-Note that `git` is the one of the programs used by DataLad under the
+Note that `git` is the program used by DataLad under the
 hood for version control. While most dataset operations can be
 performed using `datalad` commands, some will require calling `git`
 directly. After running `git restore`, you can use `datalad status` to
-see that is now clean, and `cat README.md` to see that the original
+see that the dataset is now clean, and `cat README.md` to see that the original
 file contents are back as if nothing happened - disaster
 averted. Finally, check `tig` to see that the dataset history remained
 unaffected.
@@ -524,7 +524,7 @@ identifier) of the change which we want to revert. It is displayed by
 `8ddaaad243344f38cd778b013e7e088a5b2aa11b` (note: because of the
 algorithm used by git, yours will be different). Don't worry, we only
 need the first couple characters. Find your commit hash and call `git
-revert` taking the beginning characters (seven should be plenty):
+revert` taking the first few characters (seven should be plenty):
 
 ~~~
 git revert --no-edit 8ddaaad
@@ -533,11 +533,11 @@ git revert --no-edit 8ddaaad
 
 With the `--no-edit` option, `git revert` will create a default commit
 message; without it it would open your default editor and let you
-change it. Like previously, after reverting the changes, `datalad
+edit the commit message. Like previously, after reverting the changes, `datalad
 status` shows that there is nothing to save and `cat README.md` proves
 that the removed file contents are back. This time, `tig` shows that
-history has not been rewritten, and `git revert` made a new commit
-reverting changes instead (note that recent commits can be removed
+`git revert` created a new commit that
+reverted the changes (note that recent commits can also be completely removed
 from history with `git reset` but this is beyond the scope of this
 lesson).
 
@@ -548,7 +548,7 @@ changing it manually. Now it is time to demonstrate some script-based
 data processing. Let's assume that our project requires us to convert
 the original files to greyscale. We can do this with a simple python
 script. First, let's create two new directories to keep code and
-inputs in designated places:
+outputs, i.e. processing results, in designated places:
 
 ~~~
 mkdir code
@@ -559,7 +559,7 @@ mkdir -p outputs/images_greyscale
 Now, let's "write" our custom script. You can download it using wget
 (below), or copy its content from
 [here](https://github.com/psychoinformatics-de/rdm-course/blob/gh-pages/data/greyscale.py)
-and then save it as part of the dataset
+and then save it as part of the dataset:
 
 ~~~
 wget -O code.greyscale.py https://github.com/psychoinformatics-de/rdm-course/raw/gh-pages/data/greyscale.py
@@ -568,7 +568,7 @@ datalad save -m "Add an image processing script"
 {: .language-bash}
 
 This script for greyscale conversion takes two arguments, `input_file`
-and `output file`. You can check this with `python code/greyscale.py
+and `output_file`. You can check this with `python code/greyscale.py
 --help`. Let's apply it for the first image, and place the output in the `outputs/images_greyscale` category, slightly changing the name:
 
 ~~~
@@ -596,7 +596,7 @@ good: we have recorded all our operations. However, this record is
 only as good as our descriptions. We can take it one step further.
 
 Datalad has the ability to record the exact command which was used,
-and all we have to do is prepend `datalad run` to our command. We can
+and all we have to do for this is to prepend `datalad run` to our command. We can
 also give the commit message, just as we could with `datalad
 save`. Let's try this on the other image:
 
@@ -664,7 +664,7 @@ PermissionError: [Errno 13] Permission denied: 'outputs/images_greyscale/chinstr
 ~~~
 {: .output}
 
-Something went wrong: `Permission Error: Permission denied` says the
+Something went wrong: `PermissionError:  [Errno 13] Permission denied` says the
 message. What happened? Why don't we have the permission to change the
 existing output file? Why didn't we run into the same problems when
 editing text files? To answer that question we have to introduce the
@@ -693,16 +693,16 @@ files are annexed. By default (without `text2git`) all files would be
 annexed. There are also other predefined configuration, and it's easy
 to tweak the setting manually (however, we won't do this in this
 tutorial). As a general rule you will probably want to hand some text
-files to git (code, descriptions), and annex other (especially those
+files to git (code, descriptions), and annex others (especially those
 huge in size or number). In other words, while `text2git` works well
-for our example, you should not treat the default approach.
+for our example, you should not treat it as the default approach.
 
 One essential by-product of the above distinction is that annexed
 files are write-protected to prevent accidental modifications:
 
 ![git vs git-annex]({{ page.root }}/fig/git_vs_gitannex.svg)
 
-If we do want to edit the annexed file, we can unlock it:
+If we do want to edit the annexed file, we have to unlock it:
 
 ~~~
 datalad unlock outputs/images_greyscale/chinstrap_02_grey.jpg
@@ -734,7 +734,7 @@ The file will be locked again after running `datalad save`:
 datalad save -m "Make a mess by overwriting"
 ~~~
 
-We could revert the changes we just save, but let's overwrite the file
+We could revert the changes we just saved, but let's overwrite the file
 using correct inputs instead, to demonstrate another feature of
 `datalad run`. The sequence of actions we just did (unlock - change -
 save) is not uncommon, and `datalad run` has provisions to make all
