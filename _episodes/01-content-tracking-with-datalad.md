@@ -4,11 +4,11 @@ teaching: 30
 exercises: 60
 questions:
 - "What does version control mean for datasets?"
-- "How to create a datalad datasets?"
+- "How to create a DataLad dataset?"
 objectives:
 - "Learn basics of version control"
 - "Work locally to create a dataset"
-- "Practice basic datalad commands"
+- "Practice basic DataLad commands"
 keypoints:
 - "With version control, lineage of all files is preserved"
 - "You can record and revert changes made to the dataset"
@@ -36,7 +36,7 @@ the project after some time. Moreover, Alice's project is exploratory,
 and she often makes large changes to her analysis scripts. She enjoys
 the comfort of being able to return all files to a previously recorded
 state if she makes a mistake or figures out a better solution. This is
-local version control.
+*local* version control.
 
 Alice's work is not confined to a single computer. She has a laptop
 and a desktop, and she uses a remote server to run some time-consuming
@@ -46,7 +46,7 @@ the data within the project is collected or analysed by her
 colleagues, possibly from another team. She uses the same mechanism to
 synchronise the data with a centralized storage (e.g. network storage
 owned by her lab), preserving origin and authorship of files, and
-combining simultaneous contributions. This is distributed version
+combining simultaneous contributions. This is *distributed* version
 control.
 
 Finally, Alice wants to have a mechanism to publish, completely or
@@ -89,9 +89,9 @@ datalad --version
 ~~~
 {: .language-bash}
 
-You should should have a configured `Git` identity, consisting of your
+You should should have a configured Git identity, consisting of your
 name and email (and the command above will display a complaint if you
-don't). That identity will be used to to identify you as the author of
+don't). That identity will be used to identify you as the author of
 all dataset operations. If you are unsure if you have configured your
 Git identity already, you can check if your name and email are printed
 to the terminal when you run:
@@ -173,7 +173,7 @@ dataset from scratch is done with the `datalad create` command.
 `datalad create` only needs a name, and it will subsequently create a
 new directory under this name and instruct DataLad to manage it. Here,
 the command also has an additional option, the `-c text2git`
-option. With the -c option, datasets can be pre-configured in a
+option. With the `-c` option, datasets can be pre-configured in a
 certain way at the time of creation, and `text2git` is one of the
 available *run procedures* (later we'll explain why we chose to use it
 in this example):
@@ -228,7 +228,7 @@ description, and is identified by a unique 40-character sequence
 (displayed at the bottom) called *shasum* or *hash*. You can move up
 and down the commit list using up and down arrows on your keyboard,
 use enter to display commit details, and `q` to close detail view or
-tig itself.
+Tig itself.
 
 We can see that DataLad has already created two commits on our
 behalf. They are shown with the most recent on top:
@@ -249,7 +249,7 @@ tig
 Version controlling a file means to record its changes over time,
 associate those changes with an author, date, and identifier, creating
 a lineage of file content, and being able to revert changes or restore
-previous file versions. Datalad datasets can version control their
+previous file versions. DataLad datasets can version control their
 contents, regardless of size. Let's start small, and just create a
 `README`.
 
@@ -310,22 +310,30 @@ tig
 ~~~
 {: .output}
 
-Let's add some "image data", represented here by jpeg images. For demonstration purposes, we will use photos available with a permissive license from Unsplash. Start by creating a directory for our data. Let's call it inputs, to make it clear what it represents.
+Let's add some "image data", represented here by jpeg images. For demonstration
+purposes, we will use photos available with a permissive license from
+[Unsplash](https://unsplash.com/). Start by creating a directory for your data.
+Let's call it "inputs", to make it clear what it represents.
 
 ~~~
 mkdir -p inputs/images
 ~~~
 
-Then, let's put a file in it. To avoid leaving terminal, we will use the linux `wget` command. This is just for convenience - the effect would be the same if we opened the link in the browser and saved the file from there.
-The `-O` option specifies the output file - since this is a photo of chinstrap penguins, and we may expect multiple of those, let's name the file `chinstrap_01.jpg`.
-We are putting the URL in brackets, to avoid confusing our computer with the `?` character, which can be interpreted as a placeholder for any character.
+Then, let's put a file in it. To avoid leaving terminal, we will use the Linux
+`wget` command. This is just for convenience - the effect would be the same if
+we opened the link in the browser and saved the file from there.
+The `-O` option specifies the output file - since this is a photo of chinstrap
+penguins, and we may expect multiple of those, let's name the file `chinstrap_01.jpg`.
+We are specyfying the URL as a string (i.e. in quotation marks), to avoid
+confusing our computer with the `?` character, which can be interpreted as a
+placeholder for any character.
 
 ~~~
 wget -O inputs/images/chinstrap_01.jpg "https://unsplash.com/photos/3Xd5j9-drDA/download?force=true"
 ~~~
 {: .language-bash}
 
-We can view the current file / folder structure by using the linux
+We can view the current file / folder structure by using the Linux
 `tree` command:
 
 ~~~
@@ -372,7 +380,7 @@ The inputs directory has some new contents, and it is shown as
 and it shows up as *modified*. This is a good moment to record these
 changes. Note that `datalad save` would save **all** modifications in
 the dataset at once! If you have several modified files, you can
-supply a path to the file or files you want to save. We will it this
+supply a path to the file or files you want to save. We will do it this
 way, and record two separate changes:
 
 ~~~
@@ -515,14 +523,14 @@ datalad save -m "Break things"
 ~~~
 {: .language-bash}
 
-The file was changed, and the changes have been committed. Luckily, git
+The file was changed, and the changes have been committed. Luckily, `git`
 has a method for undoing such changes, `git revert`, which can work
 even if subsequent `save` operations have been performed on the
 dataset. To call it, we need to know the *commit hash* (unique
 identifier) of the change which we want to revert. It is displayed by
 `tig` at the bottom of the window and looks like this:
 `8ddaaad243344f38cd778b013e7e088a5b2aa11b` (note: because of the
-algorithm used by git, yours will be different). Don't worry, we only
+algorithm used by `git`, yours will be different). Don't worry, we only
 need the first couple characters. Find your commit hash and call `git
 revert` taking the beginning characters (seven should be plenty):
 
@@ -546,7 +554,7 @@ lesson).
 We have demonstrated building a dataset history by collecting data and
 changing it manually. Now it is time to demonstrate some script-based
 data processing. Let's assume that our project requires us to convert
-the original files to greyscale. We can do this with a simple python
+the original files to greyscale. We can do this with a simple Python
 script. First, let's create two new directories to keep code and
 inputs in designated places:
 
@@ -569,7 +577,8 @@ datalad save -m "Add an image processing script"
 
 This script for greyscale conversion takes two arguments, `input_file`
 and `output file`. You can check this with `python code/greyscale.py
---help`. Let's apply it for the first image, and place the output in the `outputs/images_greyscale` category, slightly changing the name:
+--help`. Let's apply it for the first image, and place the output in the
+`outputs/images_greyscale` directory, slightly changing the name:
 
 ~~~
 python code/greyscale.py inputs/images/chinstrap_01.jpg outputs/images_greyscale/chinstrap_01_grey.jpg
@@ -597,8 +606,8 @@ only as good as our descriptions. We can take it one step further.
 
 Datalad has the ability to record the exact command which was used,
 and all we have to do is prepend `datalad run` to our command. We can
-also give the commit message, just as we could with `datalad
-save`. Let's try this on the other image:
+also provide the commit message to `datalad run`, just as we could with
+`datalad save`. Let's try this on the other image:
 
 ~~~
 datalad run -m "Convert the second image to greyscale" python code/greyscale.py inputs/images/chinstrap_02.jpg outputs/images_greyscale/chinstrap_02_grey.jpg
@@ -633,8 +642,8 @@ find the command that was executed (under `"cmd"` keyword). The record
 is stored using json formatting, and as such can be read not just by
 us, but also by DataLad. This is very useful: now we will be able to
 rerun the exact command if, for example, input data gets changed, the
-script get changed, or we decide to remove the outputs (we won't try
-that now, but the command to do so is `datalad rerun`).
+script gets changed, or we decide to remove the outputs. We won't try
+that now, but the command to do so is `datalad rerun`.
 
 ### Locking and unlocking
 
@@ -671,7 +680,7 @@ editing text files? To answer that question we have to introduce the
 concept of *annexed files* and go back to the moment when we created
 our dataset.
 
-Datalad uses two mechanisms to control files: `git` and
+DataLad uses two mechanisms to control files: `git` and
 `git-annex`. This duality exists because it is not possible to store
 large files in `git`. While `git` is especially good at tracking text
 files (and can also handle files other than text) it would quickly run
@@ -685,17 +694,18 @@ Let's look at the first two commit messages in `tig`. The second says:
 ~~~
 o Instruct annex to add text files to Git
 ~~~
+{: .output}
 
 Remember how we created the dataset with `datalad create -c text2git
 my-dataset`? The `-c text2git` option defined the distinction in a
-particular way: text files are controlled with git, other (binary)
-files are annexed. By default (without `text2git`) all files would be
-annexed. There are also other predefined configuration, and it's easy
-to tweak the setting manually (however, we won't do this in this
+particular way: text files are controlled with `git`, other (binary)
+files are *annexed*. By default (without `text2git`) all files would be
+annexed. There are also other predefined configuration options, and it's
+easy to tweak the setting manually (however, we won't do this in this
 tutorial). As a general rule you will probably want to hand some text
 files to git (code, descriptions), and annex other (especially those
 huge in size or number). In other words, while `text2git` works well
-for our example, you should not treat the default approach.
+for our example, you should not treat it as the default approach.
 
 One essential by-product of the above distinction is that annexed
 files are write-protected to prevent accidental modifications:
@@ -734,7 +744,7 @@ The file will be locked again after running `datalad save`:
 datalad save -m "Make a mess by overwriting"
 ~~~
 
-We could revert the changes we just save, but let's overwrite the file
+We could revert the changes we just saved, but let's overwrite the file
 using correct inputs instead, to demonstrate another feature of
 `datalad run`. The sequence of actions we just did (unlock - change -
 save) is not uncommon, and `datalad run` has provisions to make all
@@ -793,8 +803,8 @@ history with `tig`. The commit message contains the following:
 ### Making some more additions
 
 Let's make a few more changes to the dataset. We will return to it in
-the workshop module on remote collaboration. As an exercise, do these
-things under DataLad control:
+the workshop module on remote collaboration. As an exercise, do the
+following steps using DataLad commands:
 
 - Download the king penguin image from this url:
   `https://unsplash.com/photos/8fmTByMm8wE/download?force=true`
