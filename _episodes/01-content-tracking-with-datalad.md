@@ -570,7 +570,7 @@ Now, let's "write" our custom script. You can download it using wget
 and then save it as part of the dataset:
 
 ~~~
-wget -O code.greyscale.py https://github.com/psychoinformatics-de/rdm-course/raw/gh-pages/data/greyscale.py
+wget -O code/greyscale.py https://github.com/psychoinformatics-de/rdm-course/raw/gh-pages/data/greyscale.py
 datalad save -m "Add an image processing script"
 ~~~
 {: .language-bash}
