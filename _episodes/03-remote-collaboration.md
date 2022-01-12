@@ -58,7 +58,10 @@ first module. As a platform of our choice we will use
 We chose GIN because it provides a convenient way of hosting DataLad
 datasets. That being said, DataLad integrates with many providers and
 supports different scenarios -- including those when hosting of
-dataset information and actual data is separated into two locations.
+dataset information and actual data is separated into two
+locations. Although each scenario will be slightly different, the
+setup steps that we will cover with GIN will look similar on other
+git-based hosting solutions.
 
 ## Prelude: file availability, getting and droping content
 
@@ -268,7 +271,7 @@ datalad siblings add \
 ```
 [INFO   ] Could not enable annex remote gin. This is expected if gin is a pure Git remote, or happens if it is not accessible. 
 [WARNING] Could not detect whether gin carries an annex. If gin is a pure Git remote, this is expected.  
-.: gin(-) [git@gin.g-node.org:/msz/rdm-workshop.git (git)]
+.: gin(-) [git@gin.g-node.org:/username/rdm-workshop.git (git)]
 ```
 {: .output}
 
@@ -307,12 +310,27 @@ git-annex" above the files, pick another branch, likely called "main";
 to make this choice permanent, you can go to repository "Settings",
 pick "Branches", and select a default branch -- this is dependent on
 your git configuration). Observe, that:
-- the README is displayed under the list of files
-- you can click on files to view their content
+- the README is displayed under the list of files,
+- you can click on files to view their content.
 
-TODO:
-- add a screenshot
-- `datalad siblings`
+![Screenshot: GIN project page after upload]({{ page.root }}/fig/GIN_published.png)
+{: .image-with-shadow }
+
+Finally, going back to the command line, you can use the `datalad
+siblings` command to report all known dataset siblings. In this case
+there are two: one called *here* (obviously) and one called *gin* (the
+one we added). The `(+)` symbols mean that both store annexed content:
+
+```
+datalad siblings
+```
+{: .language-bash}
+
+```
+.: here(+) [git]
+.: gin(+) [git@gin.g-node.org:/username/rdm-workshop.git (git)]
+```
+{: .output}
 
 ## Data consumption: datalad clone
 
@@ -592,11 +610,11 @@ In the remainder of this module we will exercise such collaboration.
 
 ### Exercise: remote collaboration
 
-TODO:
-- outline an exercise
+#### Preparation
+Divide participants in pairs, ask to add each other as contributors
+and clone each other's dataset.
 
-(Divide participants, ask to add each other as contributors and clone each other's dataset)
-
+#### Changing a cloned dataset
 With a cloned dataset, you can do the following:
 
 - Change a (text) file. For example, in the
@@ -607,12 +625,50 @@ With a cloned dataset, you can do the following:
   as "Include penguins occluded by rocks in the count" or something
   similar.
 - Add a file. For example, you can use `datalad download-url` to get
-  this image of Gentoo penguins in a sandstorm
-  https://unsplash.com/photos/ptcOlmmtb8w or this image of king
-  penguins diving (both by Ian Parker). Don't forget to add a
-  meaningful message!
+  one of the following pictures (all by Ian Parker on Unsplash). Don't
+  forget to add a meaningful message!
+  - [Gentoo penguins in a sandstorm](https://unsplash.com/photos/ptcOlmmtb8w), download URL: `https://unsplash.com/photos/ptcOlmmtb8w/download?force=true`
+  - [King penguin backlit by setting sun](https://unsplash.com/photos/TLcLDigmTKE), download URL: `https://unsplash.com/photos/TLcLDigmTKE/download?force=true`
+  - [King penguins diving](https://unsplash.com/photos/PzAmR_Nt7KM), download URL: `https://unsplash.com/photos/PzAmR_Nt7KM/download?force=true`
+- Use `datalad run` to create a new file in
+  `outputs/images_greyscale`. When building our original dataset we
+  have left one file, `inputs/images/king01.jpg`, without its
+  black-and-white counterpart. You can do the same with the file you
+  download in the step above.
 - If you want to practice saving, edit more files. For example you can
-  add location to the yaml files.
-- (Check if we have an unconverted image for datalad run)
+  add a location key-value pair to the yaml files. For files from the
+  original dataset, chinstrap penguins were photographed on Two
+  Hummock Islands, and king penguins (king_01.jpg) on Falkland
+  Islands. For the files listed above, two of them on list the
+  location on the website.
 
-(When ready, contribute back by pushing)
+#### Contributing back
+When ready, you can contribute back wih `datalad push`. If the other
+person has granted you access to their repository (as should be the
+case during the workshop), you can do it right away. Note that in this
+case you are pushing to `origin` - this is a default name given to a
+sibling when cloning (you can verify the destination first with
+`datalad siblings`):
+
+```
+datalad push --to origin
+```
+{: .language-bash}
+
+If the owner hadn't granted you write access, you would need to submit
+a *pull request* - basically make your own copy of their dataset on
+GIN, push your changes to your copy, and use an automated process to
+ask them to incorporate your changes. This is a standard procedure for
+all collaboration based on git (works similarly on GitHub, GitLab,
+etc.) and it's a very satisfying process, but we won't cover it during
+this workshop.
+
+#### Getting the contributions locally
+When your remote dataset has been modified, you can update your local
+copy with the following (note that we are updating from `gin` because
+that's how we named the sibling when adding it for first publication):
+
+~~~
+datalad update -s gin --how merge
+~~~
+{: .language-bash}
