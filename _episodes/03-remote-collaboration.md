@@ -58,7 +58,10 @@ first module. As a platform of our choice we will use
 We chose GIN because it provides a convenient way of hosting DataLad
 datasets. That being said, DataLad integrates with many providers and
 supports different scenarios -- including those when hosting of
-dataset information and actual data is separated into two locations.
+dataset information and actual data is separated into two
+locations. Although each scenario will be slightly different, the
+setup steps that we will cover with GIN will look similar on other
+git-based hosting solutions.
 
 ## Prelude: file availability, getting and droping content
 
