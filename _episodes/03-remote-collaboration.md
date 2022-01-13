@@ -631,10 +631,8 @@ With a cloned dataset, you can do the following:
   - [King penguin backlit by setting sun](https://unsplash.com/photos/TLcLDigmTKE), download URL: `https://unsplash.com/photos/TLcLDigmTKE/download?force=true`
   - [King penguins diving](https://unsplash.com/photos/PzAmR_Nt7KM), download URL: `https://unsplash.com/photos/PzAmR_Nt7KM/download?force=true`
 - Use `datalad run` to create a new file in
-  `outputs/images_greyscale`. When building our original dataset we
-  have left one file, `inputs/images/king01.jpg`, without its
-  black-and-white counterpart. You can do the same with the file you
-  download in the step above.
+  `outputs/images_greyscale`. Convert the newly added image to
+  greyscale using the same method we used for the previous images.
 - If you want to practice saving, edit more files. For example you can
   add a location key-value pair to the yaml files. For files from the
   original dataset, chinstrap penguins were photographed on Two
