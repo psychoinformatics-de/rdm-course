@@ -1,9 +1,9 @@
-[UNDER CURRENT DEVELOPMENT]
-
 RDM with DataLad
 ================
 
-*[description of repo content to follow]*
+This workshop teaches best practices for Research Data Management with DataLad.
+Content for this workshop was developed by the DataLad team,
+while the workshop infrastructure is based on materials developed by The Carpentries (distributed under a CC-BY license).
 
 Contributors
 ============
