@@ -23,7 +23,7 @@ However, the same input dataset can be used in multiple analyses, and output (e.
 
 To address these use cases, DataLad provides a mechanism for linking datasets (Image from DataLad Handbook):
 
-![Subdataset linkage]({{ page.root }}/fig/linkage_subds.svg)
+![Subdataset linkage]({{ page.root }}/fig/dataset_modules.svg)
 {: .image-with-shadow}
 
 You may be interested in subdatasets if:
