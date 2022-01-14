@@ -72,7 +72,7 @@ install(ok): /home/alice/Documents/rdm-course/highspeed-analysis (dataset)
 Now, let's change directory into the dataset and ask about its subdatasets:
 
 ~~~
-cd highspeed-bids
+cd highspeed-analysis
 datalad subdatasets
 ~~~
 {: .language-bash}
