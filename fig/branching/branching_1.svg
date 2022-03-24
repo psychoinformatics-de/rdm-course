@@ -1,0 +1,368 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="67.150909mm"
+   height="73.861023mm"
+   viewBox="0 0 67.150909 73.861023"
+   version="1.1"
+   id="svg5"
+   inkscape:version="1.1.1 (3bf5ae0d25, 2021-09-20)"
+   sodipodi:docname="branching_1.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview7"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:document-units="mm"
+     showgrid="false"
+     fit-margin-top="0"
+     fit-margin-left="0"
+     fit-margin-right="0"
+     fit-margin-bottom="0"
+     inkscape:zoom="2.2652217"
+     inkscape:cx="45.249433"
+     inkscape:cy="89.615951"
+     inkscape:window-width="2560"
+     inkscape:window-height="1371"
+     inkscape:window-x="0"
+     inkscape:window-y="1472"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1" />
+  <defs
+     id="defs2" />
+  <g
+     inkscape:groupmode="layer"
+     id="layer4"
+     inkscape:label="base elements"
+     transform="translate(8.6057847,-7.5118909)"
+     style="display:none">
+    <ellipse
+       style="fill:#dcdcff;fill-opacity:1;stroke:#000080;stroke-width:0.3;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="ellipse31270"
+       cx="81.045845"
+       cy="11.258705"
+       rx="0.89038301"
+       ry="0.91200542" />
+    <ellipse
+       style="fill:#f5dcdc;fill-opacity:1;stroke:#9e2c2c;stroke-width:0.3;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="ellipse40596"
+       cx="84.233757"
+       cy="9.0904179"
+       rx="0.89038301"
+       ry="0.91200542" />
+    <ellipse
+       style="fill:#d9e6a3;fill-opacity:1;stroke:#677821;stroke-width:0.3;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="ellipse40596-9"
+       cx="89.764175"
+       cy="10.031097"
+       rx="0.89038301"
+       ry="0.91200542" />
+    <ellipse
+       style="fill:#dcdcff;fill-opacity:1;stroke:#000080;stroke-width:0.3;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="ellipse176118"
+       cx="81.045845"
+       cy="11.258705"
+       rx="0.89038301"
+       ry="0.91200542" />
+  </g>
+  <g
+     inkscape:label="Main "
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(8.6057847,-7.5118909)"
+     style="display:inline">
+    <path
+       style="fill:none;stroke:#000080;stroke-width:0.230521px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 16.941246,11.752263 c 1.332943,26.7463 0.71863,42.832856 0.71863,69.612124"
+       id="path931"
+       sodipodi:nodetypes="cc" />
+    <ellipse
+       style="fill:#dcdcff;fill-opacity:1;stroke:#000080;stroke-width:0.3;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="path955"
+       cx="17.102873"
+       cy="16.984539"
+       rx="0.89038301"
+       ry="0.91200542" />
+    <text
+       xml:space="preserve"
+       style="font-size:2.11667px;line-height:0.65;font-family:'Amiri Quran';-inkscape-font-specification:'Amiri Quran';text-align:center;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000080;stroke-width:0.264583"
+       x="17.336432"
+       y="8.9935598"
+       id="text11923"><tspan
+         sodipodi:role="line"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.11667px;font-family:Cabin;-inkscape-font-specification:Cabin;fill:#000080;stroke-width:0.264583"
+         x="17.336432"
+         y="9.1711082"
+         id="tspan105492">master/</tspan><tspan
+         sodipodi:role="line"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.11667px;font-family:Cabin;-inkscape-font-specification:Cabin;fill:#000080;stroke-width:0.264583"
+         x="17.336432"
+         y="10.659381"
+         id="tspan105496">main</tspan></text>
+    <text
+       xml:space="preserve"
+       style="display:inline;font-size:2.11667px;line-height:1.25;font-family:'Amiri Quran';-inkscape-font-specification:'Amiri Quran';text-align:center;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000080;stroke-width:0.264583"
+       x="30.066269"
+       y="17.773096"
+       id="text11923-3"><tspan
+         sodipodi:role="line"
+         id="tspan11921-6"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.11667px;font-family:Cabin;-inkscape-font-specification:Cabin;fill:#000080;stroke-width:0.264583"
+         x="30.066269"
+         y="17.773096">[DATALAD] new dataset</tspan></text>
+  </g>
+  <g
+     inkscape:groupmode="layer"
+     id="layer3"
+     inkscape:label="Main2"
+     style="display:none"
+     transform="translate(8.6057847,-7.5118909)">
+    <text
+       xml:space="preserve"
+       style="font-size:2.11667px;line-height:0.75;font-family:'Amiri Quran';-inkscape-font-specification:'Amiri Quran';text-align:center;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000080;stroke-width:0.264583"
+       x="27.519974"
+       y="23.794889"
+       id="text11923-3-7"><tspan
+         sodipodi:role="line"
+         id="tspan11921-6-5"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.11667px;font-family:Cabin;-inkscape-font-specification:Cabin;text-align:center;text-anchor:middle;fill:#000080;stroke-width:0.264583"
+         x="27.519974"
+         y="24.078272">adding processing</tspan><tspan
+         sodipodi:role="line"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.11667px;font-family:Cabin;-inkscape-font-specification:Cabin;text-align:center;text-anchor:middle;fill:#000080;stroke-width:0.264583"
+         x="27.519974"
+         y="25.778212"
+         id="tspan82271">pipeline</tspan></text>
+    <ellipse
+       style="fill:#dcdcff;fill-opacity:1;stroke:#000080;stroke-width:0.3;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="ellipse9521"
+       cx="17.30518"
+       cy="23.244781"
+       rx="0.89038301"
+       ry="0.91200542" />
+  </g>
+  <g
+     inkscape:groupmode="layer"
+     id="layer5"
+     inkscape:label="preproc-type1"
+     style="display:none"
+     transform="translate(8.6057847,-7.5118909)">
+    <text
+       xml:space="preserve"
+       style="font-size:2.11667px;line-height:1.25;font-family:'Amiri Quran';-inkscape-font-specification:'Amiri Quran';text-align:center;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#782121;stroke-width:0.264583"
+       x="25.70546"
+       y="9.9310637"
+       id="text11923-35"><tspan
+         sodipodi:role="line"
+         id="tspan11921-62"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.11667px;font-family:Cabin;-inkscape-font-specification:Cabin;fill:#782121;stroke-width:0.264583"
+         x="25.70546"
+         y="9.9310637">preproc</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:2.11667px;line-height:0.75;font-family:'Amiri Quran';-inkscape-font-specification:'Amiri Quran';text-align:center;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#782121;stroke-width:0.264583"
+       x="37.399551"
+       y="30.04599"
+       id="text11923-35-9"><tspan
+         sodipodi:role="line"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.11667px;font-family:Cabin;-inkscape-font-specification:Cabin;fill:#782121;stroke-width:0.264583"
+         x="37.399551"
+         y="30.04599"
+         id="tspan91663">Added parametrization A</tspan></text>
+    <path
+       style="fill:none;stroke:#a02c2c;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 18.250154,23.611123 c 7.169906,2.775713 8.868998,13.462857 9.059902,22.959334 0.132019,6.567209 -0.457224,12.81807 -0.457224,16.092382"
+       id="path31321"
+       sodipodi:nodetypes="csc" />
+    <ellipse
+       style="fill:#f5dcdc;fill-opacity:1;stroke:#9e2c2c;stroke-width:0.3;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="ellipse49595"
+       cx="24.114403"
+       cy="29.579483"
+       rx="0.89038301"
+       ry="0.91200542" />
+    <ellipse
+       style="fill:#f5dcdc;fill-opacity:1;stroke:#9e2c2c;stroke-width:0.3;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="ellipse148135"
+       cx="26.527187"
+       cy="37.556168"
+       rx="0.89038301"
+       ry="0.91200542" />
+  </g>
+  <g
+     inkscape:groupmode="layer"
+     id="layer6"
+     inkscape:label="preproc-type1-2"
+     style="display:none"
+     transform="translate(8.6057847,-7.5118909)">
+    <ellipse
+       style="fill:#f5dcdc;fill-opacity:1;stroke:#9e2c2c;stroke-width:0.3;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="ellipse68242"
+       cx="27.236086"
+       cy="56.927025"
+       rx="0.89038301"
+       ry="0.91200542" />
+    <text
+       xml:space="preserve"
+       style="font-size:2.11667px;line-height:0.75;font-family:'Amiri Quran';-inkscape-font-specification:'Amiri Quran';text-align:center;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#782121;stroke-width:0.264583"
+       x="36.613953"
+       y="57.783993"
+       id="text11923-35-9-2"><tspan
+         sodipodi:role="line"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.11667px;font-family:Cabin;-inkscape-font-specification:Cabin;fill:#782121;stroke-width:0.264583"
+         x="36.613953"
+         y="57.783993"
+         id="tspan52729-0">Compute results</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:2.11667px;line-height:0.75;font-family:'Amiri Quran';-inkscape-font-specification:'Amiri Quran';text-align:center;letter-spacing:0px;word-spacing:0px;text-anchor:middle;display:inline;fill:#782121;stroke-width:0.264583"
+       x="43.762337"
+       y="38.201351"
+       id="text11923-35-9-0"><tspan
+         sodipodi:role="line"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.11667px;font-family:Cabin;-inkscape-font-specification:Cabin;fill:#782121;stroke-width:0.264583"
+         x="43.762337"
+         y="38.201351"
+         id="tspan91663-62">Tweak parameter, add comments</tspan></text>
+  </g>
+  <g
+     inkscape:groupmode="layer"
+     id="layer9"
+     inkscape:label="merge-preproc-1"
+     style="display:none"
+     transform="translate(8.6057847,-7.5118909)">
+    <path
+       style="fill:none;stroke:#9e2c2c;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 17.863224,73.408802 c 4.956789,-3.942096 8.59448,-7.208943 9.006247,-10.898468"
+       id="path95747"
+       sodipodi:nodetypes="cc" />
+    <ellipse
+       style="fill:#f5dcdc;fill-opacity:1;stroke:#000080;stroke-width:0.3;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="ellipse121412"
+       cx="17.723133"
+       cy="73.417007"
+       rx="0.89038301"
+       ry="0.91200542" />
+  </g>
+  <g
+     inkscape:groupmode="layer"
+     id="layer7"
+     inkscape:label="fix-preproc-1"
+     transform="translate(8.6057847,-7.5118909)"
+     style="display:none">
+    <path
+       style="display:inline;mix-blend-mode:multiply;fill:none;stroke:#677821;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 16.314099,23.627177 c -9.7497465,9.125475 -4.5305,10.508146 1.314621,16.908715"
+       id="path124800"
+       sodipodi:nodetypes="cc" />
+    <ellipse
+       style="fill:#d9e6a3;fill-opacity:1;stroke:#677821;stroke-width:0.3;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="ellipse136328"
+       cx="10.872201"
+       cy="31.663845"
+       rx="0.89038301"
+       ry="0.91200542" />
+    <ellipse
+       style="fill:#d9e6a3;fill-opacity:1;stroke:#000080;stroke-width:0.3;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="ellipse151161"
+       cx="17.843536"
+       cy="40.349403"
+       rx="0.89038301"
+       ry="0.91200542" />
+    <text
+       xml:space="preserve"
+       style="font-size:2.11667px;line-height:0.75;font-family:'Amiri Quran';-inkscape-font-specification:'Amiri Quran';text-align:center;letter-spacing:0px;word-spacing:0px;text-anchor:middle;display:inline;fill:#677821;stroke-width:0.264583"
+       x="0.39744627"
+       y="31.078396"
+       id="text11923-35-9-3"><tspan
+         sodipodi:role="line"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.11667px;font-family:Cabin;-inkscape-font-specification:Cabin;fill:#677821;stroke-width:0.264583"
+         x="0.39744627"
+         y="31.361778"
+         id="tspan91663-6">Fix: Change absolute</tspan><tspan
+         sodipodi:role="line"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.11667px;font-family:Cabin;-inkscape-font-specification:Cabin;fill:#677821;stroke-width:0.264583"
+         x="0.39744622"
+         y="33.061718"
+         id="tspan137047"> to relative paths</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:2.11667px;line-height:0.75;font-family:'Amiri Quran';-inkscape-font-specification:'Amiri Quran';text-align:center;letter-spacing:0px;word-spacing:0px;text-anchor:middle;display:inline;fill:#677821;stroke-width:0.264583"
+       x="9.1480579"
+       y="9.9557104"
+       id="text11923-35-9-3-2"><tspan
+         sodipodi:role="line"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.11667px;font-family:Cabin;-inkscape-font-specification:Cabin;fill:#677821;stroke-width:0.264583"
+         x="9.1480579"
+         y="9.9557104"
+         id="tspan137047-75">fix-paths</tspan></text>
+  </g>
+  <g
+     inkscape:groupmode="layer"
+     id="layer10"
+     inkscape:label="merge-main-1"
+     transform="translate(8.6057847,-7.5118909)"
+     style="display:none">
+    <ellipse
+       style="fill:#dcdcff;fill-opacity:1;stroke:#9e2c2c;stroke-width:0.3;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="ellipse40596-6"
+       cx="27.31341"
+       cy="47.049259"
+       rx="0.89038301"
+       ry="0.91200542" />
+    <path
+       style="fill:none;stroke:#9e2c2c;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 18.670185,41.021171 c 2.578918,1.416038 5.771763,3.618865 8.007654,5.459953"
+       id="path164846"
+       sodipodi:nodetypes="cc" />
+    <text
+       xml:space="preserve"
+       style="font-size:2.11667px;line-height:0.75;font-family:'Amiri Quran';-inkscape-font-specification:'Amiri Quran';text-align:center;letter-spacing:0px;word-spacing:0px;text-anchor:middle;display:inline;fill:#000080;fill-opacity:1;stroke-width:0.264583"
+       x="38.355011"
+       y="47.40173"
+       id="text11923-35-9-3-1"><tspan
+         sodipodi:role="line"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.11667px;font-family:Cabin;-inkscape-font-specification:Cabin;fill:#000080;fill-opacity:1;stroke-width:0.264583"
+         x="38.355011"
+         y="47.685112"
+         id="tspan91663-6-8">Fix: Change absolute</tspan><tspan
+         sodipodi:role="line"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.11667px;font-family:Cabin;-inkscape-font-specification:Cabin;fill:#000080;fill-opacity:1;stroke-width:0.264583"
+         x="38.355011"
+         y="49.385052"
+         id="tspan137047-7"> to relative paths</tspan></text>
+  </g>
+  <g
+     inkscape:groupmode="layer"
+     id="layer11"
+     inkscape:label="future"
+     transform="translate(8.6057847,-7.5118909)"
+     style="display:none">
+    <ellipse
+       style="fill:#dcdcff;fill-opacity:1;stroke:#000080;stroke-width:0.3;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="ellipse176200"
+       cx="17.588501"
+       cy="80.310905"
+       rx="0.89038301"
+       ry="0.91200542" />
+    <text
+       xml:space="preserve"
+       style="font-size:2.11667px;line-height:0.75;font-family:'Amiri Quran';-inkscape-font-specification:'Amiri Quran';text-align:center;letter-spacing:0px;word-spacing:0px;text-anchor:middle;display:inline;fill:#000080;fill-opacity:1;stroke-width:0.264583"
+       x="28.814478"
+       y="80.804413"
+       id="text11923-35-9-3-1-9"><tspan
+         sodipodi:role="line"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.11667px;font-family:Cabin;-inkscape-font-specification:Cabin;fill:#000080;fill-opacity:1;stroke-width:0.264583"
+         x="28.814478"
+         y="80.804413"
+         id="tspan137047-7-0">add DOI to README</tspan></text>
+  </g>
+</svg>
