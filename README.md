@@ -55,6 +55,11 @@ bundle update
 make serve
 ```
 
+## Slides
+
+Slides, rendered using [marp](https://marp.app/), are placed in `data/slides-html`.
+Markdown source for the slides is in `data/slides-md`.
+
 
 Credit
 ======
