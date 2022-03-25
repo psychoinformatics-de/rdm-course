@@ -8,7 +8,6 @@ objectives:
 - "Get an understanding of Git's concept of a branch."
 - "Create new branches in your dataset and switch between them."
 - "Master the basics of a contribution workflow."
-- "Understand what you need forks for TODO"
 keypoints:
 - "Your dataset contains branches. The default branch is usually called either `main` or `master`"
 - "There's no limit to the number of branches one can have, and each branch can become an alternative timeline with developments independent from the developments in other branches"
@@ -22,7 +21,7 @@ keypoints:
 > Unlike the main Episodes of this course, this lesson focuses less on purely DataLad-centric workflows, but conveys concepts of Git's more advanced features.
 >It aims to provide a more solid understanding of Git's _branches_, why and when they are useful, and how to work with them productively.
 >Because DataLad datasets are Git repositories, mastering the concept of branches will translate directly into DataLad workflows, for example collaboration.
->This can be helpful for the [main episode on remote collaboration]({{ page.root }}{% link _episodes/03-remote-collaboration.md %})  ...TODO link overview GitHub
+>This can be helpful for the [main episode on remote collaboration]({{ page.root }}{% link _episodes/03-remote-collaboration.md %}).
 {: .callout}
 
 > ##  Prerequisites
@@ -37,37 +36,41 @@ Here is a short example with the development history of a dataset.
 Albeit minimal, it is a fairly stereotypical example of a revision history for a data analysis: Over time, one adds a script for data processing, and changes and fixes the pipeline until it is ready to compute the data.
 Then, the data are processed and saved, and once its published, one adds a DOI to the dataset README.
 
-<a href="{{ page.root }}/fig/tig.png">
-  <img height="100px" src="{{ page.root }}/fig/tig.png" alt="An example dataset history" />
+<a href="{{ page.root }}/fig/branching/tig.png">
+  <img height="100px" src="{{ page.root }}/fig/branching/tig.png" alt="An example dataset history" />
 </a>
 
 You can envision these changes like consecutive points on a timeline.
-
-<a href="{{ page.root }}/fig/branching/linear_time_1.svg">
-  <img height="200px" src="{{ page.root }}/fig/branching/linear_time_1.svg" alt="A revision history is like a timeline" />
-</a>
-
-This timeline exists on a _branch_ - a lightweight history streak of your dataset.
-In this example here, the timeline exists on only a single branch, the default branch.
-This default branch is usually called either `main` or `master`.
-Let's tag this timeline with its branch name:
 
 <a href="{{ page.root }}/fig/branching/linear_time_2.svg">
   <img height="200px" src="{{ page.root }}/fig/branching/linear_time_2.svg" alt="A revision history is like a timeline" />
 </a>
 
+This timeline exists on a _branch_ - a lightweight history streak of your dataset.
+In this example here, the timeline exists on only a single branch, the default branch.
+This default branch is usually called either `main` or `master`.
+
+
+
+
 ## A basic branching workflow
 
 Git doesn't limit you to only a single timeline.
-Instead, it gives you the power to create as many timelines (branches) as you want, and those can co-exist in parallel (just don't tell Physics).
+Instead, it gives you the power to create as many timelines (branches) as you want, and those can co-exist in parallel.
 This allows you to make changes in different timelines, i.e., you can create "alternative realities".
-And what is more is that you have the power to travel across timelines, merge timelines or parts of them together, or add single events from one timeline to a different timeline.
-(We secretely hope that this way of phrasing it sounds cool enough to interest you enough to endure a short demonstration of a workflow that uses branching, but may feel like uneccessary work at first.)
+For example, instead of keeping different flavours of preprocessing that you are yet undecided about in different folders, you could keep them within the same dataset, but on different branches:
 
-Lets go back in time and see how this dataset history could have reached its latest state (`added DOI to README`) in a workflow that used more than one branch.
+<a href="{{ page.root }}/fig/branching/different_directories.svg">
+  <img height="200px" src="{{ page.root }}/fig/branching/different_directories.svg" alt="A revision history is like a timeline" />
+</a>
+
+
+And what is more is that you have the power to travel across timelines, merge timelines or parts of them together, or add single events from one timeline to a different timeline.
+The only thing you need to master in order to do this is learn about common branching workflows.
 
 **The big bang: Dataset creation**
 
+Lets go back in time and see how the linear dataset history from above could have reached its latest state (`added DOI to README`) in a workflow that used more than one branch.
 At the start of time stands the first commit on the default branch.
 A `datalad create` is the big bang at the start of your multiverse that creates both the default branch and the first commit on it:
 
@@ -150,7 +153,7 @@ $ datalad save -m "Compute results"</code>
 **Merging timelines - I**
 
 And in theory, when the results look good, we can take a good look at the timeline we created and deem it worthy of "a merge" - getting integrated into the default branches' timeline.
-How does it work? It involves jumps between branches:
+How does it work? It involves jumps between branches: We switch to (_checkout_) the central branch and integrate (_merge_) the branch to get its changes.
 
 <table>
 <tr>
@@ -168,7 +171,7 @@ $ git merge preproc</code>
 </tr>
 </table>
 
-This merge integrates all developments on the `preproc` branch into the `main` branch.
+This merge integrates all developments on the `preproc` branch into the `main` branch - the timelines were combined.
 
 **Merging timelines II**
 
@@ -176,8 +179,10 @@ However, things could have gone slightly different.
 Lets rewind and consider a slight complexity: After we started working on tuning the processing pipeline, the old graduate student called.
 They apologized for the state of the script and urged us to change the absolute paths to relative paths - else it would never run for us.
 
-How do we handle this? The change needs to go into the default branch because it is important, but it should not be a part of ``preproc``, as this branch shall be transparently dedicated only to tuning and performing the preprocessing.
-We could add it straight to `main`, but we can also keep the branching workflow and perform the change on a new branch (`fix-paths`) that we then merge:
+How do we handle this? The change needs to go into the default branch because it is important, yet in a proper branching workflow we ideally would't commit directly to the default branch.
+We also don't want to add it only to ``preproc`` because we're not sure if we're going to keep that branches changes eventually, and other preprocessing flavours would need to have the fix as well.
+Also, this branch shall be transparently dedicated only to tuning and performing the preprocessing.
+Thus, in line with the branching workflow, we commit the change on a new branch (`fix-paths`) that we then merge into `main`.
 
 
 <table>
@@ -255,29 +260,28 @@ $ git merge preproc
 
 #### And... what now?
 
-The end result of all this timeline travelling may be a bit underwhelming.
-Because what this process ends in is the very same timeline as when working on the very same branch, just that its visualization is slightly more complex:
-
-<table>
-<tr>
-<td>
-<a href="{{ page.root }}/fig/branching/tig-branches.png">
-  <img height="100px" src="{{ page.root }}/fig/branching/tig-branches.png" alt="A revision history is like a timeline" />
-</a>
-</td>
-<td>
-<iframe src="https://giphy.com/embed/xUPJPehFKgld5lttRK" width="30%" height="30%" frameBorder="0"></iframe></td>
-</tr></table>
+Branching opens up the possibility to keep parallel developments neat and orderly next to eachother, hidden away in branches. A `checkout` of your favourite branch lets you travel to its timeline and view all of the changes it contains, and a `merge` combines one or more timelines into another one.
 
 > ## Exercise
 >
-> To make up for this slight disappointment, enjoy one of the most well-made audio-visuals of the branching workflow. As an exercise, pay close attention to the git commands at the bottom of the video, and also the colorful branch and commit visualizations. Note how each instrument is limited to its branch until several branches are merged.
+> Take a brief break and enjoy one of the most well-made audio-visuals of the branching workflow. As an exercise, pay close attention to the git commands at the bottom of the video, and also the colorful branch and commit visualizations. Note how each instrument is limited to its branch until several branches are merged.
 > Which concepts are new, which ones did you master already?
 > <iframe width="760" class="yt-wrapper2" height="515" src="https://www.youtube-nocookie.com/embed/S9Do2p4PwtE" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 {: .challenge}
 
 
+
 ## The true power in collaborative scenarios
+
+
+While branching seems powerful, the end result of the timeline travelling we performed above may be a bit underwhelming because what this process ends in is the very same timeline as when working on the very same branch.
+Just its visualization is slightly more complex:
+
+<a href="{{ page.root }}/fig/branching/tig-branches.png">
+  <img height="100px" src="{{ page.root }}/fig/branching/tig-branches.png" alt="A revision history is like a timeline" />
+</a>
+
+
 
 The true power of this workflow is visible in collaborative scenarios.
 Imagine we're not alone in this project - we teamed up with the grad student that wrote the script.
@@ -360,8 +364,22 @@ You can see how opening and merging PRs look like in GitHub's interface in the e
 
 > ## Creating a PR on GitHub
 >
->TODO: add images of PRs
+> Once you pushed a new branch to GitHub it will suggest you to open a "pull request" (a request to merge your branch into the default branch)
 >
+><a href="{{ page.root }}/fig/branching/Github-pushedbranch.png">
+  <img height="200px" src="{{ page.root }}/fig/branching/Github-pushedbranch.png"  />
+> </a>
+>
+> You can write a title and a description of your changes:
+>
+><a href="{{ page.root }}/fig/branching/Github-openPR.png">
+  <img height="600px" src="{{ page.root }}/fig/branching/Github-openPR.png"  />
+> </a>
+> When you created the pull request, your collaborators can see all changes on the branch and decide whether or not they want to merge them, or give feedback on necessary changes.
+>
+><a href="{{ page.root }}/fig/branching/Github-openPR2.png">
+  <img height="600px" src="{{ page.root }}/fig/branching/Github-openPR2.png" />
+> </a>
 {: .solution }
 
 
@@ -428,7 +446,11 @@ $ datalad push --to upstream
 </td>
 </tr></table>
 
+When you take a look at the revision history now, even such a simple one, its timeline starts to hint at how multidimensional and collaborative branching can make your projects:
 
+<a href="{{ page.root }}/fig/branching/collaborative-tig.png">
+  <img height="200px" src="{{ page.root }}/fig/branching/collaborative-tig.png" alt="A revision history is like a timeline" />
+</a>
 ## Further reading
 
 Understanding and mastering branching keeps many people awake at night.

@@ -8,7 +8,7 @@
    version="1.1"
    id="svg5"
    inkscape:version="1.1.1 (3bf5ae0d25, 2021-09-20)"
-   sodipodi:docname="branching_3.svg"
+   sodipodi:docname="branching_7b.svg"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns="http://www.w3.org/2000/svg"
@@ -31,11 +31,11 @@
      inkscape:cx="45.249433"
      inkscape:cy="89.615951"
      inkscape:window-width="2560"
-     inkscape:window-height="1403"
-     inkscape:window-x="957"
-     inkscape:window-y="0"
+     inkscape:window-height="1371"
+     inkscape:window-x="0"
+     inkscape:window-y="1472"
      inkscape:window-maximized="1"
-     inkscape:current-layer="layer11" />
+     inkscape:current-layer="layer6" />
   <defs
      id="defs2" />
   <g
@@ -194,7 +194,7 @@
      inkscape:groupmode="layer"
      id="layer6"
      inkscape:label="preproc-type1-2"
-     style="display:none"
+     style="display:inline"
      transform="translate(8.6057847,-7.5118909)">
     <ellipse
        style="fill:#f5dcdc;fill-opacity:1;stroke:#9e2c2c;stroke-width:0.3;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
@@ -257,7 +257,7 @@
      id="layer7"
      inkscape:label="fix-preproc-1"
      transform="translate(8.6057847,-7.5118909)"
-     style="display:none">
+     style="display:inline">
     <path
        style="display:inline;mix-blend-mode:multiply;fill:none;stroke:#677821;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
        d="m 16.314099,23.627177 c -9.7497465,9.125475 -4.5305,10.508146 1.314621,16.908715"
@@ -310,7 +310,7 @@
      id="layer10"
      inkscape:label="merge-main-1"
      transform="translate(8.6057847,-7.5118909)"
-     style="display:none">
+     style="display:inline">
     <ellipse
        style="fill:#dcdcff;fill-opacity:1;stroke:#9e2c2c;stroke-width:0.3;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
        id="ellipse40596-6"
