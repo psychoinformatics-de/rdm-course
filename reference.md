@@ -2,17 +2,28 @@
 layout: reference
 ---
 
-## Summary of Basic Commands
+## Summary of basic DataLad commands
 
-| Action      | Files | Folders      |
-|-------------|-------|--------------|
-| Inspect     | ls    | ls           |
-| View content| cat   | ls           |
-| Navigate to |       | cd           |
-| Move        | mv    | mv           |
-| Copy        | cp    | cp -r        |
-| Create      | nano  | mkdir        |
-| Delete      | rm    | rmdir, rm -r |
+| Action        | Description                                                                                |
+|---------------|--------------------------------------------------------------------------------------------|
+| create        | Create a new dataset from scratch                                                          |
+| save          | Save the current state of a dataset                                                        |
+| status        | Report on the state of a dataset and / or its subdatasets                                  |
+| get           | Get dataset content (files / directories / subdatasets)                                    |
+| clone         | Install an existing dataset from path / url / open data collection                         |
+| update        | Update a dataset from a sibling                                                            |
+| remove        | Remove datasets + contents, unregister from potential top-level datasets                   |
+| unlock        | Unlock file(s) of a dataset to enable editing their content                                |
+| drop          | Drop file content from dataset (remove data, retain symlink)                               |
+| siblings      | Manage sibling configurations                                                              |
+| publish       | Publish a dataset to a known sibling                                                       |
+| run           | Run arbitrary shell command and record its impact                                          |
+| rerun         | Re-execute a previous run command identified by its hash, and save resulting modifications |
+| run-procedure | Run prepared procedures (execudables) on a dataset                                         |
+| download-url  | Download, save, and record origin of content from websources.                              |
+
+
+See the [DataLad cheat sheet](https://handbook.datalad.org/en/latest/basics/101-136-cheatsheet.html) in the DataLad Handbook.
 
 ## Filesystem hierarchy
 
