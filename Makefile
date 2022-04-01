@@ -191,9 +191,9 @@ endif
 ## Shell lesson specific commands
 ## =================================================
 
-.PHONY : zip
-ZIPFILE = data/shell-lesson-data.zip
+# .PHONY : zip
+# ZIPFILE = data/shell-lesson-data.zip
 
-## zip              : create zip file for learners to download
-zip : shell-lesson-data
-	zip -r $(ZIPFILE) $<
+# ## zip              : create zip file for learners to download
+# zip : shell-lesson-data
+# 	zip -r $(ZIPFILE) $<
