@@ -85,6 +85,7 @@ exclude:
   - Makefile
   - bin/
   - .Rproj.user/
+  - files/slides-md/
 
 # Turn on built-in syntax highlighting.
 highlighter: rouge
