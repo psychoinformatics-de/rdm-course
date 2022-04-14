@@ -65,7 +65,7 @@ For example, instead of keeping different flavours of preprocessing that you are
 </a>
 
 
-And what is more is that you have the power to travel across timelines, merge timelines or parts of them together, or add single events from one timeline to a different timeline.
+Moreover, you have the power to travel across timelines, merge timelines or parts of them together, or add single events from one timeline to a different timeline.
 The only thing you need to master in order to do this is learn about common branching workflows.
 
 **The big bang: Dataset creation**
@@ -107,9 +107,9 @@ Its probably one a past graduate student left on the lab server - finders-keeper
 **Escape to a safe sandbox**
 
 The old script proves to be not as reusable as initially thought.
-It parameterizes the analysis really weirdly, and we're not sure that we can actually run it on the data because it needs to much work.
+It parameterizes the analysis really weirdly, and you're not sure that you can actually run it on the data because it needs too much work.
 Nevertheless, let's give it a try.
-But because we're not sure if this endeavour works, we will teleport ourselves to a new timeline - a branch that is independent from the default branch, yet still contains the script, allowing us to do some experimental changes without cluttering the main history line, for example changing the parametrization.
+But because you're not sure if this endeavour works, let's teleport to a new timeline - a branch that is independent from the default branch, yet still contains the script, allowing us to do some experimental changes without cluttering the main history line, for example changing the parametrization.
 
 <table>
 <tr>
@@ -132,7 +132,7 @@ $ datalad save -m \ <br>
 </tr>
 </table>
 
-In theory, we can now continue the development in the alternative timeline until it is time to compute the results.
+In theory, you can now continue the development in the alternative timeline until it is time to compute the results.
 
 <table>
 <tr>
@@ -152,7 +152,7 @@ $ datalad save -m "Compute results"</code>
 
 **Merging timelines - I**
 
-And in theory, when the results look good, we can take a good look at the timeline we created and deem it worthy of "a merge" - getting integrated into the default branches' timeline.
+When the results look good, you may deem the timeline you created worthy of "a merge" - getting integrated into the default branches' timeline.
 How does it work? It involves jumps between branches: We switch to (_checkout_) the central branch and integrate (_merge_) the branch to get its changes.
 
 <table>
@@ -176,13 +176,16 @@ This merge integrates all developments on the `preproc` branch into the `main` b
 **Merging timelines II**
 
 However, things could have gone slightly different.
-Lets rewind and consider a slight complexity: After we started working on tuning the processing pipeline, the old graduate student called.
-They apologized for the state of the script and urged us to change the absolute paths to relative paths - else it would never run for us.
+Lets rewind and consider a slight complexity: After you started working on tuning the processing pipeline, the old graduate student called.
+They apologized for the state of the script and urged to change the absolute paths to relative paths - else it would never run.
 
-How do we handle this? The change needs to go into the default branch because it is important, yet in a proper branching workflow we ideally would't commit directly to the default branch.
-We also don't want to add it only to ``preproc`` because we're not sure if we're going to keep that branches changes eventually, and other preprocessing flavours would need to have the fix as well.
-Also, this branch shall be transparently dedicated only to tuning and performing the preprocessing.
-Thus, in line with the branching workflow, we commit the change on a new branch (`fix-paths`) that we then merge into `main`.
+In a text-book-like branching workflow, such a change is integrated into the main line from a new dedicated branch.
+The change needs to eventually be the default branch because it is important, but there are different reasons why it wouldn't be added to the main branch or the existing ``preproc`` branch:
+In a picture-perfect branching workflow one ideally would never commit directly to the default branch.
+The change also shouldn't be added only to ``preproc`` - it is unclear whether that branches' changes will be kept eventually, and other preprocessing flavours would need to have the fix as well.
+Also, each branch should ideally be transparently dedicated only to a specific feature, for example tuning and performing the preprocessing.
+
+Thus, in a text-book-like branching workflow, you commit the change on a new branch (`fix-paths`) that is then merged into `main`.
 
 
 <table>
@@ -209,8 +212,8 @@ $ git merge fix-paths
 
 **Merging timelines III**
 
-Even though we didn't want to make the change to the paths on a branch dedicated to preprocessing, the fix is still crucial to run the script on the data.
-So in order to get the fix (which is now a part of `main`) we can merge the changes from `main` into `preproc`.
+At this point, even though the fix to relative paths wasn't added to the ``preproc`` branch dedicated to preprocessing, the fix is still crucial to run the script on the data.
+So in order to get the fix (which is now a part of `main`) you can merge the changes from `main` into `preproc`.
 
 <table>
 <tr>
@@ -230,7 +233,7 @@ $ git merge main
 </tr>
 </table>
 
-With fixes and tuning done, the data can be computed, ``preproc`` can be merged into `main`, and the development that does not need sandboxing (like adding a DOI badge to the README) can continue in the `main` branch.
+With fixes and tuning done, the data can be computed, ``preproc`` can be merged into `main`, and the development that does not need sandboxing (like adding a DOI badge to the README) could continue in the `main` branch.
 
 <table>
 <tr>
@@ -256,7 +259,7 @@ $ git merge preproc
 > Branches are lightweight, independent history streaks of your dataset. Branches can contain less, more, or changed files compared to other branches, and one can merge the changes a branch contains into another branch. Branches can help with sandboxing and transparent development.
 >While branching is a Git concept and is done with Git commands, it works in datasets (which are Git repositories under the hood) just as well.
 {: .keypoints}
->
+
 
 #### And... what now?
 
@@ -274,7 +277,7 @@ Branching opens up the possibility to keep parallel developments neat and orderl
 ## The true power in collaborative scenarios
 
 
-While branching seems powerful, the end result of the timeline travelling we performed above may be a bit underwhelming because what this process ends in is the very same timeline as when working on the very same branch.
+While branching seems powerful, the end result of the timeline travelling performed above may be a bit underwhelming because what this process ends in is the very same timeline as when working on the very same branch.
 Just its visualization is slightly more complex:
 
 <a href="{{ page.root }}/fig/branching/tig-branches.png">
@@ -284,21 +287,41 @@ Just its visualization is slightly more complex:
 
 
 The true power of this workflow is visible in collaborative scenarios.
-Imagine we're not alone in this project - we teamed up with the grad student that wrote the script.
+Imagine you're not alone in this project - you teamed up with the grad student that wrote the script.
 
 ### Setup for collaboration
 
 Collaboration requires more than one dataset, or rather many copies (so called _siblings_) of the same dataset.
 In a common collaborative workflow every involved collaborator has their own sibling of the dataset on their own computer.
 Often, these datasets are siblings of one central dataset, which is commonly called `upstream` (though nothing enforces this convention - you could chose arbitrary names).
-`upstream` is also where every collaborator sends their changes to, and typically lives on a Git repository hosting services such as GitHub, GitLab, Gin, or Bitbucket, because those services are usually accessible to every collaborator and provide a number of convenient collaborative features.
+`upstream` is also the final destination where every collaborator sends their changes to, and typically lives on a Git repository hosting services such as GitHub, GitLab, Gin, or Bitbucket, because those services are usually accessible to every collaborator and provide a number of convenient collaborative features.
 
-Lets travel back in time and put the dataset to GitHub after the old processing script was added to it.
+
+> ## Names can be confusing
+>
+> Collaborative workflows may not only difficult because of the multidimensional nature of a dataset/repository with branches, but also because it involves a network-like setup of different repositories. The names for the network components can be confusing. Git and DataLad sometimes also use different names for the same concept. Here is an overview.
+>
+> ``clone``: A dataset/repository that was cloned from elsewhere.
+>
+> ``sibling``/``remote``: A dataset/repository (clone) that a given dataset/repository knows about. Siblings/remotes can be established automatically (e.g., a ``clone`` knows its original dataset), or added by hand. A sibling/remote always has a unique name (which can be arbitrary, and changed at will) and a path or URL to the dataset/repository. By default, the original dataset is known to its clones as the remote "origin", i.e., whenever you clone a dataset/repository, the original location will be known as "origin" to your clone. The original dataset has no automatic knowledge about the clone, but you could add the clone as a remote by hand (via ``datalad siblings add --name <name> --url <url>`` or ``git remote add <name> <url>``).
+>
+>``fork``: A repository clone on a repository hosting site like GitHub. "Forking" a repository from a different user "clones" it into your own user account. This is necessary when you don't have permissions to push any changes to the other users repository but still want to propose changes. It is not necessary when you are made a collaborator on the repository via the respective hosting service's web interface.
+>
+>``upstream`` versus ``origin``: Any clone knows its original dataset/repository as a remote. By default, this remote is called `"origin"`. A dataset/repository often has multiple remotes, for example a different users' dataset/repository on GitHub and your own ``fork`` of this repository on GitHub. Ìt is convention (similarly to naming the default branch `main` or `master`) to call the original dataset on GitHub ``upstream`` and your fork of it `origin`. This involves adding a sibling/remote by hand and potentially renaming siblings/remotes (via ``git remote rename <name> <newname>``).
+>
+> <a href="{{ page.root }}/fig/branching/git_PR.png">
+  <img height="600px" src="{{ page.root }}/fig/branching/git_PR.png" alt="A stereotypical network of datasets and their remote names in a collaborative workflow" />
+</a>
+{: .callout}
+
+Let's step through a scenario involving two computers and one shared repository on GitHub to which both collaborators have write access (i.e., a scenario without forks).
+For this setup, you travel back in time and, after adding the old processing script, you publish your dataset to GitHub.
 
 <table>
 <tr>
 <td style="text-align:left; vertical-align:middle">
-<code># create a sibling repository named "mydataset" <br>
+<code>
+# create a sibling repository named "mydataset" <br>
 # on your user account on GitHub (github.com/username/mydataset) <br>
 # (You need to create and supply a token the first time) <br>
 $ datalad create-sibling-github mydataset --sibling-name upstream <br>
@@ -313,8 +336,9 @@ $ datalad push --to upstream
 </td>
 </tr></table>
 
-Lets now also invite the old graduate student to collaborate on the analysis with us.
-What they do first is obtain a clone from GitHub to their own Laptop.
+Afterwards, you invite the old graduate student to collaborate on the analysis.
+Repository hosting services allow you to add collaborators via their web interface - if they accept the invitation, they get write access.
+What they do next is obtain a clone from GitHub to their own Laptop.
 
 <table>
 <tr>
@@ -333,12 +357,12 @@ $ git remote rename origin upstream
 </td>
 </tr></table>
 
-With every collaborator set up with a dataset to work on in parallel, we can work on preprocessing tuning, while the old grad student fixes the issue with the absolute paths.
+With every collaborator set up with a dataset to work on in parallel, you work on preprocessing tuning, while the old grad student fixes the issue with the absolute paths.
 
 <table>
 <tr>
 <td style="text-align:left; vertical-align:middle">
-<code># Work on our sibling <br>
+<code># Work on your sibling <br>
 $ git branch preproc<br>
 $ git checkout preproc<br>
 $ datalad save -m "Added parametrization A"<br>
@@ -399,14 +423,14 @@ $ git push upstream fix-paths
 </tr></table>
 
 
-Because those fixes are crucial to do the processing, we can now get them from the central sibling `upstream` - this time using `git pull upstream main` to `merge` the `main` branch of `upstream`.
+Because those fixes are crucial to do the processing, you can now get them from the central sibling `upstream` - this time using `git pull upstream main` to `merge` the `main` branch of `upstream` into your local ``preproc`` branch.
 
 
 
 <table>
 <tr>
 <td style="text-align:left; vertical-align:middle">
-<code> # we merge upstream's changes into our preproc branch<br>
+<code># merge upstream's changes into your preproc branch<br>
 $ git pull upstream main
 </code></td>
 <td>
@@ -416,7 +440,7 @@ $ git pull upstream main
 </td>
 </tr></table>
 
-Now that we have the crucial fix thanks to the parallel work of our collaborator, we can finally run the processing, and push our changes as well to propose them as a pull request to `upstream`:
+Now that you have the crucial fix thanks to the parallel work of your collaborator, you can finally run the processing, and push your changes as well to propose them as a pull request to `upstream`:
 
 <table>
 <tr>
