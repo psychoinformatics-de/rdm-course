@@ -9,8 +9,8 @@ objectives:
 - "Create new branches in your dataset and switch between them."
 - "Master the basics of a contribution workflow."
 keypoints:
-- "Your dataset contains branches. The default branch is usually called either `main` or `master`"
-- "There's no limit to the number of branches one can have, and each branch can become an alternative timeline with developments independent from the developments in other branches"
+- "Your dataset contains branches. The default branch is usually called either `main` or `master`."
+- "There's no limit to the number of branches one can have, and each branch can become an alternative timeline with developments independent from the developments in other branches."
 - "Branches can be `merged` to integrate the changes from one branch into another."
 - "Using branches is fundamental in collaborative workflows where many collaborators start from a clean default branch and propose new changes to a central dataset sibling."
 - "Typically, central datasets are hosted on services like GitHub, GitLab, or Gin, and if collaborators push their branches with new changes, these services help to create pull requests."
@@ -34,7 +34,7 @@ keypoints:
 You already know that a dataset keeps a revision history of all past changes.
 Here is a short example with the development history of a dataset.
 Albeit minimal, it is a fairly stereotypical example of a revision history for a data analysis: Over time, one adds a script for data processing, and changes and fixes the pipeline until it is ready to compute the data.
-Then, the data are processed and saved, and once its published, one adds a DOI to the dataset README.
+Then, the data are processed and saved, and once it's published, one adds a DOI to the dataset README.
 
 <a href="{{ page.root }}/fig/branching/tig.png">
   <img height="100px" src="{{ page.root }}/fig/branching/tig.png" alt="An example dataset history" />
@@ -180,7 +180,7 @@ Lets rewind and consider a slight complexity: After you started working on tunin
 They apologized for the state of the script and urged to change the absolute paths to relative paths - else it would never run.
 
 In a text-book-like branching workflow, such a change is integrated into the main line from a new dedicated branch.
-The change needs to eventually be the default branch because it is important, but there are different reasons why it wouldn't be added to the main branch or the existing ``preproc`` branch:
+The change needs to eventually be on the default branch because it is important, but there are different reasons why it wouldn't be added to the main branch or the existing ``preproc`` branch:
 In a picture-perfect branching workflow one ideally would never commit directly to the default branch.
 The change also shouldn't be added only to ``preproc`` - it is unclear whether that branches' changes will be kept eventually, and other preprocessing flavours would need to have the fix as well.
 Also, each branch should ideally be transparently dedicated only to a specific feature, for example tuning and performing the preprocessing.
@@ -299,13 +299,13 @@ Often, these datasets are siblings of one central dataset, which is commonly cal
 
 > ## Names can be confusing
 >
-> Collaborative workflows may not only difficult because of the multidimensional nature of a dataset/repository with branches, but also because it involves a network-like setup of different repositories. The names for the network components can be confusing. Git and DataLad sometimes also use different names for the same concept. Here is an overview.
+> Collaborative workflows may be difficult not only because of the multidimensional nature of a dataset/repository with branches, but also because they involve a network-like setup of different repositories. The names for the network components can be confusing. Git and DataLad sometimes also use different names for the same concept. Here is an overview.
 >
 > ``clone``: A dataset/repository that was cloned from elsewhere.
 >
 > ``sibling``/``remote``: A dataset/repository (clone) that a given dataset/repository knows about. Siblings/remotes can be established automatically (e.g., a ``clone`` knows its original dataset), or added by hand. A sibling/remote always has a unique name (which can be arbitrary, and changed at will) and a path or URL to the dataset/repository. By default, the original dataset is known to its clones as the remote "origin", i.e., whenever you clone a dataset/repository, the original location will be known as "origin" to your clone. The original dataset has no automatic knowledge about the clone, but you could add the clone as a remote by hand (via ``datalad siblings add --name <name> --url <url>`` or ``git remote add <name> <url>``).
 >
->``fork``: A repository clone on a repository hosting site like GitHub. "Forking" a repository from a different user "clones" it into your own user account. This is necessary when you don't have permissions to push any changes to the other users repository but still want to propose changes. It is not necessary when you are made a collaborator on the repository via the respective hosting service's web interface.
+>``fork``: A repository clone on a repository hosting site like GitHub. "Forking" a repository from a different user "clones" it into your own user account. This is necessary when you don't have permissions to push any changes to the other user's repository but still want to propose changes. It is not necessary when you are made a collaborator on the repository via the respective hosting service's web interface.
 >
 >``upstream`` versus ``origin``: Any clone knows its original dataset/repository as a remote. By default, this remote is called `"origin"`. A dataset/repository often has multiple remotes, for example a different users' dataset/repository on GitHub and your own ``fork`` of this repository on GitHub. Ìt is convention (similarly to naming the default branch `main` or `master`) to call the original dataset on GitHub ``upstream`` and your fork of it `origin`. This involves adding a sibling/remote by hand and potentially renaming siblings/remotes (via ``git remote rename <name> <newname>``).
 >
@@ -338,7 +338,7 @@ $ datalad push --to upstream
 
 Afterwards, you invite the old graduate student to collaborate on the analysis.
 Repository hosting services allow you to add collaborators via their web interface - if they accept the invitation, they get write access.
-What they do next is obtain a clone from GitHub to their own Laptop.
+What they do next is obtain a clone from GitHub to their own laptop.
 
 <table>
 <tr>
@@ -485,4 +485,4 @@ Here, we'll recommend two:
 * The first one is [The Git Parable](https://tom.preston-werner.com/2009/05/19/the-git-parable.html) (20 min reading time). It is a story-like journey that not only explains the complex fundamental workings of Git, it also motivates them in an accessible way.
 As an added benefit, having read this text will make you friends with every open source software contributor at the next party - it works just like mentioning in passing that you have seen _\<insert-niche-Indie-band-here\>_ in person to someone who has been a life-long fan.
 
-* The second one is the free, browser-based game [learngitbranching.js.org](https://learngitbranching.js.org). You will learn a lot of Git commands in passing, its at least as much fun and colors as Candy Crush, and the best use of time during boring Zoom seminars.
+* The second one is the free, browser-based game [learngitbranching.js.org](https://learngitbranching.js.org). You will learn a lot of Git commands in passing, it's at least as much fun and colors as Candy Crush, and the best use of time during boring Zoom seminars.
