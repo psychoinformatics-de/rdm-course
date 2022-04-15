@@ -79,7 +79,7 @@ changes, and undo things we don't want to keep.
 ## Setting up
 
 In order to code along, you should have a recent DataLad version. The
-workshop was developed based on DataLad version `0.15`. Installation
+workshop was developed based on DataLad version `0.16`. Installation
 instructions are included in the [Setup]({{ page.root }}{% link
 setup.md %}) page. If you are unsure about your version of DataLad,
 you can check it using the following command:
