@@ -266,7 +266,7 @@ associate those changes with an author, date, and identifier, creating
 a lineage of file content, and being able to revert changes or restore
 previous file versions. DataLad datasets can version control their
 contents, regardless of size. Let's start small, and just create a
-`README`.
+`README.md`.
 
 We will use a text editor called nano to work without leaving the
 command line. You can, of course, use an editor of your
@@ -286,7 +286,7 @@ Out) the file, hit Ctrl-O, type the file name (`README.md`), and hit
 enter. Then, use Ctrl-X to exit.
 
 `datalad status` can report on the state of a dataset, and we will use
-it a lot. As we added a new file, `README` will show up as being
+it a lot. As we added a new file, `README.md` will show up as being
 *untracked* if you run `datalad status`:
 
 ~~~
