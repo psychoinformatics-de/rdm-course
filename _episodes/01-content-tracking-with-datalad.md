@@ -162,6 +162,21 @@ You can also request help for a specific command, for example:
 ~~~
 datalad create --help
 ~~~
+
+Using the shorter ``-h`` flag instead of ``--help`` will return a concise
+ overview of all subcommands or command options.
+
+~~~
+datalad create -h
+~~~
+~~~
+Usage: datalad create [-h] [-f] [-D DESCRIPTION] [-d DATASET] [--no-annex]
+                      [--fake-dates] [-c PROC] [--version]
+                      [PATH] ...
+
+Use '--help' to get more comprehensive information.
+~~~
+{: .output}
 {: .language-bash}
 
 
