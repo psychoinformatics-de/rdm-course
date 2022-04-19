@@ -120,12 +120,15 @@ datalad drop inputs/images/chinstrap_01.jpg
 
 ```
 drop(error): /home/alice/Documents/rdm-workshop/example-dataset/inputs/images/chinstrap_01.jpg (file)
-[unsafe; Could only verify the existence of 0 out of 1 necessary copy; (Use --nocheck to override this check, or adjust numcopies.)]
+[unsafe; Could only verify the existence of 0 out of 1 necessary copy; (Use --reckless availability to override this check, or adjust numcopies.)]
+
+# If you were to run this with DataLad version < 0.16.0, the safety check would be overriden with --nocheck instead of --reckless availablity)
 ```
 {: .output}
 
 This time, DataLad refused to drop the file, because no information
 about its availability elsewhere has been recorded.
+The [extra episode on removing files and datasets]({{ page.root }}{% link _episodes/92-filesystem-operations.md %}) has a bit more context about this behavior.
 
 The `datalad get` command is the reverse of `datalad drop` - it
 obtains file contents from a known source. Let's use it to reobtain
