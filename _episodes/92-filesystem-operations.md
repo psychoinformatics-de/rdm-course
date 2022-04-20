@@ -76,7 +76,7 @@ ok
 This output shows that the file contents of this book exist locally and "on the web", more precisely under the URL [arxiv.org/pdf/0904.3664v1.pdf](https://arxiv.org/pdf/0904.3664v1.pdf).
 
 A ``datalad drop <file>`` performs an internal check if the to-be-dropped file content could be re-obtained before dropping it.
-When the file content exists in more than your local system, _and_ at least one of those other location is successfully probed to have this content, dropping its file content succeeds.
+When the file content exists in more locations than your local system, _and_ at least one of those other location is successfully probed to have this content, dropping its file content succeeds.
 Here is a successful ``drop``:
 
 ~~~
