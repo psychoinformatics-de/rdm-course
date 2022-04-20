@@ -91,7 +91,7 @@ drop(ok): A.Shashua-Introduction_to_Machine_Learning.pdf (file)
 
 ### ``remove`` the easy way: datasets with remote availability
 
-To demonstrate removing a datasets, let's remove the `machinelearning-books` dataset.
+To demonstrate removing datasets, let's remove the `machinelearning-books` dataset.
 
 Because this dataset was cloned from a GitHub repository, it has a registered _sibling_:
 
