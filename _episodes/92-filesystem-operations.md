@@ -268,4 +268,4 @@ rm -rf <dataset>
 {: .language-bash}
 ## Further reading
 
-This overview only covers the surface of all possible file system operations, and not even all ways in which files or datasets can be removed. For a more complete overview, checkout [handbook.datalad.org/basics/101-136-filesystem.html](http://handbook.datalad.org/en/latest/basics/101-136-filesystem.html) - the navigation bar on the left of the page lists a number of useful file system operations.
+This overview only covers the surface of all possible file system operations, and not even all ways in which files or datasets can be removed. For a more complete overview, check out [handbook.datalad.org/basics/101-136-filesystem.html](http://handbook.datalad.org/en/latest/basics/101-136-filesystem.html) - the navigation bar on the left of the page lists a number of useful file system operations.
