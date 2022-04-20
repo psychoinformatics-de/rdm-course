@@ -157,7 +157,7 @@ GIN (G-Node infrastructure) is a free data management system designed for compre
 and reproducible management of scientific data.
 It is a web-based repository store and provides fine-grained access control to share data.
 GIN builds up on Git and git-annex, and is an easy alternative to other third-party services to host and share your DataLad datasets.
-It allows to share datasets and their contents with selected collaborators or making them publicly and anonymously available.
+It allows sharing datasets and their contents with selected collaborators or making them publicly and anonymously available.
 And even if you prefer to expose and share your datasets via GitHub, you can still use Gin to host your data.
 
 ### Configuration (SSH keys)
@@ -242,7 +242,7 @@ publish. To do so, we first need to create a *repository* - a place on
 GIN where things will be stored.
 This can either be done via GIN's web interface, or, when you run DataLad version
  ``0.16`` or higher, via the `create-sibling-gin` command.
-Pick which ever route seems more attractive to you.
+Pick whichever route seems more attractive to you.
 
 #### Route 1: Create a repo via web interface
 
