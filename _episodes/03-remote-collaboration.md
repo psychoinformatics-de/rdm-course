@@ -151,7 +151,16 @@ can use it to keep only part of its contents on your local machine
 (e.g. laptop) while being aware of the bigger whole. With that in
 mind, let's move on to dataset publishing.
 
-## GIN - configuration (SSH keys)
+## Publishing datasets to GIN
+
+GIN (G-Node infrastructure) is a free data management system designed for comprehensive
+and reproducible management of scientific data.
+It is a web-based repository store and provides fine-grained access control to share data.
+GIN builds up on Git and git-annex, and is an easy alternative to other third-party services to host and share your DataLad datasets.
+It allows sharing datasets and their contents with selected collaborators or making them publicly and anonymously available.
+And even if you prefer to expose and share your datasets via GitHub, you can still use Gin to host your data.
+
+### Configuration (SSH keys)
 
 To participate in the following part you should have registered an
 account on GIN. Before we are able to start sending data, we need to
@@ -230,17 +239,14 @@ pasting the key, click the "Add key" button.
 
 We have our dataset, we configured our access, and we are ready to
 publish. To do so, we first need to create a *repository* - a place on
-GIN where things will be stored. To do this, we will go to GIN web
-interface (note: DataLad version 0.16, which at the moment of writing
-is upcoming, introduces a `create-sibling-gin` command which autoates
-this process, but we will use this as an opportunity to take a look at
-the GIN web interface anyway).
+GIN where things will be stored.
+This can either be done via GIN's web interface, or, when you run DataLad version
+ ``0.16`` or higher, via the `create-sibling-gin` command.
+Pick whichever route seems more attractive to you.
 
-![Screenshot: creating a new repository on GIN]({{ page.root }}/fig/GIN_newrepo.png)
-{: .image-with-shadow }
+#### Route 1: Create a repo via web interface
 
-(Image from DataLad Handbook)
-
+Go to gin.g-node.org.
 Click the plus button on the upper right and select "New
 Repository". Then, enter a repository name (one word, no spaces, but
 dashes and underscores are allowed). You can, optionally, add a short
@@ -249,9 +255,13 @@ description in "Title". In the "Initial files" section, uncheck the
 checkbox - we want the repository to be empty. Finally, click the
 button "Create Repository".
 
-### Publish your dataset
+![Screenshot: creating a new repository on GIN]({{ page.root }}/fig/GIN_newrepo.png)
+{: .image-with-shadow }
 
-To publish your dataset, you need to add the GIN repository as a
+(Image from DataLad Handbook)
+
+
+Afterwards, add the GIN repository as a
 *sibling* of your dataset. To do so, use `datalad siblings add`,
 substituting your user name and dataset name below (note that the URL
 is displayed for you on the GIN website after creating the
@@ -280,8 +290,92 @@ configured, `.` means "here"), `name` is the name by which we will
 later refer to the sibling, and `url` is the address for transferring
 the data.
 
-Afterwards, you can publish your dataset with `datalad push`, using
-the name which we set in the command above together with the `--to`
+#### Route 2: Create a repo using ``create-sibling-gin``
+
+The ``create-sibling-gin`` command automates repository creation from the command line for Gin.
+You can provide it with a name for your sibling (``-s/--name gin``) and a name under which the
+repository will be created (make sure that no repository with this name exists yet).
+
+```
+datalad create-sibling-gin --name gin my-dataset
+```
+{: .language-bash}
+
+If it is your first time running this command, DataLad will ask for a token.
+This token provides authentication and permission to create new repositories under your user account.
+
+```
+An access token is required for https://gin.g-node.org. Visit https://gin.g-node.org/user/settings/applications to create a token
+token:
+```
+{: .output}
+
+The link above should take you to your accounts' settings, where you will be able to click "Generate new token":
+
+![Screenshot: Token query]({{ page.root }}/fig/gintoken1.png)
+{: .image-with-shadow }
+
+Choose a meaningful and unique name:
+
+![Screenshot: Token query]({{ page.root }}/fig/gintoken2.png)
+{: .image-with-shadow }
+
+And copy the token into the command line prompt.
+DataLad will store the token in your system's password manager, but it can be useful to make a note of the token if you are not using your personal computer to run this code.
+
+![Screenshot: Token query]({{ page.root }}/fig/gintoken3.png)
+{: .image-with-shadow }
+
+```
+ datalad create-sibling-gin -s gin mydataset
+An access token is required for https://gin.g-node.org. Visit https://gin.g-node.org/user/settings/applications to create a token
+token:
+create_sibling_gin(ok): [sibling repository 'gin' created at https://gin.g-node.org/adswa/mydataset]
+configure-sibling(ok): . (sibling)
+action summary:
+  configure-sibling (ok: 1)
+  create_sibling_gin (ok: 1)
+```
+{: .output}
+
+Afterwards, there will be a new repository on Gin and your dataset will know it as a sibling under the name ``gin``.
+If it is the first time connecting to Gin, you might be prompted to approve the connection to a new host.
+
+
+```
+datalad siblings
+```
+{: .language-bash}
+
+```
+The authenticity of host 'gin.g-node.org (141.84.41.219)' can't be established.
+ED25519 key fingerprint is SHA256:z+QGH+2gmb07ZpjRxRKW+Msge5PDR8O+y1p6qQR54qg.
+This key is not known by any other names
+Are you sure you want to continue connecting (yes/no/[fingerprint])? yes
+.: here(+) [git]
+[WARNING] Could not detect whether gin carries an annex. If gin is a pure Git remote, this is expected.
+.: gin(-) [https://gin.g-node.org/adswa/mydataset (git)]
+```
+{: .output}
+
+Alternatively, run ``git remote -v`` to list known siblings:
+
+```
+git remote -v
+```
+{: .language-bash}
+
+```
+gin     https://gin.g-node.org/adswa/mydataset (fetch)
+gin     git@gin.g-node.org:/adswa/mydataset.git (push)
+```
+{: .output}
+
+### Publish your dataset
+
+If you have created a new repository on Gin and registered it as a sibling of
+ your dataset via one of two routes outlined above, you can publish your
+  dataset with `datalad push`, using the sibling name together with the `--to`
 option:
 
 ```
