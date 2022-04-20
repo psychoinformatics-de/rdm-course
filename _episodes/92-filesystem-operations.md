@@ -190,7 +190,7 @@ The file content of ``local-file.txt`` is irretrievably gone now.
 >       datalad run -m "Make a second version" --output local-file-multiple-revision.txt "echo 'This is the second revision' > {outputs}"
 > {% endraw %}
 >
->``datalad drop --reckless availability local-file-multiple-revision.txt`` would drop the _current_ revision of the file, but the first version (with the content "``This is the first revision``") would still exist in the datasets history.
+>``datalad drop --reckless availability local-file-multiple-revision.txt`` would drop the _current_ revision of the file, but the first version (with the content "``This is the first revision``") would still exist in the dataset's history.
 >To verify this, ``git checkout`` the first run commit and check the contents of the file.
 > {% raw %}
 >       git checkout HEAD~1
