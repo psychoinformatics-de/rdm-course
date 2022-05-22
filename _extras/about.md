@@ -3,8 +3,18 @@ layout: page
 title: About
 ---
 
-This workshop teaches best practices for Research Data Management with DataLad. Content for this workshop was developed by the DataLad team, while the workshop infrastructure
-is based on materials developed by The Carpentries (distributed under a CC-BY license).
+This workshop teaches best practices for Research Data Management with
+DataLad. Content for this workshop was developed by the DataLad team,
+while the workshop infrastructure is based on materials developed by
+The Carpentries (distributed under a CC-BY license).
+
+# Acknowledgements
+
+These training materials were developed with funding from the Deutsche
+Forschungsgemeinschaft (DFG, German Research Foundation) under grant SFB 1451
+([431549029](https://gepris.dfg.de/gepris/projekt/431549029), INF project).
+
+# DataLad
 
 ![DataLad logo]({{ page.root }}/fig/datalad_logo.svg)
 
