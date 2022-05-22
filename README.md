@@ -81,6 +81,6 @@ Sources include:
 Acknowledgements
 ================
 
-This DataLad extension was developed with funding from the Deutsche
+These training materials were developed with funding from the Deutsche
 Forschungsgemeinschaft (DFG, German Research Foundation) under grant SFB 1451
 ([431549029](https://gepris.dfg.de/gepris/projekt/431549029), INF project).
