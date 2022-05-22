@@ -77,3 +77,10 @@ Sources include:
 - [Project structure](https://slides.djnavarro.net/project-structure) by Danielle Navarro
 - [The Turing Way](https://the-turing-way.netlify.app/) (CC-BY 4.0) 
 
+
+Acknowledgements
+================
+
+These training materials were developed with funding from the Deutsche
+Forschungsgemeinschaft (DFG, German Research Foundation) under grant SFB 1451
+([431549029](https://gepris.dfg.de/gepris/projekt/431549029), INF project).
