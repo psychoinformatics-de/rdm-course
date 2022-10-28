@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<title>Research Data Management with DataLad</title>
+<meta name="author" content="Michał Szczepanik"/>
+<meta name="description" content=""/>
+<meta name="keywords" content=""/>
+<style type="text/css">
+.underline { text-decoration: underline; }
+</style>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js/dist/reveal.css"/>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js/dist/theme/beige.css" id="theme"/>
+
+<link rel="stylesheet" href="./local.css"/>
+
+<!-- If the query includes 'print-pdf', include the PDF print sheet -->
+<script>
+    if( window.location.search.match( /print-pdf/gi ) ) {
+        var link = document.createElement( 'link' );
+        link.rel = 'stylesheet';
+        link.type = 'text/css';
+        link.href = 'https://cdn.jsdelivr.net/npm/reveal.js/css/print/pdf.css';
+        document.getElementsByTagName( 'head' )[0].appendChild( link );
+    }
+</script>
+<meta name="description" content="Research Data Management with DataLad">
+</head>
+<body>
+<div class="reveal">
+<div class="slides">
+<section id="sec-title-slide"><h1 class="title">Research Data Management with DataLad</h1><p class="subtitle"></p>
+<h2 class="author">Michał Szczepanik</h2><p class="date">Created: 2022-10-28 Fri 20:58</p>
+</section>
+
+<section>
+<section id="slide-org040eacb">
+<h2 id="org040eacb"><span class="section-number-2">1.</span> Day 1: topics</h2>
+<ul>
+<li>Content tracking with DataLad</li>
+<li>Good practicies in data management</li>
+
+</ul>
+
+</section>
+</section>
+<section>
+<section id="slide-org8d03f19">
+<h2 id="org8d03f19"><span class="section-number-2">2.</span> Introduction: life of digital objects</h2>
+<ul>
+<li>Alice is a PhD student.</li>
+<li>She works on a fairly typical research project: data collection &amp; and processing.
+<ul>
+<li>Exact kind of data not relevant for us</li>
+<li>first sample → final result: cumulative process</li>
+
+</ul></li>
+
+</ul>
+
+</section>
+<section id="slide-org8d03f19-split">
+
+<ul>
+<li>When working locally, Alice likes to have an automated record of:
+<ul>
+<li>when a given file was last changed</li>
+<li>where it came from</li>
+<li>what input files were used to generate a given output</li>
+<li>why some things were done.</li>
+
+</ul></li>
+<li>Even without sharing, essential for her future self</li>
+<li>Project is exploratory: often large changes to her analysis scripts</li>
+<li>Enjoys comfort of being able to return to a previously recorded state</li>
+
+</ul>
+
+<p>
+This is <b>local</b> version control.
+</p>
+
+</section>
+<section id="slide-org8d03f19-split">
+
+<ul>
+<li>Alice's work not confined to a single computer
+<ul>
+<li>laptop / desktop / remote server</li>
+<li>automatic and efficient way to synchronise</li>
+
+</ul></li>
+<li>Some data collected / analysed by colleagues from other team
+<ul>
+<li>all synchronize with centralized storage</li>
+<li>preserving origin &amp; authorship</li>
+<li>combining simultaneous contributions</li>
+
+</ul></li>
+
+</ul>
+
+<p>
+This is <b>distributed</b> version control.
+</p>
+
+</section>
+<section id="slide-org8d03f19-split">
+
+<ul>
+<li>When working, needs a subset of all data at a given time
+<ul>
+<li>all files are kept on a server</li>
+<li>few files are rotated into and out of the laptop</li>
+
+</ul></li>
+<li>When project is complete, Alice may need to publish
+<ul>
+<li>raw data / outputs / both</li>
+<li>completely or selectively</li>
+
+</ul></li>
+
+</ul>
+
+<p>
+&#x2026; all these were typical data management issues which we will touch upon during this workshop,
+using DataLad as our primary tool.
+</p>
+
+</section>
+</section>
+<section>
+<section id="slide-org2056c07">
+<h2 id="org2056c07"><span class="section-number-2">3.</span> Workshop plan</h2>
+<ul>
+<li>Day 1:
+<ul>
+<li>Content tracking with DataLad (local version control)</li>
+<li>Good practices in data management</li>
+
+</ul></li>
+<li>Day 2:
+<ul>
+<li>Distributed version control (publish / consume)</li>
+<li>Linked datasets</li>
+
+</ul></li>
+
+</ul>
+
+</section>
+</section>
+<section>
+<section id="slide-orgadd7013">
+<h2 id="orgadd7013"><span class="section-number-2">4.</span> Resources</h2>
+<ul>
+<li><a href="https://datalad-hub.inm7.de/">https://datalad-hub.inm7.de/</a></li>
+<li><a href="https://psychoinformatics-de.github.io/rdm-course/">https://psychoinformatics-de.github.io/rdm-course/</a></li>
+
+</ul>
+
+</section>
+</section>
+<section>
+<section id="slide-org8d81f91">
+<h2 id="org8d81f91"><span class="section-number-2">5.</span> Part 1: Content tracking with DataLad</h2>
+</section>
+<section id="slide-org8d81f91-split">
+
+<ul>
+<li>Gradually build up an example dataset
+<ul>
+<li>Discover version control and basic DataLad concepts in the process.</li>
+<li>Introduce basic DataLad commands - a technical foundation for all above</li>
+
+</ul></li>
+<li>DataLad is agnostic about the kind of data it manages
+<ul>
+<li>Add photos and text as "data"</li>
+<li>Convert photos to b/w as "data processing"</li>
+
+</ul></li>
+<li>Add files → record origin → make changes → track changes → undo things</li>
+
+</ul>
+</section>
+</section>
+</div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js/dist/reveal.js"></script>
+
+<script>
+// Full list of configuration options available here:
+// https://github.com/hakimel/reveal.js#configuration
+Reveal.initialize({
+width:1200, height:800, margin: 0.1, minScale:0.2, maxScale:2.5,
+
+// Optional libraries used to extend on reveal.js
+dependencies: [
+ { src: 'https://cdn.jsdelivr.net/npm/reveal.js/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+ { src: 'https://cdn.jsdelivr.net/npm/reveal.js/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+ { src: 'https://cdn.jsdelivr.net/npm/reveal.js/plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }]
+
+});
+
+</script>
+</body>
+</html>
