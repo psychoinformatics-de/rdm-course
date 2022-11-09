@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<title>Research Data Management with DataLad</title>
+<meta name="author" content="Michał Szczepanik"/>
+<meta name="description" content=""/>
+<meta name="keywords" content=""/>
+<style type="text/css">
+.underline { text-decoration: underline; }
+</style>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js/dist/reveal.css"/>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js/dist/theme/beige.css" id="theme"/>
+
+<link rel="stylesheet" href="./local.css"/>
+
+<!-- If the query includes 'print-pdf', include the PDF print sheet -->
+<script>
+    if( window.location.search.match( /print-pdf/gi ) ) {
+        var link = document.createElement( 'link' );
+        link.rel = 'stylesheet';
+        link.type = 'text/css';
+        link.href = 'https://cdn.jsdelivr.net/npm/reveal.js/css/print/pdf.css';
+        document.getElementsByTagName( 'head' )[0].appendChild( link );
+    }
+</script>
+<meta name="description" content="Research Data Management with DataLad">
+</head>
+<body>
+<div class="reveal">
+<div class="slides">
+<section id="sec-title-slide"><h1 class="title">Research Data Management with DataLad</h1><p class="subtitle">SFB1451 workshop, day 2</p><p class="author">Michał Szczepanik</p><p class="date"></p>
+</section>
+
+<section>
+<section id="slide-orga051b93">
+<h2 id="orga051b93"><span class="section-number-2">1.</span> Day 2 outline</h2>
+<ul>
+<li>Remote collaboration</li>
+<li>Dataset management</li>
+
+</ul>
+
+</section>
+</section>
+<section>
+<section id="slide-orgaa26f00">
+<h2 id="orgaa26f00"><span class="section-number-2">2.</span> Part 3: Remote collaboration</h2>
+<div class="outline-text-2" id="text-2">
+</div>
+</section>
+<section id="slide-org1aeb455">
+<h3 id="org1aeb455"><span class="section-number-3">2.1.</span> Recap</h3>
+<ul>
+<li>Before: basics of local version control
+<ul>
+<li>recording changes, interacting with dataset history
+<ul>
+<li>built a small dataset</li>
+<li>have a record of what led to its current state</li>
+<li>single location, single person</li>
+
+</ul></li>
+
+</ul></li>
+
+</ul>
+
+</section>
+<section id="slide-org5310777">
+<h3 id="org5310777"><span class="section-number-3">2.2.</span> Introduction</h3>
+<ul>
+<li>Research data rarely lives just on a single computer.</li>
+<li>Research projects aren't single-person affairs.</li>
+<li>Want to:
+<ul>
+<li>synchronise with a remote location (backup/archival)</li>
+<li>keep only a subset on your PC, rotating files (save space)</li>
+<li>send data to colleagues, ensure up to date with version control</li>
+<li>have them contribute to your dataset (add files, make changes)</li>
+<li>publish to a repository</li>
+
+</ul></li>
+
+</ul>
+
+<p>
+DataLad has tools to facilitate all that.
+</p>
+
+</section>
+<section id="slide-org0829540">
+<h3 id="org0829540"><span class="section-number-3">2.3.</span> Plan</h3>
+<ul>
+<li>Publish our dataset from yesterday</li>
+<li>Use GIN (G-Node Infrastructure): <a href="https://gin.g-node.org">https://gin.g-node.org</a>
+<ul>
+<li>Convenient integration with DataLad (all files, annexed or not)</li>
+<li>DataLad supports many different scenarios (incl. separation)</li>
+<li>Some quirks, but steps for GIN will be similar elswhere</li>
+
+</ul></li>
+<li>Make changes to each other's datasets through GIN</li>
+
+</ul>
+
+</section>
+</section>
+<section>
+<section id="slide-org7fea06d">
+<h2 id="org7fea06d"><span class="section-number-2">3.</span> Part 4: Dataset management</h2>
+<div class="outline-text-2" id="text-3">
+</div>
+</section>
+<section id="slide-orgc02eba3">
+<h3 id="orgc02eba3"><span class="section-number-3">3.1.</span> Introduction</h3>
+<ul>
+<li>Analysis, simplified: collect inputs, produce outputs
+<ul>
+<li>same input can be used for multiple analyses</li>
+<li>output (transform / preprocess) may become input for next one</li>
+
+</ul></li>
+
+</ul>
+
+</section>
+<section id="slide-org62559d8">
+<h4 id="org62559d8"><span class="section-number-4">3.1.1.</span> Subdataset hierarchy</h4>
+
+<div id="orga1a4580" class="figure">
+<p><img src="https://handbook.datalad.org/en/latest/_images/dataset_modules.svg" alt="dataset_modules.svg" class="org-svg" />
+</p>
+<p><span class="figure-number">Figure 1: </span>Dataset modules - from DataLad handbook</p>
+</div>
+
+</section>
+<section id="slide-orgf994b8d">
+<h4 id="orgf994b8d"><span class="section-number-4">3.1.2.</span> Reasons to use subdatasets:</h4>
+<ul>
+<li>a logical need to make your data modular
+<ul>
+<li>eg. raw data - preprocessing - analysis - paper</li>
+
+</ul></li>
+<li>a technical need to divide your data
+<ul>
+<li>hundreds of thousands of files start hurting performance</li>
+
+</ul></li>
+
+</ul>
+
+</section>
+<section id="slide-org4ceea4d">
+<h3 id="org4ceea4d"><span class="section-number-3">3.2.</span> Plan</h3>
+<ul>
+<li>Inspect a published nested DataLad dataset</li>
+<li>Create a toy example from scratch</li>
+
+</ul>
+
+</section>
+<section id="slide-org8fb175e">
+<h3 id="org8fb175e"><span class="section-number-3">3.3.</span> Data we will use</h3>
+<ul>
+<li>"Highspeed Analysis" DataLad dataset
+<ul>
+<li>Wittkuhn L, Schuck NW, <b>Nat. Commun.</b> 12, 1795 (2021)</li>
+<li><a href="https://github.com/lnnrtwttkhn/highspeed-analysis">github.com/lnnrtwttkhn/highspeed-analysis</a></li>
+
+</ul></li>
+<li>Tabular data from Palmer Station Antarctica LTER
+<ul>
+<li>Gorman KB, Williams TD, Fraser WR, <b>PLoS ONE</b> 9(3):e90081 (2014)</li>
+<li>see also: <a href="https://allisonhorst.github.io/palmerpenguins/">palmerpenguins</a> R dataset, alternative to Iris</li>
+
+</ul></li>
+
+</ul>
+
+</section>
+<section id="slide-org8fa96a0">
+<h3 id="org8fa96a0"><span class="section-number-3">3.4.</span> Published DataLad dataset: the plan</h3>
+<ul>
+<li>Obtain the dataset</li>
+<li>Inspect its nested structure</li>
+<li>Obtain a specific file</li>
+
+</ul>
+
+</section>
+<section id="slide-orgbcbc956">
+<h3 id="orgbcbc956"><span class="section-number-3">3.5.</span> Toy example: the plan:</h3>
+<ul>
+<li>Investigate the relationship between flipper length and body mass in 3 penguin species.
+<ul>
+<li>Create a "penguin-report" dataset, with "inputs" subdataset</li>
+<li>Populate the subdataset with data</li>
+<li>Run an analysis, → figure in the main dataset</li>
+<li>Write our "report" → document in the main dataset</li>
+
+</ul></li>
+
+</ul>
+
+</section>
+<section id="slide-org9c6b8c6">
+<h4 id="org9c6b8c6"><span class="section-number-4">3.5.1.</span> Folder structure we're aiming for</h4>
+<pre  class="example" >
+penguin-report/
+├── figures
+│   └── lmplot.png
+├── inputs
+│   ├── adelie.csv
+│   ├── chinstrap.csv
+│   └── gentoo.csv
+├── process.py
+├── report.html
+└── report.md
+</pre>
+
+</section>
+</section>
+<section>
+<section id="slide-org0613a40">
+<h2 id="org0613a40"><span class="section-number-2">4.</span> Wrap-up</h2>
+<div class="outline-text-2" id="text-4">
+</div>
+</section>
+<section id="slide-orgeda20ea">
+<h3 id="orgeda20ea"><span class="section-number-3">4.1.</span> Where to next</h3>
+<ul>
+<li>Materials aren't going anywhere (but hub shuts down)</li>
+<li>INF project website: [rdm.sfb1451.de](<a href="https://rdm.sfb1451.de/">https://rdm.sfb1451.de/</a>)
+<ul>
+<li>contact information, practical info</li>
+
+</ul></li>
+<li>DataLad Office Hours
+<ul>
+<li>virtual, Thu 16:00</li>
+<li>announced in a matrix chat room (link ☝)</li>
+
+</ul></li>
+<li>DataLad website: [datalad.org](<a href="https://datalad.org">https://datalad.org</a>)</li>
+<li>DataLad handbook: [handbook.datalad.org](<a href="https://handbook.datalad.org/en/latest/">https://handbook.datalad.org/en/latest/</a>)</li>
+
+</ul>
+</section>
+</section>
+</div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js/dist/reveal.js"></script>
+
+<script>
+// Full list of configuration options available here:
+// https://github.com/hakimel/reveal.js#configuration
+Reveal.initialize({
+width:1200, height:800, margin: 0.1, minScale:0.2, maxScale:2.5,
+
+// Optional libraries used to extend on reveal.js
+dependencies: [
+ { src: 'https://cdn.jsdelivr.net/npm/reveal.js/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+ { src: 'https://cdn.jsdelivr.net/npm/reveal.js/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+ { src: 'https://cdn.jsdelivr.net/npm/reveal.js/plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+ { src: 'https://cdn.jsdelivr.net/npm/reveal.js/plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }]
+
+});
+
+</script>
+</body>
+</html>

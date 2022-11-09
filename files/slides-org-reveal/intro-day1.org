@@ -1,28 +1,28 @@
----
-theme: gaia
-_class: lead
-paginate: true
-backgroundColor: #fff
-backgroundImage: url('https://marp.app/assets/hero-background.svg')
----
+#+title: Research Data Management with DataLad
+#+Author: Michał Szczepanik, Michael Hanke & the DataLad team
 
-# Research Data Management with DataLad
+#+REVEAL_INIT_OPTIONS: width:1200, height:800, margin: 0.1, minScale:0.2, maxScale:2.5
+#+OPTIONS: toc:nil
+#+REVEAL_THEME: beige
+#+REVEAL_HLEVEL: 2
+#+REVEAL_HEAD_PREAMBLE: <meta name="description" content="Research Data Management with DataLad">
+#+REVEAL_TITLE_SLIDE:<h1 class="title">%t</h1><p class="subtitle">%s</p><p class="author">%a</p><p class="date">%d</p>
+#+REVEAL_PLUGINS: (markdown notes)
+#+REVEAL_EXTRA_CSS: ./local.css
+#+REVEAL_ROOT: https://cdn.jsdelivr.net/npm/reveal.js
 
-SFB1451 Workshop, day 1
-
+* Day 1: topics
 - Content tracking with DataLad
 - Good practicies in data management
 
----
-
-## Introduction: life of digital objects
+* Introduction: life of digital objects
 
 - Alice is a PhD student.
 - She works on a fairly typical research project: data collection & and processing.
   - Exact kind of data not relevant for us
   - first sample → final result: cumulative process
 
---- 
+#+REVEAL:split
 
 - When working locally, Alice likes to have an automated record of:
   - when a given file was last changed
@@ -35,7 +35,7 @@ SFB1451 Workshop, day 1
 
 This is *local* version control.
 
----
+#+REVEAL:split
 
 - Alice's work not confined to a single computer
   - laptop / desktop / remote server
@@ -47,20 +47,19 @@ This is *local* version control.
 
 This is *distributed* version control.
 
----
+#+REVEAL:split
 
-- When working, needs a subset of all data at a given time
+- Needs to work on a subset of data at a given time
   - all files are kept on a server
   - few files are rotated into and out of the laptop
-- When project is complete, Alice may need to publish
+- Needs to publish data at project's end
   - raw data / outputs / both
   - completely or selectively
 
-... all these were typical data management issues which we will touch upon during this workshop, using DataLad as our primary tool.
+... all these were typical data management issues which we will touch upon during this workshop,
+using DataLad as our primary tool.
 
----
-
-## Workshop plan
+* Workshop plan
 
 - Day 1:
   - Content tracking with DataLad (local version control)
@@ -69,18 +68,14 @@ This is *distributed* version control.
   - Distributed version control (publish / consume)
   - Linked datasets
 
----
-
-## Resources
+* Resources
 
 - https://datalad-hub.inm7.de/
 - https://psychoinformatics-de.github.io/rdm-course/
 
----
-<!-- _class: lead -->
-# 1 Content tracking with DataLad
+* Part 1: Content tracking with DataLad
 
----
+#+REVEAL:split
 
 - Gradually build up an example dataset
   - Discover version control and basic DataLad concepts in the process.
