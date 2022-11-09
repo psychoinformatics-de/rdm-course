@@ -1,0 +1,488 @@
+#+title: Structuring data
+#+Author: Michał Szczepanik
+
+#+REVEAL_INIT_OPTIONS: width:1200, height:800, margin: 0.1, minScale:0.2, maxScale:2.5
+#+OPTIONS: toc:nil
+#+REVEAL_THEME: beige
+#+REVEAL_HLEVEL: 1
+#+REVEAL_HEAD_PREAMBLE: <meta name="description" content="Research Data Management with DataLad">
+
+#+REVEAL_EXTRA_CSS: ./local.css
+#+REVEAL_ROOT: https://cdn.jsdelivr.net/npm/reveal.js
+#+REVEAL_TITLE_SLIDE:<h1 class="title">%t</h1><p class="subtitle">%s</p><p class="author">%a</p><p class="date">%d</p>
+
+* Good practices on data organisation
+
+"What is a good filename?"
+
+- Naming can go a long way in making your life easier
+- Topics:
+  - file names
+  - file types
+  - project structure
+
+Based on the presentations "[[http://www2.stat.duke.edu/~rcs46/lectures_2015/01-markdown-git/slides/naming-slides/naming-slides.pdf][Naming Things]]" (CC0) by Jenny Bryan and "[[https://slides.djnavarro.net/project-structure/][Project structure]]" by Danielle Navarro.
+
+* How to name a file?
+
+- A file name exists to identify its content.
+- Opinions as to what *exactly* is a good file name differ.
+- Disclaimer:
+  - Probably no gold standard exists, and
+  - we do not claim to possess one, but
+  - we will focus on identifying patterns in file naming which can make working with data easier.
+
+** Three principles:
+
+  - be machine readable (automatically extract information)
+  - be human readable (easy to know what's what)
+  - make sorting and searching easy (easy to find things)
+
+** Why some ways are preferred?
+
+- The obvious
+  - Need to know what's in a file
+  - Need to find the file we need
+- Less obvious
+  - Different uses (point & click, command line, automation)
+  - Must survive transfer (also across OS)
+
+** Example: english literature class
+
+#+begin_src 
+✅ reading01_shakespeare_romeo-and-juliet_act01.docx
+✅ reading01_shakespeare_romeo-and-juliet_act02.docx
+✅ reading01_shakespeare_romeo-and-juliet_act03.docx
+✅ reading02_shakespeare_othello.docx
+✅ reading19_plath_the-bell-jar.docx
+#+end_src
+
+/versus/
+
+#+begin_src 
+❌ Romeo and Juliet Act 1.docx
+❌ Romeo and juliet act 2.docx
+❌ Shakespeare RJ act3.docx
+❌ shakespeare othello I think?.docx
+❌ belljar plath (1).docx
+#+end_src
+
+** What's to like?
+
+#+begin_src 
+✅ reading01_shakespeare_romeo-and-juliet_act03.docx
+✅ reading02_shakespeare_othello.docx
+✅ reading19_plath_the-bell-jar.docx
+#+end_src
+
+- uses consistent patterns
+- avoids "risky" characters
+- remains:
+  - human readable
+  - machine readable
+  - easy to sort and search
+
+* Recommendations
+
+** Avoid white spaces
+
+- Command line: space separates arguments
+  - =edit my file.txt=
+  - =edit= command & =my=, =file.txt= args
+- Solve by:
+  - Quoting: =edit "my file.txt"=
+  - Escaping: =edit my\ file.txt=
+- Not ideal:
+  - more typing / harder autocompletion
+  - problems when passing around: =my\ file.txt= → =my\\ file.txt=
+
+** Use only letters, numbers, hyphens, and underscores
+
+- Encoding: e.g. even within Unicode, é in *Adélie* can be:
+  - =U+00E9= (latin small letter e with acute)
+  - =U+0065= =U+0301= (the letter "e" plus a combining acute symbol)
+- Special meaning in command line (='^.*?$+|=)
+  - e.g. =?= *may* mean "match any character"
+- Outright forbidden by some OS
+  - illegal on Unix: =/= (directory separator)
+  - illegal on Windows: =<>:"/\|?*=
+
+** Don't rely on letter case
+
+- Are =apple= and =Apple= are the same file?
+  - depends on file system
+  - eg. HFS+ preserves case on creation but not retrieval
+- Be consistent
+- Don't rely on just letter case to distinguish files
+
+** Use separators in a meaningful way
+
+- "-" to join words into one entity.
+- "_" to separate entities.
+- Example pattern: 
+  #+begin_src 
+  [category] [class] [author] [title] [section(optional)]
+  #+end_src
+- Basic variant:
+  #+begin_src
+  reading_01_shakespeare_romeo-and-juliet_act01.docx
+  #+end_src
+- Key-value variant:
+  #+begin_src
+  cat-reading_class-01_author-shakespeare_title-romeoandjuliet_act-01.docx
+  #+end_src
+
+*** Globbing
+#+begin_src python
+>>> import glob
+>>> glob.glob('reading_01*')
+['reading_01_shakespeare_romeo-and-juliet_act02.docx', 'reading_01_shakespeare_romeo-and-juliet_act01.docx']
+#+end_src
+
+(similar to search in GUI file browsers)
+
+*** Splitting
+
+#+begin_src python
+>>> file = 'reading_01_shakespeare_romeo-and-juliet_act01.docx'
+>>> file.split('_')
+['reading', '01', 'shakespeare', 'romeo-and-juliet', 'act01.docx']
+#+end_src
+
+#+begin_src python
+>>> file = 'cat-reading_class-01_author-shakespeare_title-romeoandjuliet_act-01.docx'
+>>> dict(part.split('-') for part in file.split('_'))
+{'cat': 'reading', 'class': RR'01', 'author': 'shakespeare', 'title': 'romeoandjuliet', 'act': '01.docx'}
+#+end_src
+
+** Follow ISO 8601 if using dates
+
+- =YYYY-MM-DD= format maintains chronology in alphabetical ordering
+- Dates aren't always preserved on transfer
+- Valid usecases:
+  - Date is crucial (e.g. daily weather data)
+  - Sorting by name is crucial (e.g. meeting notes)
+- Version control covers most other usecases:
+  - Don't use date as =_v1=, =_v2=, =_v3_final=
+  - =git log= will show file history
+  - so will =git blame= (line-by-line for text files)
+
+*** git log
+
+#+begin_src 
+git log inputs/images/king_01.jpg
+commit ff73ce9acb8ee4b99106fa7ae080cfcb08138d48
+Author: John Doe <j.doe@example.com>
+Date:   Mon Oct 18 16:09:27 2021 +0200
+
+    Add third image
+#+end_src
+
+*** git blame
+
+#+begin_src 
+git blame --date human README.md
+487b1267 (John Doe Oct 12 2021       1) # Example dataset
+487b1267 (John Doe Oct 12 2021       2) 
+487b1267 (John Doe Oct 12 2021       3) This is an example datalad dataset.
+487b1267 (John Doe Oct 12 2021       4) 
+7fef4b96 (John Doe Oct 12 2021       5) Raw data is kept in `inputs` folder:
+7fef4b96 (John Doe Oct 12 2021       6) - penguin photos are in `inputs/images`
+dbf4ad7e (John Doe Oct 13 2021       7) 
+dbf4ad7e (John Doe Oct 13 2021       8) ## Credit
+dbf4ad7e (John Doe Oct 13 2021       9) 
+6e759623 (John Doe Oct 18 2021      10) Photos by [Derek Oyen](https://unsplash.com/@goosegrease) and ...
+#+end_src
+
+** Avoid leaking undesired information
+
+#+begin_src bash
+touch name-with-identifying-information.dat
+datalad save
+
+git mv name-with-identifying-information.dat a-new-name.dat
+datalad save
+
+git diff HEAD~1 HEAD
+#+end_src
+
+#+begin_src 
+diff --git a/name-with-identifying-information.dat b/a-new-name.dat
+similarity index 100%
+rename from name-with-identifying-information.dat
+rename to a-new-name.dat
+#+end_src
+
+"Rewriting history" possible, but: not easy, potentially destructive.
+
+* Sidecar metadata strategy
+
+*** Additional information in a text file
+
+#+begin_src 
+adelie_087.jpeg
+adelie_087.yaml
+#+end_src
+
+Sidecar file content:
+
+#+begin_src yaml
+species: Adelie
+island: Torgersen
+date: 2021-09-12
+penguin_count: 1
+sex: MALE
+photographer: John
+#+end_src
+
+*** Meticulous tabular data annotation
+
+#+begin_src 
+penguins.csv
+penguins.yaml
+#+end_src
+
+Sidecar file content:
+
+#+begin_src 
+species:
+  description: a factor denoting penguin species
+  levels:
+    Adélie: P. adeliae
+    Chinstrap: P. antarctica
+    Gentoo: P. papua
+  termURL: https://www.wikidata.org/wiki/Q9147
+bill_length_mm:
+  description: a number denoting bill length
+  units: mm
+#+end_src
+
+* Important distinctions
+
+** File paths: full vs relative
+
+full:
+#+begin_src 
+/home/alice/Documents/project/figures/setup.png
+/Users/bob/Documents/project/figures/setup.png
+C:\\Users\eve\Documents\project\figures\setup.py
+#+end_src
+
+relative:
+
+#+begin_src 
+figures/setup.png
+#+end_src
+
+Avoid hardcoding full paths - easier to move around.
+
+** Text vs binary files
+
+- Text file is a file structured as a sequence of lines containing text, composed of characters. 
+- Binary file is anything other than a text file.
+- Choice will affect
+  - DataLad behaviour (esp. with text2git - often suboptimal)
+  - Simplicity of reading data
+
+*** Examples
+
+| Text                                            | Binary                                             |
+|-------------------------------------------------+----------------------------------------------------|
+| .txt                                            |                                                    |
+| markup: .md, .rst, .org, .html                  | documents: docx, .xlsx, .pdf                       |
+| source code: .py, .R, .m                        | compiled files: .pyc, .o, .exe                     |
+| text-serialised formats: .toml, yaml, json, xml | binary-serialised formats: .pickle, .feather, .hdf |
+| delimited files: .tsv, .csv                     | domain-specific: .nii, .edf                        |
+| vector graphics: .svg                           | images: .jpg, .png, .tiff                          |
+|                                                 | compressed: .zip .gz, .7z                          |
+
+* Folder structure
+
+** Keep inputs and outputs separately
+
+Consider the following:
+
+#+begin_src 
+/dataset
+├── sample1
+│   └── a001.dat
+├── sample2
+│   └── a001.dat
+...
+#+end_src
+
+#+REVEAL:split
+
+After applying a transform (preprocessing, analysis, ...) this becomes:
+
+#+begin_src 
+/dataset
+├── sample1
+│   ├── ps34t.dat
+│   └── a001.dat
+├── sample2
+│   ├── ps34t.dat
+│   └── a001.dat
+...
+#+end_src
+
+Without expert / domain knowledge, no distinction between original and derived data is possible anymore.
+
+#+REVEAL:split
+
+Compare it to a case with a clearer separation of semantics:
+
+#+begin_src 
+/derived_dataset
+├── sample1
+│   └── ps34t.dat
+├── sample2
+│   └── ps34t.dat
+├── ...
+└── inputs
+    └── raw
+        ├── sample1
+        │   └── a001.dat
+        ├── sample2
+        │   └── a001.dat
+        ...
+#+end_src
+
+** Example: Research compendium
+
+*** minimal research compendium
+#+begin_src
+compendium/
+├── data
+│   ├── my_data.csv
+├── analysis
+│   └── my_script.R
+├── DESCRIPTION
+└── README.md
+#+end_src
+
+- Data and methods separated into folders
+- Computational environment described in a designated file
+- A README document provides a landing page
+
+[[https://research-compendium.science/][research-compendium.science]]
+
+*** more extensive research compendium
+
+#+begin_src 
+compendium/
+├── CITATION              <- instructions on how to cite
+├── code                  <- custom code for this project
+│   ├── analyze_data.R
+│   └── clean_data.R
+├── data_clean            <- intermediate data that has been transformed
+│   └── data_clean.csv
+├── data_raw              <- raw, immutable data
+│   ├── datapackage.json
+│   └── data_raw.csv
+├── Dockerfile            <- computing environment recipe
+├── figures               <- figures
+│   └── flow_chart.jpeg
+├── LICENSE               <- terms for reuse
+├── Makefile              <- steps to automatically generate the results
+├── paper.Rmd             <- text and code combined
+└── README.md             <- top-level description
+#+end_src
+
+Example from [[https://the-turing-way.netlify.app/reproducible-research/compendia.html][The Turing Way]]
+
+** Example: YODA principles
+
+(3) /Structure study elements in modular components to facilitate reuse within or outside the context of the original study/
+
+Yoda's Organigram on Data Analysis, [[https://github.com/myyoda/myyoda][github.com/myyoda/myyoda]]
+
+*** Minimal example
+
+- =datalad create -c yoda "my_analysis"=
+  - creates initial files
+  - sets =code=, =changelog= & =README= to be tracked by git (all else annexed)
+
+#+begin_src 
+.
+├── CHANGELOG.md
+├── code
+│   └── README.md
+└── README.md
+#+end_src
+
+
+*** extensive example
+
+#+begin_src 
+├── ci/                         # continuous integration configuration
+│   └── .travis.yml
+├── code/                       # your code
+│   ├── tests/                  # unit tests to test your code
+│   │   └── test_myscript.py
+│   └── myscript.py
+├── docs                        # documentation about the project
+│   ├── build/
+│   └── source/
+├── envs                        # computational environments
+│   └── Singularity
+├── inputs/                     # dedicated inputs/, will not be changed by an analysis
+│   └─── data/
+│       ├── dataset1/           # one stand-alone data component
+│       │   └── datafile_a
+│       └── dataset2/
+│           └── datafile_a
+├── outputs/                    # outputs away from the input data
+│   └── important_results/
+│       └── figures/
+├── CHANGELOG.md                # notes for fellow humans about your project
+├── HOWTO.md
+└── README.md
+#+end_src
+
+Example from [[http://handbook.datalad.org/en/latest/basics/101-127-yoda.html][Datalad Handbook]]
+
+** Example: Brain Imaging Data Structure
+
+file naming, directory structure, metadata
+[[https://bids.neuroimaging.io/][bids.neuroimaging.io]]
+
+*** Example
+
+#+begin_src 
+.
+├── CHANGES
+├── dataset_description.json
+├── participants.tsv
+├── README
+├── sub-01
+│   ├── anat
+│   │   ├── sub-01_inplaneT2.nii.gz
+│   │   └── sub-01_T1w.nii.gz
+│   └── func
+│       ├── sub-01_task-rhymejudgment_bold.nii.gz
+│       └── sub-01_task-rhymejudgment_events.tsv
+└── task-rhymejudgment_bold.json
+#+end_src
+
+*** Key elements
+
+#+begin_src 
+sub-01_task-rhymejudgment_bold.nii.gz
+sub-01_task-rhymejudgment_events.tsv
+#+end_src
+
+- Key-value naming, with underscores and dashes
+- Sidecar metadata strategy:
+  - .nii.gz (compressed binary file with neuroimaging data)
+  - .tsv (text file with event timings)
+- Text files where possible:
+  - tsv files are used to store participant tables and event timings.
+  - json files are used for metadata
+- Specification & extensions for different neuroscience domains
+
+* Find out more
+
+- Workshop materials: [[https://psychoinformatics-de.github.io/rdm-course/02-structuring-data/index.html][Structuring data]]
+- DataLad handbook: [[https://handbook.datalad.org/en/latest/intro/filenaming.html][How to name a file: interoperability considerations]]
+- BIDS [[https://bids.neuroimaging.io/][website]] and [[https://bids-specification.readthedocs.io/en/stable/][specification]]

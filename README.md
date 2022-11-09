@@ -57,9 +57,10 @@ make serve
 
 ## Slides
 
-Slides, rendered using [marp](https://marp.app/), are placed in `files/slides-html`.
-Markdown source for the slides is in `files/slides-md`.
-
+The slides are placed in `files/slides-org-reveal`.
+Html files (based on the [reveal.js](https://revealjs.com/) framework) can be viewed directly in the web browser.
+Slide content was written in [org mode](https://orgmode.org/) (org files are also included)
+and converted using [org-reveal](https://github.com/yjwen/org-reveal) to produce html output.
 
 Credit
 ======

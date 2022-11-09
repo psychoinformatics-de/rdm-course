@@ -1,0 +1,793 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<title>Structuring data</title>
+<meta name="author" content="Michał Szczepanik"/>
+<meta name="description" content=""/>
+<meta name="keywords" content=""/>
+<style type="text/css">
+.underline { text-decoration: underline; }
+</style>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js/dist/reveal.css"/>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js/dist/theme/beige.css" id="theme"/>
+
+<link rel="stylesheet" href="./local.css"/>
+
+<!-- If the query includes 'print-pdf', include the PDF print sheet -->
+<script>
+    if( window.location.search.match( /print-pdf/gi ) ) {
+        var link = document.createElement( 'link' );
+        link.rel = 'stylesheet';
+        link.type = 'text/css';
+        link.href = 'https://cdn.jsdelivr.net/npm/reveal.js/css/print/pdf.css';
+        document.getElementsByTagName( 'head' )[0].appendChild( link );
+    }
+</script>
+<meta name="description" content="Research Data Management with DataLad">
+</head>
+<body>
+<div class="reveal">
+<div class="slides">
+<section id="sec-title-slide"><h1 class="title">Structuring data</h1><p class="subtitle"></p><p class="author">Michał Szczepanik</p><p class="date"></p>
+</section>
+
+<section>
+<section id="slide-orgaf45235">
+<h2 id="orgaf45235"><span class="section-number-2">1.</span> Good practices on data organisation</h2>
+<p>
+"What is a good filename?"
+</p>
+
+<ul>
+<li>Naming can go a long way in making your life easier</li>
+<li>Topics:
+<ul>
+<li>file names</li>
+<li>file types</li>
+<li>project structure</li>
+
+</ul></li>
+
+</ul>
+
+<p>
+Based on the presentations "<a href="http://www2.stat.duke.edu/~rcs46/lectures_2015/01-markdown-git/slides/naming-slides/naming-slides.pdf">Naming Things</a>" (CC0) by Jenny Bryan and "<a href="https://slides.djnavarro.net/project-structure/">Project structure</a>" by Danielle Navarro.
+</p>
+
+</section>
+</section>
+<section>
+<section id="slide-orgfcd716e">
+<h2 id="orgfcd716e"><span class="section-number-2">2.</span> How to name a file?</h2>
+<ul>
+<li>A file name exists to identify its content.</li>
+<li>Opinions as to what <b>exactly</b> is a good file name differ.</li>
+<li>Disclaimer:
+<ul>
+<li>Probably no gold standard exists, and</li>
+<li>we do not claim to possess one, but</li>
+<li>we will focus on identifying patterns in file naming which can make working with data easier.</li>
+
+</ul></li>
+
+</ul>
+
+</section>
+<section id="slide-orgdbd0c07">
+<h3 id="orgdbd0c07"><span class="section-number-3">2.1.</span> Three principles:</h3>
+<ul>
+<li>be machine readable (automatically extract information)</li>
+<li>be human readable (easy to know what's what)</li>
+<li>make sorting and searching easy (easy to find things)</li>
+
+</ul>
+
+</section>
+<section id="slide-orgd5b85ec">
+<h3 id="orgd5b85ec"><span class="section-number-3">2.2.</span> Why some ways are preferred?</h3>
+<ul>
+<li>The obvious
+<ul>
+<li>Need to know what's in a file</li>
+<li>Need to find the file we need</li>
+
+</ul></li>
+<li>Less obvious
+<ul>
+<li>Different uses (point &amp; click, command line, automation)</li>
+<li>Must survive transfer (also across OS)</li>
+
+</ul></li>
+
+</ul>
+
+</section>
+<section id="slide-orgb9d957f">
+<h3 id="orgb9d957f"><span class="section-number-3">2.3.</span> Example: english literature class</h3>
+<pre  class="example" >
+✅ reading01_shakespeare_romeo-and-juliet_act01.docx
+✅ reading01_shakespeare_romeo-and-juliet_act02.docx
+✅ reading01_shakespeare_romeo-and-juliet_act03.docx
+✅ reading02_shakespeare_othello.docx
+✅ reading19_plath_the-bell-jar.docx
+</pre>
+
+<p>
+<i>versus</i>
+</p>
+
+<pre  class="example" >
+❌ Romeo and Juliet Act 1.docx
+❌ Romeo and juliet act 2.docx
+❌ Shakespeare RJ act3.docx
+❌ shakespeare othello I think?.docx
+❌ belljar plath (1).docx
+</pre>
+
+</section>
+<section id="slide-org3b018a4">
+<h3 id="org3b018a4"><span class="section-number-3">2.4.</span> What's to like?</h3>
+<pre  class="example" >
+✅ reading01_shakespeare_romeo-and-juliet_act03.docx
+✅ reading02_shakespeare_othello.docx
+✅ reading19_plath_the-bell-jar.docx
+</pre>
+
+<ul>
+<li>uses consistent patterns</li>
+<li>avoids "risky" characters</li>
+<li>remains:
+<ul>
+<li>human readable</li>
+<li>machine readable</li>
+<li>easy to sort and search</li>
+
+</ul></li>
+
+</ul>
+
+</section>
+</section>
+<section>
+<section id="slide-orgd36ddcc">
+<h2 id="orgd36ddcc"><span class="section-number-2">3.</span> Recommendations</h2>
+<div class="outline-text-2" id="text-3">
+</div>
+</section>
+<section id="slide-org5e55a13">
+<h3 id="org5e55a13"><span class="section-number-3">3.1.</span> Avoid white spaces</h3>
+<ul>
+<li>Command line: space separates arguments
+<ul>
+<li><code>edit my file.txt</code></li>
+<li><code>edit</code> command &amp; <code>my</code>, <code>file.txt</code> args</li>
+
+</ul></li>
+<li>Solve by:
+<ul>
+<li>Quoting: <code>edit "my file.txt"</code></li>
+<li>Escaping: <code>edit my\ file.txt</code></li>
+
+</ul></li>
+<li>Not ideal:
+<ul>
+<li>more typing / harder autocompletion</li>
+<li>problems when passing around: <code>my\ file.txt</code> → <code>my\\ file.txt</code></li>
+
+</ul></li>
+
+</ul>
+
+</section>
+<section id="slide-orga636760">
+<h3 id="orga636760"><span class="section-number-3">3.2.</span> Use only letters, numbers, hyphens, and underscores</h3>
+<ul>
+<li>Encoding: e.g. even within Unicode, é in <b>Adélie</b> can be:
+<ul>
+<li><code>U+00E9</code> (latin small letter e with acute)</li>
+<li><code>U+0065</code> <code>U+0301</code> (the letter "e" plus a combining acute symbol)</li>
+
+</ul></li>
+<li>Special meaning in command line (<code>'^.*?$+|</code>)
+<ul>
+<li>e.g. <code>?</code> <b>may</b> mean "match any character"</li>
+
+</ul></li>
+<li>Outright forbidden by some OS
+<ul>
+<li>illegal on Unix: <code>/</code> (directory separator)</li>
+<li>illegal on Windows: <code>&lt;&gt;:"/\|?*</code></li>
+
+</ul></li>
+
+</ul>
+
+</section>
+<section id="slide-orgc5c7a98">
+<h3 id="orgc5c7a98"><span class="section-number-3">3.3.</span> Don't rely on letter case</h3>
+<ul>
+<li>Are <code>apple</code> and <code>Apple</code> are the same file?
+<ul>
+<li>depends on file system</li>
+<li>eg. HFS+ preserves case on creation but not retrieval</li>
+
+</ul></li>
+<li>Be consistent</li>
+<li>Don't rely on just letter case to distinguish files</li>
+
+</ul>
+
+</section>
+<section id="slide-org4fd179d">
+<h3 id="org4fd179d"><span class="section-number-3">3.4.</span> Use separators in a meaningful way</h3>
+<ul>
+<li>"-" to join words into one entity.</li>
+<li>"_" to separate entities.</li>
+<li><p>
+Example pattern: 
+</p>
+<pre  class="example" >
+[category] [class] [author] [title] [section(optional)]
+</pre></li>
+<li><p>
+Basic variant:
+</p>
+<pre  class="example" >
+reading_01_shakespeare_romeo-and-juliet_act01.docx
+</pre></li>
+<li><p>
+Key-value variant:
+</p>
+<pre  class="example" >
+cat-reading_class-01_author-shakespeare_title-romeoandjuliet_act-01.docx
+</pre></li>
+
+</ul>
+
+</section>
+<section id="slide-org70754cb">
+<h4 id="org70754cb"><span class="section-number-4">3.4.1.</span> Globbing</h4>
+<div class="org-src-container">
+
+<pre  class="src src-python"   ><code trim>&gt;&gt;&gt; import glob
+&gt;&gt;&gt; glob.glob('reading_01*')
+['reading_01_shakespeare_romeo-and-juliet_act02.docx', 'reading_01_shakespeare_romeo-and-juliet_act01.docx']
+</code></pre>
+</div>
+
+<p>
+(similar to search in GUI file browsers)
+</p>
+
+</section>
+<section id="slide-org2942c10">
+<h4 id="org2942c10"><span class="section-number-4">3.4.2.</span> Splitting</h4>
+<div class="org-src-container">
+
+<pre  class="src src-python"   ><code trim>&gt;&gt;&gt; file = 'reading_01_shakespeare_romeo-and-juliet_act01.docx'
+&gt;&gt;&gt; file.split('_')
+['reading', '01', 'shakespeare', 'romeo-and-juliet', 'act01.docx']
+</code></pre>
+</div>
+
+<div class="org-src-container">
+
+<pre  class="src src-python"   ><code trim>&gt;&gt;&gt; file = 'cat-reading_class-01_author-shakespeare_title-romeoandjuliet_act-01.docx'
+&gt;&gt;&gt; dict(part.split('-') for part in file.split('_'))
+{'cat': 'reading', 'class': RR'01', 'author': 'shakespeare', 'title': 'romeoandjuliet', 'act': '01.docx'}
+</code></pre>
+</div>
+
+</section>
+<section id="slide-orgcb2f528">
+<h3 id="orgcb2f528"><span class="section-number-3">3.5.</span> Follow ISO 8601 if using dates</h3>
+<ul>
+<li><code>YYYY-MM-DD</code> format maintains chronology in alphabetical ordering</li>
+<li>Dates aren't always preserved on transfer</li>
+<li>Valid usecases:
+<ul>
+<li>Date is crucial (e.g. daily weather data)</li>
+<li>Sorting by name is crucial (e.g. meeting notes)</li>
+
+</ul></li>
+<li>Version control covers most other usecases:
+<ul>
+<li>Don't use date as <code>_v1</code>, <code>_v2</code>, <code>_v3_final</code></li>
+<li><code>git log</code> will show file history</li>
+<li>so will <code>git blame</code> (line-by-line for text files)</li>
+
+</ul></li>
+
+</ul>
+
+</section>
+<section id="slide-org67573f4">
+<h4 id="org67573f4"><span class="section-number-4">3.5.1.</span> git log</h4>
+<pre  class="example" >
+git log inputs/images/king_01.jpg
+commit ff73ce9acb8ee4b99106fa7ae080cfcb08138d48
+Author: John Doe &lt;j.doe@example.com&gt;
+Date:   Mon Oct 18 16:09:27 2021 +0200
+
+    Add third image
+</pre>
+
+</section>
+<section id="slide-org300f864">
+<h4 id="org300f864"><span class="section-number-4">3.5.2.</span> git blame</h4>
+<pre  class="example" >
+git blame --date human README.md
+487b1267 (John Doe Oct 12 2021       1) # Example dataset
+487b1267 (John Doe Oct 12 2021       2) 
+487b1267 (John Doe Oct 12 2021       3) This is an example datalad dataset.
+487b1267 (John Doe Oct 12 2021       4) 
+7fef4b96 (John Doe Oct 12 2021       5) Raw data is kept in `inputs` folder:
+7fef4b96 (John Doe Oct 12 2021       6) - penguin photos are in `inputs/images`
+dbf4ad7e (John Doe Oct 13 2021       7) 
+dbf4ad7e (John Doe Oct 13 2021       8) ## Credit
+dbf4ad7e (John Doe Oct 13 2021       9) 
+6e759623 (John Doe Oct 18 2021      10) Photos by [Derek Oyen](https://unsplash.com/@goosegrease) and ...
+</pre>
+
+</section>
+<section id="slide-org3b9f574">
+<h3 id="org3b9f574"><span class="section-number-3">3.6.</span> Avoid leaking undesired information</h3>
+<div class="org-src-container">
+
+<pre  class="src src-bash"   ><code trim>touch name-with-identifying-information.dat
+datalad save
+
+git mv name-with-identifying-information.dat a-new-name.dat
+datalad save
+
+git diff HEAD~1 HEAD
+</code></pre>
+</div>
+
+<pre  class="example" >
+diff --git a/name-with-identifying-information.dat b/a-new-name.dat
+similarity index 100%
+rename from name-with-identifying-information.dat
+rename to a-new-name.dat
+</pre>
+
+<p>
+"Rewriting history" possible, but: not easy, potentially destructive.
+</p>
+
+</section>
+</section>
+<section>
+<section id="slide-org64a4382">
+<h2 id="org64a4382"><span class="section-number-2">4.</span> Sidecar metadata strategy</h2>
+<div class="outline-text-2" id="text-4">
+</div>
+</section>
+<section id="slide-org8a58fa4">
+<h4 id="org8a58fa4"><span class="section-number-4">4.0.1.</span> Additional information in a text file</h4>
+<pre  class="example" >
+adelie_087.jpeg
+adelie_087.yaml
+</pre>
+
+<p>
+Sidecar file content:
+</p>
+
+<div class="org-src-container">
+
+<pre  class="src src-yaml"   ><code trim>species: Adelie
+island: Torgersen
+date: 2021-09-12
+penguin_count: 1
+sex: MALE
+photographer: John
+</code></pre>
+</div>
+
+</section>
+<section id="slide-org710e1f4">
+<h4 id="org710e1f4"><span class="section-number-4">4.0.2.</span> Meticulous tabular data annotation</h4>
+<pre  class="example" >
+penguins.csv
+penguins.yaml
+</pre>
+
+<p>
+Sidecar file content:
+</p>
+
+<pre  class="example" >
+species:
+  description: a factor denoting penguin species
+  levels:
+    Adélie: P. adeliae
+    Chinstrap: P. antarctica
+    Gentoo: P. papua
+  termURL: https://www.wikidata.org/wiki/Q9147
+bill_length_mm:
+  description: a number denoting bill length
+  units: mm
+</pre>
+
+</section>
+</section>
+<section>
+<section id="slide-org9807d29">
+<h2 id="org9807d29"><span class="section-number-2">5.</span> Important distinctions</h2>
+<div class="outline-text-2" id="text-5">
+</div>
+</section>
+<section id="slide-orgfd3f3cb">
+<h3 id="orgfd3f3cb"><span class="section-number-3">5.1.</span> File paths: full vs relative</h3>
+<p>
+full:
+</p>
+<pre  class="example" >
+/home/alice/Documents/project/figures/setup.png
+/Users/bob/Documents/project/figures/setup.png
+C:\\Users\eve\Documents\project\figures\setup.py
+</pre>
+
+<p>
+relative:
+</p>
+
+<pre  class="example" >
+figures/setup.png
+</pre>
+
+<p>
+Avoid hardcoding full paths - easier to move around.
+</p>
+
+</section>
+<section id="slide-orgd6c7e2a">
+<h3 id="orgd6c7e2a"><span class="section-number-3">5.2.</span> Text vs binary files</h3>
+<ul>
+<li>Text file is a file structured as a sequence of lines containing text, composed of characters.</li>
+<li>Binary file is anything other than a text file.</li>
+<li>Choice will affect
+<ul>
+<li>DataLad behaviour (esp. with text2git - often suboptimal)</li>
+<li>Simplicity of reading data</li>
+
+</ul></li>
+
+</ul>
+
+</section>
+<section id="slide-org5a07f32">
+<h4 id="org5a07f32"><span class="section-number-4">5.2.1.</span> Examples</h4>
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">Text</th>
+<th scope="col" class="org-left">Binary</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">.txt</td>
+<td class="org-left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="org-left">markup: .md, .rst, .org, .html</td>
+<td class="org-left">documents: docx, .xlsx, .pdf</td>
+</tr>
+
+<tr>
+<td class="org-left">source code: .py, .R, .m</td>
+<td class="org-left">compiled files: .pyc, .o, .exe</td>
+</tr>
+
+<tr>
+<td class="org-left">text-serialised formats: .toml, yaml, json, xml</td>
+<td class="org-left">binary-serialised formats: .pickle, .feather, .hdf</td>
+</tr>
+
+<tr>
+<td class="org-left">delimited files: .tsv, .csv</td>
+<td class="org-left">domain-specific: .nii, .edf</td>
+</tr>
+
+<tr>
+<td class="org-left">vector graphics: .svg</td>
+<td class="org-left">images: .jpg, .png, .tiff</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">compressed: .zip .gz, .7z</td>
+</tr>
+</tbody>
+</table>
+
+</section>
+</section>
+<section>
+<section id="slide-org75e9594">
+<h2 id="org75e9594"><span class="section-number-2">6.</span> Folder structure</h2>
+<div class="outline-text-2" id="text-6">
+</div>
+</section>
+<section id="slide-orga9f269a">
+<h3 id="orga9f269a"><span class="section-number-3">6.1.</span> Keep inputs and outputs separately</h3>
+<p>
+Consider the following:
+</p>
+
+<pre  class="example" >
+/dataset
+├── sample1
+│   └── a001.dat
+├── sample2
+│   └── a001.dat
+...
+</pre>
+
+</section>
+<section id="slide-orga9f269a-split">
+
+<p>
+After applying a transform (preprocessing, analysis, &#x2026;) this becomes:
+</p>
+
+<pre  class="example" >
+/dataset
+├── sample1
+│   ├── ps34t.dat
+│   └── a001.dat
+├── sample2
+│   ├── ps34t.dat
+│   └── a001.dat
+...
+</pre>
+
+<p>
+Without expert / domain knowledge, no distinction between original and derived data is possible anymore.
+</p>
+
+</section>
+<section id="slide-orga9f269a-split">
+
+<p>
+Compare it to a case with a clearer separation of semantics:
+</p>
+
+<pre  class="example" >
+/derived_dataset
+├── sample1
+│   └── ps34t.dat
+├── sample2
+│   └── ps34t.dat
+├── ...
+└── inputs
+    └── raw
+	├── sample1
+	│   └── a001.dat
+	├── sample2
+	│   └── a001.dat
+	...
+</pre>
+
+</section>
+<section id="slide-org3aee065">
+<h3 id="org3aee065"><span class="section-number-3">6.2.</span> Example: Research compendium</h3>
+<div class="outline-text-3" id="text-6-2">
+</div>
+</section>
+<section id="slide-org4ebbb68">
+<h4 id="org4ebbb68"><span class="section-number-4">6.2.1.</span> minimal research compendium</h4>
+<pre  class="example" >
+compendium/
+├── data
+│   ├── my_data.csv
+├── analysis
+│   └── my_script.R
+├── DESCRIPTION
+└── README.md
+</pre>
+
+<ul>
+<li>Data and methods separated into folders</li>
+<li>Computational environment described in a designated file</li>
+<li>A README document provides a landing page</li>
+
+</ul>
+
+<p>
+<a href="https://research-compendium.science/">research-compendium.science</a>
+</p>
+
+</section>
+<section id="slide-orgbe727b3">
+<h4 id="orgbe727b3"><span class="section-number-4">6.2.2.</span> more extensive research compendium</h4>
+<pre  class="example" >
+compendium/
+├── CITATION              &lt;- instructions on how to cite
+├── code                  &lt;- custom code for this project
+│   ├── analyze_data.R
+│   └── clean_data.R
+├── data_clean            &lt;- intermediate data that has been transformed
+│   └── data_clean.csv
+├── data_raw              &lt;- raw, immutable data
+│   ├── datapackage.json
+│   └── data_raw.csv
+├── Dockerfile            &lt;- computing environment recipe
+├── figures               &lt;- figures
+│   └── flow_chart.jpeg
+├── LICENSE               &lt;- terms for reuse
+├── Makefile              &lt;- steps to automatically generate the results
+├── paper.Rmd             &lt;- text and code combined
+└── README.md             &lt;- top-level description
+</pre>
+
+<p>
+Example from <a href="https://the-turing-way.netlify.app/reproducible-research/compendia.html">The Turing Way</a>
+</p>
+
+</section>
+<section id="slide-org30e9872">
+<h3 id="org30e9872"><span class="section-number-3">6.3.</span> Example: YODA principles</h3>
+<p>
+(3) <i>Structure study elements in modular components to facilitate reuse within or outside the context of the original study</i>
+</p>
+
+<p>
+Yoda's Organigram on Data Analysis, <a href="https://github.com/myyoda/myyoda">github.com/myyoda/myyoda</a>
+</p>
+
+</section>
+<section id="slide-org7f51a72">
+<h4 id="org7f51a72"><span class="section-number-4">6.3.1.</span> Minimal example</h4>
+<ul>
+<li><code>datalad create -c yoda "my_analysis"</code>
+<ul>
+<li>creates initial files</li>
+<li>sets <code>code</code>, <code>changelog</code> &amp; <code>README</code> to be tracked by git (all else annexed)</li>
+
+</ul></li>
+
+</ul>
+
+<pre  class="example" >
+.
+├── CHANGELOG.md
+├── code
+│   └── README.md
+└── README.md
+</pre>
+
+
+</section>
+<section id="slide-orgda26c64">
+<h4 id="orgda26c64"><span class="section-number-4">6.3.2.</span> extensive example</h4>
+<pre  class="example" >
+├── ci/                         # continuous integration configuration
+│   └── .travis.yml
+├── code/                       # your code
+│   ├── tests/                  # unit tests to test your code
+│   │   └── test_myscript.py
+│   └── myscript.py
+├── docs                        # documentation about the project
+│   ├── build/
+│   └── source/
+├── envs                        # computational environments
+│   └── Singularity
+├── inputs/                     # dedicated inputs/, will not be changed by an analysis
+│   └─── data/
+│       ├── dataset1/           # one stand-alone data component
+│       │   └── datafile_a
+│       └── dataset2/
+│           └── datafile_a
+├── outputs/                    # outputs away from the input data
+│   └── important_results/
+│       └── figures/
+├── CHANGELOG.md                # notes for fellow humans about your project
+├── HOWTO.md
+└── README.md
+</pre>
+
+<p>
+Example from <a href="http://handbook.datalad.org/en/latest/basics/101-127-yoda.html">Datalad Handbook</a>
+</p>
+
+</section>
+<section id="slide-org438b3d0">
+<h3 id="org438b3d0"><span class="section-number-3">6.4.</span> Example: Brain Imaging Data Structure</h3>
+<p>
+file naming, directory structure, metadata
+<a href="https://bids.neuroimaging.io/">bids.neuroimaging.io</a>
+</p>
+
+</section>
+<section id="slide-org0af73da">
+<h4 id="org0af73da"><span class="section-number-4">6.4.1.</span> Example</h4>
+<pre  class="example" >
+.
+├── CHANGES
+├── dataset_description.json
+├── participants.tsv
+├── README
+├── sub-01
+│   ├── anat
+│   │   ├── sub-01_inplaneT2.nii.gz
+│   │   └── sub-01_T1w.nii.gz
+│   └── func
+│       ├── sub-01_task-rhymejudgment_bold.nii.gz
+│       └── sub-01_task-rhymejudgment_events.tsv
+└── task-rhymejudgment_bold.json
+</pre>
+
+</section>
+<section id="slide-org778b905">
+<h4 id="org778b905"><span class="section-number-4">6.4.2.</span> Key elements</h4>
+<pre  class="example" >
+sub-01_task-rhymejudgment_bold.nii.gz
+sub-01_task-rhymejudgment_events.tsv
+</pre>
+
+<ul>
+<li>Key-value naming, with underscores and dashes</li>
+<li>Sidecar metadata strategy:
+<ul>
+<li>.nii.gz (compressed binary file with neuroimaging data)</li>
+<li>.tsv (text file with event timings)</li>
+
+</ul></li>
+<li>Text files where possible:
+<ul>
+<li>tsv files are used to store participant tables and event timings.</li>
+<li>json files are used for metadata</li>
+
+</ul></li>
+<li>Specification &amp; extensions for different neuroscience domains</li>
+
+</ul>
+
+</section>
+</section>
+<section>
+<section id="slide-org288d5cb">
+<h2 id="org288d5cb"><span class="section-number-2">7.</span> Find out more</h2>
+<ul>
+<li>Workshop materials: <a href="https://psychoinformatics-de.github.io/rdm-course/02-structuring-data/index.html">Structuring data</a></li>
+<li>DataLad handbook: <a href="https://handbook.datalad.org/en/latest/intro/filenaming.html">How to name a file: interoperability considerations</a></li>
+<li>BIDS <a href="https://bids.neuroimaging.io/">website</a> and <a href="https://bids-specification.readthedocs.io/en/stable/">specification</a></li>
+
+</ul>
+</section>
+</section>
+</div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js/dist/reveal.js"></script>
+
+<script>
+// Full list of configuration options available here:
+// https://github.com/hakimel/reveal.js#configuration
+Reveal.initialize({
+width:1200, height:800, margin: 0.1, minScale:0.2, maxScale:2.5,
+
+// Optional libraries used to extend on reveal.js
+dependencies: [
+ { src: 'https://cdn.jsdelivr.net/npm/reveal.js/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+ { src: 'https://cdn.jsdelivr.net/npm/reveal.js/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+ { src: 'https://cdn.jsdelivr.net/npm/reveal.js/plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+ { src: 'https://cdn.jsdelivr.net/npm/reveal.js/plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }]
+
+});
+
+</script>
+</body>
+</html>

@@ -1,11 +1,12 @@
 #+title: Research Data Management with DataLad
-#+Author: Michał Szczepanik
+#+Author: Michał Szczepanik, Michael Hanke & the DataLad team
 
 #+REVEAL_INIT_OPTIONS: width:1200, height:800, margin: 0.1, minScale:0.2, maxScale:2.5
 #+OPTIONS: toc:nil
 #+REVEAL_THEME: beige
 #+REVEAL_HLEVEL: 2
 #+REVEAL_HEAD_PREAMBLE: <meta name="description" content="Research Data Management with DataLad">
+#+REVEAL_TITLE_SLIDE:<h1 class="title">%t</h1><p class="subtitle">%s</p><p class="author">%a</p><p class="date">%d</p>
 #+REVEAL_PLUGINS: (markdown notes)
 #+REVEAL_EXTRA_CSS: ./local.css
 #+REVEAL_ROOT: https://cdn.jsdelivr.net/npm/reveal.js
@@ -48,10 +49,10 @@ This is *distributed* version control.
 
 #+REVEAL:split
 
-- When working, needs a subset of all data at a given time
+- Needs to work on a subset of data at a given time
   - all files are kept on a server
   - few files are rotated into and out of the laptop
-- When project is complete, Alice may need to publish
+- Needs to publish data at project's end
   - raw data / outputs / both
   - completely or selectively
 

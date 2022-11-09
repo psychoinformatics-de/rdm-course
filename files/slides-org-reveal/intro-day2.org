@@ -1,0 +1,125 @@
+#+title: Research Data Management with DataLad
+#+subtitle: SFB1451 workshop, day 2
+#+Author: Michał Szczepanik
+
+#+REVEAL_INIT_OPTIONS: width:1200, height:800, margin: 0.1, minScale:0.2, maxScale:2.5
+#+OPTIONS: toc:nil
+#+REVEAL_THEME: beige
+#+REVEAL_HLEVEL: 1
+#+REVEAL_HEAD_PREAMBLE: <meta name="description" content="Research Data Management with DataLad">
+#+REVEAL_EXTRA_CSS: ./local.css
+#+REVEAL_ROOT: https://cdn.jsdelivr.net/npm/reveal.js
+#+REVEAL_TITLE_SLIDE:<h1 class="title">%t</h1><p class="subtitle">%s</p><p class="author">%a</p><p class="date">%d</p>
+
+* Day 2 outline
+
+- Remote collaboration
+- Dataset management
+
+* Part 3: Remote collaboration
+
+** Recap
+
+- Before: basics of local version control
+  - recording changes, interacting with dataset history
+    - built a small dataset
+    - have a record of what led to its current state
+    - single location, single person
+
+** Introduction
+
+- Research data rarely lives just on a single computer.
+- Research projects aren't single-person affairs.
+- Want to:
+  - synchronise with a remote location (backup/archival)
+  - keep only a subset on your PC, rotating files (save space)
+  - send data to colleagues, ensure up to date with version control
+  - have them contribute to your dataset (add files, make changes)
+  - publish to a repository
+
+DataLad has tools to facilitate all that.
+
+** Plan
+
+- Publish our dataset from yesterday
+- Use GIN (G-Node Infrastructure): https://gin.g-node.org
+  - Convenient integration with DataLad (all files, annexed or not)
+  - DataLad supports many different scenarios (incl. separation)
+  - Some quirks, but steps for GIN will be similar elswhere
+- Make changes to each other's datasets through GIN
+
+* Part 4: Dataset management
+
+** Introduction
+
+- Analysis, simplified: collect inputs, produce outputs
+  - same input can be used for multiple analyses
+  - output (transform / preprocess) may become input for next one
+
+*** Subdataset hierarchy
+
+#+CAPTION: Dataset modules - from DataLad handbook
+[[https://handbook.datalad.org/en/latest/_images/dataset_modules.svg]]
+
+*** Reasons to use subdatasets:
+
+- a logical need to make your data modular
+  - eg. raw data - preprocessing - analysis - paper
+- a technical need to divide your data
+  - hundreds of thousands of files start hurting performance
+
+** Plan
+
+- Inspect a published nested DataLad dataset
+- Create a toy example from scratch
+
+** Data we will use
+
+- "Highspeed Analysis" DataLad dataset
+  - Wittkuhn L, Schuck NW, *Nat. Commun.* 12, 1795 (2021)
+  - [[https://github.com/lnnrtwttkhn/highspeed-analysis][github.com/lnnrtwttkhn/highspeed-analysis]]
+- Tabular data from Palmer Station Antarctica LTER
+  - Gorman KB, Williams TD, Fraser WR, *PLoS ONE* 9(3):e90081 (2014)
+  - see also: [[https://allisonhorst.github.io/palmerpenguins/][palmerpenguins]] R dataset, alternative to Iris
+
+** Published DataLad dataset: the plan
+
+- Obtain the dataset
+- Inspect its nested structure
+- Obtain a specific file
+
+** Toy example: the plan:
+
+- Investigate the relationship between flipper length and body mass in 3 penguin species.
+  - Create a "penguin-report" dataset, with "inputs" subdataset
+  - Populate the subdataset with data
+  - Run an analysis, → figure in the main dataset
+  - Write our "report" → document in the main dataset
+
+*** Folder structure we're aiming for
+
+#+begin_src
+penguin-report/
+├── figures
+│   └── lmplot.png
+├── inputs
+│   ├── adelie.csv
+│   ├── chinstrap.csv
+│   └── gentoo.csv
+├── process.py
+├── report.html
+└── report.md
+#+end_src
+
+* Wrap-up
+
+** Where to next
+
+- Materials aren't going anywhere (but hub shuts down)
+- INF project website: [rdm.sfb1451.de](https://rdm.sfb1451.de/)
+  - contact information, practical info
+- DataLad Office Hours
+  - virtual, Thu 16:00
+  - announced in a matrix chat room (link ☝)
+- DataLad website: [datalad.org](https://datalad.org)
+- DataLad handbook: [handbook.datalad.org](https://handbook.datalad.org/en/latest/)
