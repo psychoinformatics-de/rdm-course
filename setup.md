@@ -10,7 +10,10 @@ have provided you with access to a Jupyter Hub. In this case you
 will be working on a remote server, with all required software,
 through a web browser interface. This interface, called Jupyter Lab,
 gives you access to a command line, a basic file browser and a basic
-text editor.
+text editor. For workshop organisers/instructors, more information on
+setting up a cloud server with Jupyter Hub can be found
+[here]({{ page.root }}{% link _extras/for_instructors.md %}).
+
 
 ## Participate without installation: use Binder
 If you don't have access to a premade environment (such as the Jupyter
