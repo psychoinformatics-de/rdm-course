@@ -257,9 +257,9 @@ in JupyterHub often happens via Jupyter Notebooks, which auto-create and -update
 files in the form of `.ipynb_checkpoints` files, we will add those to the global `gitignore` configuration:
 
 ~~~
-touch "$HOME/.gitignore_global"
-echo ".ipynb_checkpoints" > "$HOME/.gitignore_global
-git config --global core.excludesfile ~/.gitignore_global
+sudo touch /home/.gitignore_global
+sudo echo ".ipynb_checkpoints" > /home/.gitignore_global
+git config --global core.excludesfile /home/.gitignore_global
 ~~~
 
 ### 3.7. Set up default user settings and data
@@ -277,8 +277,8 @@ Run the following code to copy the `zsh` configuration files, the `.gitignore_gl
 sudo mkdir -p /etc/skel/.zsh
 sudo cp -r "$HOME/.zsh/pure" /etc/skel/.zsh/
 sudo cp "$HOME/.zshrc" /etc/skel/
-
-sudo cp "$HOME/.gitignore_global" /etc/skel/ 
+ 
+sudo cp "$HOME/.gitconfig" /etc/skel/ 
 
 sudo mkdir -p /etc/skel/.jupyter
 sudo cp "$HOME/.jupyter/jupyter_notebook_config.py" /etc/skel/.jupyter/
