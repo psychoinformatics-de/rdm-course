@@ -84,6 +84,7 @@ paste the following code (provided in [The Littlest JupyterHub documentation](ht
 
 Once launched and running, the instance with JupyterHub environment will be accessible via a
 public IP address. You can verify this by navigating to `Instances` in the left-hand sidebar of the EC2 console, then selecting your newly launched instance, and clicking on `open address` next to the IP address in the information block. This should open a browser tab/window with a login interface for JupyterHub.
+At this moment, we only have http available (not https).
 
 Technically, this IP address can suffice as a point of entry for users, but there are certain caveats:
 - we ideally want the IP address to stay constant even if we stop and restart our instance
