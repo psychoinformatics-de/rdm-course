@@ -249,9 +249,11 @@ to access them in order to set the default shell to `zsh`:
 
 When we work with `git` repositories and add content or code, we often want certain files
 or directories not to form part of the `git` history. We can achieve this by telling `git`
-to ignore certain files or directories, via the `.gitignore` configuration. Since development
-in JupyterHub often happens via Jupyter Notebooks, which auto-create and -update it's own metadata
-files in the form of `.ipynb_checkpoints` files, we will add those to the global `gitignore` configuration:
+to ignore certain files or directories, via the `.gitignore` configuration. JupyterHub stores its own
+metadata files under `.ipynb_checkpoints` and will create this directory whenever the hub's text
+editor is used, or a notebook is opened. To prevent these directories for getting into user's way
+when working with DataLad, we will create a global (user-level) `gitignore` configuration following
+[this method](https://docs.github.com/en/get-started/getting-started-with-git/ignoring-files#configuring-ignored-files-for-all-repositories-on-your-computer):
 
 ~~~
 sudo touch /home/.gitignore_global
