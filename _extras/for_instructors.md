@@ -63,12 +63,12 @@ According to AWS, "free tier eligible customers can get up to 30 GB of EBS Gener
 8. `Advanced details`: expand this section, and at the very end in the text-field `User data`
 paste the following code (provided in [The Littlest JupyterHub documentation](https://tljh.jupyter.org/en/latest/topic/customizing-installer.html#topic-customizing-installer)):
 
-    ~~~
-    #!/bin/bash
-    curl -L https://tljh.jupyter.org/bootstrap.py \
-    | sudo python3 - \
-        --admin <admin-username>
-    ~~~
+   ~~~
+   #!/bin/bash
+   curl -L https://tljh.jupyter.org/bootstrap.py \
+   | sudo python3 - \
+       --admin <admin-username>
+   ~~~
 
     **Be sure to replace `<admin-username>` with your username of choice. And the shebang is important, don't miss it!**
 
