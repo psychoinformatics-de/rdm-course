@@ -35,6 +35,8 @@ chosen domain address.
 > ## AWS account usage can incur costs
 >
 > While Amazon provides [Free Tier](https://aws.amazon.com/free/) access to its services, it can still potentially result in costs if usage exceeds [Free Tier Limits](https://docs.aws.amazon.com/awsaccountbilling/latest/aboutv2/free-tier-limits.html). Be sure to take note of these limits, or set up [automatic tracking alerts](https://docs.aws.amazon.com/awsaccountbilling/latest/aboutv2/tracking-free-tier-usage.html) to be notified before incurring unnecessary costs.
+
+In 2022, our costs for a two half-day workshop were about 15 € (we used a small AWS instance for setup, and manually started & stopped a large instance for the workshop sessions only, i.e. about 8 hours).
 {: .discussion}
 
 
