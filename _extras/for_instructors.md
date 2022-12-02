@@ -87,11 +87,12 @@ public IP address. You can verify this by navigating to `Instances` in the left-
 At this moment, we only have http available (not https).
 
 Technically, this IP address can suffice as a point of entry for users, but there are certain caveats:
-- we ideally want the IP address to stay constant even if we stop and restart our instance
+- we ideally want the IP address to stay constant even if we stop and restart our instance,
+- we want to assign a domain to our hub that makes it easily identifiable (e.g. `datalad-hub.inm7.de`),
 - we want the information transfer to and from the server to be securely encrypted via HTTPS,
-- and we want to assign a domain to our hub that makes it easily identifiable (e.g. `datalad-hub.inm7.de`)
+- HTTPS access in TLJH can only be configured when we have a domain (i.e. not when using a plain IP address).
 
-The Littlest JupyterHub also requires a custom constant domain if HTTPS acces is to be configures. For these reasons, we need an "Elastic IP":
+For these reasons, we need an "Elastic IP":
 
 1. Go to `Elastic IPs` under `Network & Security` in the left-hand sidebar in EC2 console.
 2. Click the orange `Allocate Elastic IP address` button.
