@@ -200,11 +200,9 @@ as well as those required for the workshop.
 
 Run the following lines one by one, typing `y` for "Yes" whenever you are prompted to continue:
 ~~~
-apt update
-apt upgrade
-apt install zsh
-sudo -E conda install git
-sudo -E apt-get install tig
+sudo apt update
+sudo apt upgrade
+sudo apt install zsh tig tree
 ~~~
 
 For the workshop itself, we want to install datalad and its dependencies.
