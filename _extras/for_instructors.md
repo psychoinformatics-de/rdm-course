@@ -26,7 +26,6 @@ for a small number of users (0-100) on a single
 2. Consider the costs involved in running a cloud-compute server. AWS provides resources
 for checking [EC2 on-demand pricing](https://aws.amazon.com/ec2/pricing/on-demand/) and
 also for [calculating cost estimates](https://calculator.aws/) for your usage.
-*TODO: add ballpark figures for costs of running a workshop for X users for Y days.*
 3. If you want to serve your workshop content via a custom domain (e.g.
 [datalad-hub.inm7.de](http://datalad-hub.inm7.de/)), ensure that you have the required
 level of access that will allow you to associate the EC2-provided IP address with your
