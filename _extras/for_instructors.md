@@ -208,7 +208,7 @@ sudo apt install zsh tig tree
 For the workshop itself, we want to install datalad and its dependencies.
 Run the following lines one by one:
 ~~~
-sudo -E apt-get install git-annex
+sudo -E apt install git-annex
 sudo -E -H pip3 install datalad
 ~~~
 
