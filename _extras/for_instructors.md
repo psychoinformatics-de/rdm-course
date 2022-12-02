@@ -3,7 +3,7 @@ layout: page
 title: For Instructors
 ---
 
-To save time during a workshop, organisors and instructors can consider setting
+To save time during a workshop, organizers and instructors can consider setting
 up a cloud-based server beforehand, with JupyterHub and all required software
 packages pre-installed for all users. This ensures that all users have a working
 setup that is accessible via the browser, and prevents user- and operating
