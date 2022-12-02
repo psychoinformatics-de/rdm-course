@@ -231,14 +231,10 @@ to access them in order to set the default shell to `zsh`:
    sudo mkdir -p "$HOME/.zsh"
    git clone https://github.com/sindresorhus/pure.git "$HOME/.zsh/pure"
    ~~~
-2. Create a `.zshrc` file in your HOME directory and copy the content from [this source](https://gist.github.com/mslw/926f1191e61ef2d705fadab66d19b8ba) into the file:
+2. Create a `.zshrc` file in your HOME directory with a basic configuration taken, e.g., from [this source](https://gist.github.com/mslw/926f1191e61ef2d705fadab66d19b8ba):
    ~~~
-   touch "$HOME/.zshrc"
-   nano "$HOME/.zshrc"
+   wget https://gist.githubusercontent.com/mslw/926f1191e61ef2d705fadab66d19b8ba/raw/.zshrc
    ~~~
-   This opens the `.zshrc` file for editing in the shell using nano text editor.
-   Now paste the content from the source file in this editor, then hit CTRL+O and Enter (saves edits)
-   and then hit CTRL+X and Enter (exits editor).
 3. Lastly, we also need to make the hub aware of which shell it should use when launching a terminal.
    We do this with a configuration script. Run the following lines one by one:
    ~~~
