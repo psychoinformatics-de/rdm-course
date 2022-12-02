@@ -264,9 +264,10 @@ git config --global core.excludesfile /home/.gitignore_global
 ### 3.7. Set up default user settings and data
 
 What we have done up until now is to set up the base environment that a user will encounter
-when they log into the JupyterHub. Some tools and packages have been installed for all users
-(as a result of using the `sudo -E` command) such as `git`, `datalad`, and others. However,
-some settings will not yet be the default for any newly created user. This includes the default
+when they log into the JupyterHub. Some tools and packages, such as `datalad`,
+ have been installed for all users (as a result of using `pip` with `sudo -E`). However,
+some settings were done only for the admin account, and  will not yet be the default for 
+other, newly created users. This includes the default
 shell setup as well as any data content. We can ensure that any configuration files or data content
 are available to individual users by copying the required content to the `/etc/skel` directory, the
 contents of which will be placed in the `$HOME` directories of newly created users.
