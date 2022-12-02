@@ -308,5 +308,24 @@ Different authentication options are possible (e.g. admin can also authenticate 
 - Elastic IP incurs cost when not associated with a running instance, but it is marginal.
 - After the workshop, you will want to pull everything down, including storage (if left sitting, storage may generate a couple dollars per month).
 
+### Troubleshooting
+
+- When checking if your hub was initialized successfully, apart from trying to access the server's ip address, you may want to view the AWS's system log.
+- In EC2 Management Console, Instances page, right click your instance, and select "Monitor and troubleshoot", "Get system log".
+- If system setup was finished, there will be a lot of text, most likely ending with something like:
+   ~~~
+   2022/12/01 12:40:30Z: OsProductName: Ubuntu
+   2022/12/01 12:40:30Z: OsVersion: 22.04
+   ~~~
+- If the JupyterHub bootsrap script succeeded, within the last 30 lines you will find:
+   ~~~
+   [  210.143720] cloud-init[1233]: Waiting for JupyterHub to come up (1/20 tries)
+   [  210.147437] cloud-init[1233]: Done!
+   ~~~
+- If the "user data" was not given, or pasted incorrectly (e.g. without admin name), within the last 30 lines you will probably see:
+   ~~~
+   cloud-init[1246]: 2022-12-01 12:40:29,790 - util.py[WARNING]: Running module scripts-user (<module 'cloudinit.config.cc_scripts_user' from '/usr/lib/python3/dist-packages/cloudinit/config/cc_scripts_user.py'>) failed
+   ~~~
+- In case of problems, you can log in through `ssh` and try running the TLJH bootstrap script manually, or terminate the instance and start over.
 #### TLJH options
 - Increase cull timeout with sudo tljh-config set services.cull.timeout <time in seconds> (you may wish to do this only before the workshop)
