@@ -32,11 +32,11 @@ level of access that will allow you to associate the EC2-provided IP address wit
 chosen domain address.
 
 
-> ## AWS account usage can incur costs
->
-> While Amazon provides [Free Tier](https://aws.amazon.com/free/) access to its services, it can still potentially result in costs if usage exceeds [Free Tier Limits](https://docs.aws.amazon.com/awsaccountbilling/latest/aboutv2/free-tier-limits.html). Be sure to take note of these limits, or set up [automatic tracking alerts](https://docs.aws.amazon.com/awsaccountbilling/latest/aboutv2/tracking-free-tier-usage.html) to be notified before incurring unnecessary costs.
+## AWS account usage can incur costs
 
-In 2022, our costs for a two half-day workshop were about 15 € (we used a small AWS instance for setup, and manually started & stopped a large instance for the workshop sessions only, i.e. about 8 hours).
+> While Amazon provides [Free Tier](https://aws.amazon.com/free/) access to its services, it can still potentially result in costs if usage exceeds [Free Tier Limits](https://docs.aws.amazon.com/awsaccountbilling/latest/aboutv2/free-tier-limits.html). Be sure to take note of these limits, or set up [automatic tracking alerts](https://docs.aws.amazon.com/awsaccountbilling/latest/aboutv2/tracking-free-tier-usage.html) to be notified before incurring unnecessary costs.
+>
+> In 2022, our costs for a two half-day workshop were about 15 € (we used a small AWS instance for setup, and manually started & stopped a large instance for the workshop sessions only, i.e. about 8 hours).
 {: .discussion}
 
 
@@ -192,8 +192,17 @@ This can be done with [Let's Encrypt](https://letsencrypt.org/) by following ins
    This could also require you to to refresh the page (with the address now containing `https`
    instead of `http`) and log in again.
 
+### 3.4. Increase cull timeout
 
-### 3.4. Install required tools into the base environment
+JupyterHub will [shut down inactive notebook servers](https://tljh.jupyter.org/en/latest/topic/idle-culler.html) to save resources.
+Although state is restored, having to click "restart my server" if there is a pause during the workshop may be irritating.
+To increase cull timeout, do:
+~~~
+sudo tljh-config set services.cull.timeout <time in seconds>
+~~~
+If you plan to leave a low-resource instance running for users to explore, you may wish to adjust culling only before the workshop.
+
+### 3.5. Install required tools into the base environment
 
 This ensures that you have the required tools for the rest of the configuration procedure
 as well as those required for the workshop.
@@ -216,7 +225,7 @@ Depending on the content of your workshop, you might also want to install DataLa
 other packages. This would be a sensible time to do so. Remember to add `sudo -E` in front of the
 install command in order to make the installation apply to all users.
 
-### 3.5. Set up the default shell
+### 3.6. Set up the default shell
 
 We will set up [`zsh`](https://en.wikipedia.org/wiki/Z_shell) as the default shell for the terminal.
 Currently, when you open a terminal and run `echo $0`, it should print `/usr/bin/bash`, indicating that
@@ -245,7 +254,7 @@ to access them in order to set the default shell to `zsh`:
    in order for the changes to take effect.
 
 
-### 3.6. Create a global `gitignore`
+### 3.7. Create a global `gitignore`
 
 When we work with `git` repositories and add content or code, we often want certain files
 or directories not to form part of the `git` history. We can achieve this by telling `git`
@@ -260,7 +269,7 @@ echo ".ipynb_checkpoints" > ~/.gitignore_global
 git config --global core.excludesfile "~/.gitignore_global"
 ~~~
 
-### 3.7. Set up default user settings and data
+### 3.8. Set up default user settings and data
 
 What we have done up until now is to set up the base environment that a user will encounter
 when they log into the JupyterHub. Some tools and packages, such as `datalad`,
@@ -288,7 +297,7 @@ Now, at long last, you can create a new user from the JupyterHub admin panel.
 Using this user, login from another device or using the browser's incognito mode,
 and then check to see that everything functions as expected.
 
-### 3.8. Finally, add users!
+### 3.9. Finally, add users!
 
 Depending on group size and logistics, we suggest creating users beforehand via the admin control panel (e.g. using their email addresses, or the username part of these), and letting users create their own passwords once they navigate to the hub URL for the first time. This is the default configuration.
 
@@ -313,19 +322,17 @@ Different authentication options are possible (e.g. admin can also authenticate 
 - When checking if your hub was initialized successfully, apart from trying to access the server's ip address, you may want to view the AWS's system log.
 - In EC2 Management Console, Instances page, right click your instance, and select "Monitor and troubleshoot", "Get system log".
 - If system setup was finished, there will be a lot of text, most likely ending with something like:
-   ~~~
-   2022/12/01 12:40:30Z: OsProductName: Ubuntu
-   2022/12/01 12:40:30Z: OsVersion: 22.04
-   ~~~
+~~~
+2022/12/01 12:40:30Z: OsProductName: Ubuntu
+2022/12/01 12:40:30Z: OsVersion: 22.04
+~~~
 - If the JupyterHub bootsrap script succeeded, within the last 30 lines you will find:
-   ~~~
-   [  210.143720] cloud-init[1233]: Waiting for JupyterHub to come up (1/20 tries)
-   [  210.147437] cloud-init[1233]: Done!
-   ~~~
+~~~
+[  210.143720] cloud-init[1233]: Waiting for JupyterHub to come up (1/20 tries)
+[  210.147437] cloud-init[1233]: Done!
+~~~
 - If the "user data" was not given, or pasted incorrectly (e.g. without admin name), within the last 30 lines you will probably see:
-   ~~~
-   cloud-init[1246]: 2022-12-01 12:40:29,790 - util.py[WARNING]: Running module scripts-user (<module 'cloudinit.config.cc_scripts_user' from '/usr/lib/python3/dist-packages/cloudinit/config/cc_scripts_user.py'>) failed
-   ~~~
+~~~
+cloud-init[1246]: 2022-12-01 12:40:29,790 - util.py[WARNING]: Running module scripts-user (<module 'cloudinit.config.cc_scripts_user' from '/usr/lib/python3/dist-packages/cloudinit/config/cc_scripts_user.py'>) failed
+~~~
 - In case of problems, you can log in through `ssh` and try running the TLJH bootstrap script manually, or terminate the instance and start over.
-#### TLJH options
-- Increase cull timeout with sudo tljh-config set services.cull.timeout <time in seconds> (you may wish to do this only before the workshop)
