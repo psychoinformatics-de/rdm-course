@@ -277,7 +277,8 @@ sudo mkdir -p /etc/skel/.zsh
 sudo cp -r "$HOME/.zsh/pure" /etc/skel/.zsh/
 sudo cp "$HOME/.zshrc" /etc/skel/
  
-sudo cp "$HOME/.gitconfig" /etc/skel/ 
+sudo cp "$HOME/.gitconfig" /etc/skel/
+sudo cp "$HOME/.gitignore_global" /etc/skel/ 
 
 sudo mkdir -p /etc/skel/.jupyter
 sudo cp "$HOME/.jupyter/jupyter_notebook_config.py" /etc/skel/.jupyter/
