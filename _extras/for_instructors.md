@@ -256,9 +256,8 @@ when working with DataLad, we will create a global (user-level) `gitignore` conf
 [this method](https://docs.github.com/en/get-started/getting-started-with-git/ignoring-files#configuring-ignored-files-for-all-repositories-on-your-computer):
 
 ~~~
-sudo touch /home/.gitignore_global
-sudo echo ".ipynb_checkpoints" > /home/.gitignore_global
-git config --global core.excludesfile /home/.gitignore_global
+echo ".ipynb_checkpoints" > ~/.gitignore_global
+git config --global core.excludesfile "~/.gitignore_global"
 ~~~
 
 ### 3.7. Set up default user settings and data
