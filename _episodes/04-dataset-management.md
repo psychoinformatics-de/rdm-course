@@ -12,7 +12,7 @@ objectives:
 - Create a simple model of a nested dataset
 keypoints:
 - A dataset can contain other datasets
-- The super- and sub-datasets have separate histories.
+- The super- and sub-datasets have separate histories
 - The superdataset only contains a reference to a specific commit in the subdataset's history
 ---
 
@@ -380,14 +380,14 @@ At this stage, our superdataset stores the reference to a populated inputs datas
 
 > ## Separate history
 >
-> - The super- and sub-datasets have separate histories.
+> - The super- and sub-datasets have separate histories
 > - The superdataset only contains a reference to a specific commit in the subdataset's history
 > - If the subdataset evolves, the reference in the superdataset can be updated (this has to be done explicitly)
 > 
 > ## Installing subdatasets
 > 
-> - Usually, you would install an already existing dataset as a subdataset with `datalad clone -d . ...` rather than create it from scratch like we just did.
-> - The end effect would be the same, with the parent dataset pointing at the specific state of the subdataset.
+> - Usually, you would install an already existing dataset as a subdataset with `datalad clone -d . ...` rather than create it from scratch like we just did
+> - The end effect would be the same, with the parent dataset pointing at the specific state of the subdataset
 > 
 {: .callout}
 
