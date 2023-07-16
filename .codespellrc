@@ -1,4 +1,5 @@
 [codespell]
 skip = .git,*.pdf,*.svg,*.min.js,*.map,*.scss,*.css
+ignore-regex = (Nat\.? Commun.?|highlighter: rouge)
 #
 # ignore-words-list =
