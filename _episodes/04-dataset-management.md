@@ -363,7 +363,7 @@ This is important: a *superdataset* does not record individual changes within th
 In other words, it points to the subdataset location and a point in its life (indicated by a specific commit).
 
 Let's acknowledge that we want our superdataset to point to the updated version of the subdataset (ie. that which has all three tabular files) by saving this change in the superdataset's history.
-In other words, while the subdataset progressed by three comits, in the parent dataset we can record it as a single change (from empty to populated subdataset):
+In other words, while the subdataset progressed by three commits, in the parent dataset we can record it as a single change (from empty to populated subdataset):
 
 ~~~
 datalad save -d . -m "Progress the subdataset version"
@@ -566,6 +566,6 @@ save(ok): . (dataset)
 ~~~
 {: .output}
 
-The end! We have produced a nested datset:
+The end! We have produced a nested dataset:
 - the superdataset (penguin-report) directly contains our code, figures, and report (tracking their history), and includes inputs as a subdatset.
 - the subdataset (inputs) tracks the history of the raw data files.

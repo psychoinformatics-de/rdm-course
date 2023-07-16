@@ -231,7 +231,7 @@ datalad remove -d local-dataset
 uninstall(error): . (dataset) [to-be-dropped dataset has revisions that are not available at any known sibling. Use `datalad push --to ...` to push these before dropping the local dataset, or ignore via `--reckless availability`. Unique revisions: ['main']]
 ~~~
 
-``remove`` advises to either ``push`` the "unique revisions" to a different place (i.e., creating a sibling to host your pristine, version-controlled changes), or, similarily to how it was done for ``drop``, to disable the availability check with ``--reckless availability``.
+``remove`` advises to either ``push`` the "unique revisions" to a different place (i.e., creating a sibling to host your pristine, version-controlled changes), or, similarly to how it was done for ``drop``, to disable the availability check with ``--reckless availability``.
 
 ~~~
 datalad remove -d local-dataset --reckless availability
