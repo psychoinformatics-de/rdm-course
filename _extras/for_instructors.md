@@ -247,8 +247,8 @@ to access them in order to set the default shell to `zsh`:
 3. Lastly, we also need to make the hub aware of which shell it should use when launching a terminal.
    We do this with a configuration script. Run the following lines one by one:
    ~~~
-   touch "$HOME/.jupyter/jupyter_notebook_config.py
-   echo 'c.NotebookApp.terminado_settings = {"shell_command": ["/usr/bin/zsh"]}' > "$HOME/.jupyter/jupyter_notebook_config.py
+   touch "$HOME/.jupyter/jupyter_notebook_config.py"
+   echo 'c.NotebookApp.terminado_settings = {"shell_command": ["/usr/bin/zsh"]}' > "$HOME/.jupyter/jupyter_notebook_config.py"
    ~~~
 4. This finalizes the shell setup. You can now navigate to the hub's admin panel and restart your server
    in order for the changes to take effect.
