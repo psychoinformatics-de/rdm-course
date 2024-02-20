@@ -29,7 +29,7 @@ about collaboration you won't be able to publish all example data).
 
 ## Participate with own computer: install software
 
-If you want to follow the exaples on your own machine, you will need
+If you want to follow the examples on your own machine, you will need
 to install DataLad and some additional software which we will use
 during the walkthrough. Note that Linux or MacOS are strongly
 recommended for this workshop; although DataLad works on all main

@@ -263,7 +263,7 @@ $ git merge preproc
 
 #### And... what now?
 
-Branching opens up the possibility to keep parallel developments neat and orderly next to eachother, hidden away in branches. A `checkout` of your favourite branch lets you travel to its timeline and view all of the changes it contains, and a `merge` combines one or more timelines into another one.
+Branching opens up the possibility to keep parallel developments neat and orderly next to each other, hidden away in branches. A `checkout` of your favourite branch lets you travel to its timeline and view all of the changes it contains, and a `merge` combines one or more timelines into another one.
 
 > ## Exercise
 >
@@ -383,7 +383,7 @@ $ datalad save -m "Fix: Change absolute to relative paths</code></td>
 
 In order to propose the fix to the central dataset as an addition, the collaborator pushes their branch to the central sibling.
 When the central sibling is on GitHub or a similar hosting service, the hosting service assists with merging `fix-paths` to `main` with a **pull request** - a browser-based description and overview of the changes a branch carries.
-Collaborators can conviently take a look and decide whether they accept the pull request and thereby merge the `fix-paths` into `upstream`'s `main`.
+Collaborators can conveniently take a look and decide whether they accept the pull request and thereby merge the `fix-paths` into `upstream`'s `main`.
 You can see how opening and merging PRs look like in GitHub's interface in the expandable box below.
 
 > ## Creating a PR on GitHub

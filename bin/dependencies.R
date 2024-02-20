@@ -79,7 +79,7 @@ create_description <- function(required_pkgs) {
   # We have to write the description twice to get the hidden dependencies
   # because renv only considers explicit dependencies.
   #
-  # This is needed because some of the hidden dependencis will require system
+  # This is needed because some of the hidden dependencies will require system
   # libraries to be configured.
   suppressMessages(repo <- BiocManager::repositories())
   deps <- remotes::dev_package_deps(dependencies = TRUE, repos = repo)

@@ -63,7 +63,7 @@ locations. Although each scenario will be slightly different, the
 setup steps that we will cover with GIN will look similar on other
 git-based hosting solutions.
 
-## Prelude: file availability, getting and droping content
+## Prelude: file availability, getting and dropping content
 
 Before we proceed to data publishing let's first take a look at the
 dataset we created during the first module. We used two ways of adding
@@ -122,7 +122,7 @@ datalad drop inputs/images/chinstrap_01.jpg
 drop(error): /home/alice/Documents/rdm-workshop/example-dataset/inputs/images/chinstrap_01.jpg (file)
 [unsafe; Could only verify the existence of 0 out of 1 necessary copy; (Use --reckless availability to override this check, or adjust numcopies.)]
 
-# If you were to run this with DataLad version < 0.16.0, the safety check would be overriden with --nocheck instead of --reckless availablity)
+# If you were to run this with DataLad version < 0.16.0, the safety check would be overridden with --nocheck instead of --reckless availability)
 ```
 {: .output}
 
@@ -716,7 +716,7 @@ With a cloned dataset, you can do the following:
 
 - Change a (text) file. For example, in the
   `inputs/images/chinstrap_02.yaml` file we entered `penguin_count:
-  2`, but if you look closely at the related fotograph, there are
+  2`, but if you look closely at the related photograph, there are
   actually three penguins (one is partially behind a rock). Edit the
   file and save the changes with an informative commit message, such
   as "Include penguins occluded by rocks in the count" or something
@@ -738,7 +738,7 @@ With a cloned dataset, you can do the following:
   location on the website.
 
 #### Contributing back
-When ready, you can contribute back wih `datalad push`. If the other
+When ready, you can contribute back with `datalad push`. If the other
 person has granted you access to their repository (as should be the
 case during the workshop), you can do it right away. Note that in this
 case you are pushing to `origin` - this is a default name given to a
