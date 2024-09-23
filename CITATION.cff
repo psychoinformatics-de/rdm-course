@@ -1,0 +1,42 @@
+# This CITATION.cff file was generated with cffinit.
+# Visit https://bit.ly/cffinit to generate yours today!
+
+cff-version: 1.2.0
+title: Research Data Management with DataLad
+message: >-
+  If you use these course materials, please cite them using
+  the metadata from this file.
+type: software
+authors:
+  - given-names: Michał
+    family-names: Szczepanik
+    orcid: 'https://orcid.org/0000-0002-4028-2087'
+  - given-names: Adina
+    family-names: Wagner
+  - given-names: Stephan
+    family-names: Heunis
+  - given-names: Christian
+    family-names: Mönch
+  - given-names: Michael
+    family-names: Hanke
+url: 'https://psychoinformatics-de.github.io/rdm-course/'
+abstract: >-
+  The aim of this workshop is to present a set of good
+  practices in research data management, explain version
+  control, and to introduce the core features of DataLad
+  software - a data management multitool that can assist in
+  handling the entire life cycle of digital objects. We will
+  tackle issues ranging from “what is a good file name” to
+  “how to publish a version-controlled dataset”.
+
+  The exercises will provide an opportunity to gain hands-on
+  experience with using DataLad to create a basic dataset,
+  track its changes over time, and publish its contents. You
+  will also learn how to use data created by others and
+  collaborate on datasets. The exercises will be based
+  around toy examples, but all operations will be relevant
+  for real-world data management.
+keywords:
+  - research data management
+  - datalad
+license: CC-BY-4.0
