@@ -154,7 +154,7 @@ This can be done with [Let's Encrypt](https://letsencrypt.org/) by following ins
    ~~~
    sudo tljh-config set https.enabled true
    ~~~
-2. Set your email addres for Let's Encrypt:
+2. Set your email address for Let's Encrypt:
    ~~~
    sudo tljh-config set https.letsencrypt.email <you@example.com>
    ~~~
@@ -326,7 +326,7 @@ Different authentication options are possible (e.g. admin can also authenticate 
 2022/12/01 12:40:30Z: OsProductName: Ubuntu
 2022/12/01 12:40:30Z: OsVersion: 22.04
 ~~~
-- If the JupyterHub bootsrap script succeeded, within the last 30 lines you will find:
+- If the JupyterHub bootstrap script succeeded, within the last 30 lines you will find:
 ~~~
 [  210.143720] cloud-init[1233]: Waiting for JupyterHub to come up (1/20 tries)
 [  210.147437] cloud-init[1233]: Done!
